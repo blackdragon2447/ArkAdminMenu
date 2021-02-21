@@ -1,0 +1,172 @@
+package com.blackdragon2447.AAM.gui;
+
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.lang.reflect.InvocationTargetException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.SeparatorUI;
+
+import com.blackdragon2447.AAM.Reference;
+import com.blackdragon2447.AAM.util.Utils;
+import com.formdev.flatlaf.FlatLightLaf;
+import javax.swing.JSeparator;
+
+public class SimpleCommandDialog extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3122563720977107636L;
+	private JPanel contentPane;
+	private JTextField ArgumentField;
+	private JButton RunButton;
+	private JButton QueueButton;
+	private JLabel outPutLabel;
+	private JLabel argumentLabel;
+	private JLabel ArgDescLabel;
+	private JSeparator separator;
+
+	
+	public static void createGui(int CommandNumber) throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
+		
+		UIManager.setLookAndFeel(new FlatLightLaf());
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					SimpleCommandDialog frame = new SimpleCommandDialog(CommandNumber);
+					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+
+	/**
+	 * Create the frame.
+	 */
+	public SimpleCommandDialog(int command) {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 250);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		GridBagLayout gbl_contentPane = new GridBagLayout();
+		gbl_contentPane.columnWidths = new int[]{40, 180, 180, 40, 0};
+		gbl_contentPane.rowHeights = new int[]{30, 20, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		contentPane.setLayout(gbl_contentPane);
+		
+		separator = new JSeparator();
+		GridBagConstraints gbc_separator = new GridBagConstraints();
+		gbc_separator.gridwidth = 2;
+		gbc_separator.insets = new Insets(0, 0, 5, 5);
+		gbc_separator.gridx = 1;
+		gbc_separator.gridy = 0;
+		contentPane.add(separator, gbc_separator);
+		
+		JLabel CommandLabel = new JLabel("command");
+		CommandLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		GridBagConstraints gbc_CommandLabel = new GridBagConstraints();
+		gbc_CommandLabel.gridwidth = 2;
+		gbc_CommandLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_CommandLabel.gridx = 1;
+		gbc_CommandLabel.gridy = 1;
+		contentPane.add(CommandLabel, gbc_CommandLabel);
+		
+		outPutLabel = new JLabel(Utils.GenerateCommand(command));
+		GridBagConstraints gbc_outPutLabel = new GridBagConstraints();
+		gbc_outPutLabel.gridwidth = 2;
+		gbc_outPutLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_outPutLabel.gridx = 1;
+		gbc_outPutLabel.gridy = 2;
+		contentPane.add(outPutLabel, gbc_outPutLabel);
+		
+		argumentLabel = new JLabel("argument description");
+		argumentLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		GridBagConstraints gbc_argumentLabel = new GridBagConstraints();
+		gbc_argumentLabel.gridwidth = 2;
+		gbc_argumentLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_argumentLabel.gridx = 1;
+		gbc_argumentLabel.gridy = 3;
+		contentPane.add(argumentLabel, gbc_argumentLabel);
+		
+		ArgDescLabel = new JLabel(String.valueOf(Reference.SimpleCommandArgList.get(command).getSecondValue()));
+		GridBagConstraints gbc_ArgDescLabel = new GridBagConstraints();
+		gbc_ArgDescLabel.gridwidth = 2;
+		gbc_ArgDescLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_ArgDescLabel.gridx = 1;
+		gbc_ArgDescLabel.gridy = 4;
+		contentPane.add(ArgDescLabel, gbc_ArgDescLabel);
+		
+		ArgumentField = new JTextField();
+		GridBagConstraints gbc_ArgumentField = new GridBagConstraints();
+		gbc_ArgumentField.gridwidth = 2;
+		gbc_ArgumentField.insets = new Insets(0, 0, 5, 5);
+		gbc_ArgumentField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_ArgumentField.gridx = 1;
+		gbc_ArgumentField.gridy = 5;
+		contentPane.add(ArgumentField, gbc_ArgumentField);
+		ArgumentField.setColumns(10);
+		ArgumentField.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				outPutLabel.setText(Utils.GenerateCommand(command) + " " + ArgumentField.getText());
+			}
+		});
+		ArgumentField.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				outPutLabel.setText(Utils.GenerateCommand(command) + " " + ArgumentField.getText());
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {}
+		});
+		
+		RunButton = new JButton("Run");
+		GridBagConstraints gbc_RunButton = new GridBagConstraints();
+		gbc_RunButton.insets = new Insets(0, 0, 0, 5);
+		gbc_RunButton.gridx = 1;
+		gbc_RunButton.gridy = 7;
+		contentPane.add(RunButton, gbc_RunButton);
+		
+		QueueButton = new JButton("Queue");
+		QueueButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		GridBagConstraints gbc_QueueButton = new GridBagConstraints();
+		gbc_QueueButton.insets = new Insets(0, 0, 0, 5);
+		gbc_QueueButton.gridx = 2;
+		gbc_QueueButton.gridy = 7;
+		contentPane.add(QueueButton, gbc_QueueButton);
+		
+		if(Reference.SimpleCommandList.get(command).getSecondValue() == false) ArgumentField.setEnabled(false);
+	}
+
+}

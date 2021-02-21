@@ -1,10 +1,12 @@
 package com.blackdragon2447.AAM;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.blackdragon2447.AAM.gui.AAMGui;
+import com.blackdragon2447.AAM.util.CSVReader;
 
 /**
  * the main class of AAM
@@ -20,10 +22,41 @@ import com.blackdragon2447.AAM.gui.AAMGui;
 public class Main {
 	
 
-	public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
+	
+
+	@SuppressWarnings("unused")
+	public static void main(String[] args){
 		
-		AAMGui.createGui();
-		System.out.print("done");
+		CSVReader reader = new CSVReader();
+		System.out.println(Reference.SimpleCommandArgList == null);
+		try {
+			Reference.SimpleCommandList = CSVReader.readCommandList("simpleCommands.csv");
+			Reference.SimpleCommandArgList = CSVReader.readArgList("simpleCommandsArgs.csv");
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		
+		for(int i=0; i < Reference.SimpleCommandList.size(); i++) {
+			System.out.println(Reference.SimpleCommandArgList.get(i).GetcsvValue());
+		}
+		
+		//open gui
+		try {
+			AAMGui.createGui();
+		} catch (IllegalArgumentException e) {
+			
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			
+			e.printStackTrace();
+		}
 
 	}
 
