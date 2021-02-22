@@ -7,11 +7,13 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,7 +22,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -32,11 +37,9 @@ import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.actionlistners.ActionlistnerAAM;
 import com.blackdragon2447.AAM.gui.components.JNumberedButton;
 import com.blackdragon2447.AAM.gui.components.JNumberedCheckbox;
+import com.blackdragon2447.AAM.util.Utils;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.JButton;
-import javax.swing.JSpinner;
 
 public class AAMGui extends JFrame {
 	private static final long serialVersionUID = -735583961255908606L;
@@ -60,6 +63,9 @@ public class AAMGui extends JFrame {
 	public static GridBagConstraints gbc_commandButtonList = new GridBagConstraints();
 	public static JTabbedPane tabbedPaneOut;
 	public static JSpinner DelaySpinner = new JSpinner(new SpinnerNumberModel(0, 0, 30, 0.1));
+	JScrollPane scrollPane;
+	Rectangle DefSPbounds;
+	JPanel scrollPanel;
 
 	/**
 	 * Launch the application.
@@ -101,6 +107,13 @@ public class AAMGui extends JFrame {
 		
 		JMenuItem BPPMenuItem = new JMenuItem("import bp paths");
 		settingsMenu.add(BPPMenuItem);
+		BPPMenuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ImportItemsDialog.createDialog();
+			}
+		});
 		
 		JMenuItem IGSNewMenuItem_1 = new JMenuItem("in game settings");
 		settingsMenu.add(IGSNewMenuItem_1);
@@ -471,6 +484,60 @@ public class AAMGui extends JFrame {
 		
 		JPanel impoted_items_panel = new JPanel();
 		tabbedPane.addTab("imported items", null, impoted_items_panel, null);
+		GridBagLayout gbl_impoted_items_panel = new GridBagLayout();
+		gbl_impoted_items_panel.columnWidths = new int[]{40, 564, 40, 0};
+		gbl_impoted_items_panel.rowHeights = new int[]{40, 310, 40, 0};
+		gbl_impoted_items_panel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_impoted_items_panel.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		impoted_items_panel.setLayout(gbl_impoted_items_panel);
+		
+		scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 1;
+		gbc_scrollPane.gridy = 1;
+		impoted_items_panel.add(scrollPane, gbc_scrollPane);
+		DefSPbounds = new Rectangle(564, 310);
+		
+		scrollPanel = new JPanel();
+		scrollPane.setViewportView(scrollPanel);
+		GridBagLayout gbl_scrollPanel = new GridBagLayout();
+		gbl_scrollPanel.columnWidths = new int[]{0};
+		gbl_scrollPanel.rowHeights = new int[]{0};
+		gbl_scrollPanel.columnWeights = new double[]{Double.MIN_VALUE};
+		gbl_scrollPanel.rowWeights = new double[]{Double.MIN_VALUE};
+		scrollPanel.setLayout(gbl_scrollPanel);
+		
+		GridBagConstraints gbc_ImItemLabel = new GridBagConstraints();
+		gbc_ImItemLabel.insets = new Insets(0, 0, 0, 5);
+		gbc_ImItemLabel.gridx = 0;
+		gbc_ImItemLabel.gridy = 0;
+		gbc_ImItemLabel.weighty = 1;
+		GridBagConstraints gbc_ImItemLabel2 = new GridBagConstraints();
+		gbc_ImItemLabel2.insets = new Insets(0, 0, 0, 5);
+		gbc_ImItemLabel2.gridx = 1;
+		gbc_ImItemLabel2.gridy = 0;
+		gbc_ImItemLabel2.weighty = 1;
+		
+		for(int i = 0; i < Reference.ImportedItemGroups.size(); i++) {
+			
+			scrollPanel.add(Utils.generateTitleLabel(Reference.ImportedItemGroups.get(i).getFirstValue()), gbc_ImItemLabel);
+			gbc_ImItemLabel.gridy++;
+			scrollPanel.add(Utils.generateTitleLabel("BP Path"), gbc_ImItemLabel2);
+			gbc_ImItemLabel2.gridy++;
+			
+			for(int x = 0; x < Reference.ImportedItemGroups.get(i).getSecondValue().size(); x++) {
+				scrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(x).getSecondValue()), gbc_ImItemLabel);
+				gbc_ImItemLabel.gridy++;
+			}
+			
+			for(int y = 0; y < Reference.ImportedItemGroups.get(i).getSecondValue().size(); y++) {
+				scrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(y).getFirstValue()), gbc_ImItemLabel2);
+				gbc_ImItemLabel2.gridy++;
+			}
+			
+		}
 		
 		tabbedPane.addTab("queue", null, queuePanel, null);
 		tabbedPane.setEnabledAt(5, true);
@@ -598,6 +665,41 @@ public class AAMGui extends JFrame {
 					simple_commands_panel.add(KickButton, gbc_KickButton);
 					simple_commands_panel.add(KickCheckBox, gbc_KickCheckBox);
 
+				}else if(tabbedPane.getSelectedIndex() == 4) {
+					GridBagConstraints gbc_ImItemLabel = new GridBagConstraints();
+					gbc_ImItemLabel.insets = new Insets(0, 0, 0, 5);
+					gbc_ImItemLabel.gridx = 0;
+					gbc_ImItemLabel.gridy = 0;
+					gbc_ImItemLabel.weighty = 1;
+					GridBagConstraints gbc_ImItemLabel2 = new GridBagConstraints();
+					gbc_ImItemLabel2.insets = new Insets(0, 0, 0, 5);
+					gbc_ImItemLabel2.gridx = 1;
+					gbc_ImItemLabel2.gridy = 0;
+					gbc_ImItemLabel2.weighty = 1;
+					
+					for(int i = 0; i < Reference.ImportedItemGroups.size(); i++) {
+						
+						scrollPanel.removeAll();
+						scrollPanel.revalidate();
+						scrollPanel.repaint();
+						
+						scrollPanel.add(Utils.generateTitleLabel(Reference.ImportedItemGroups.get(i).getFirstValue()), gbc_ImItemLabel);
+						gbc_ImItemLabel.gridy++;
+						scrollPanel.add(Utils.generateTitleLabel("BP Path"), gbc_ImItemLabel2);
+						gbc_ImItemLabel2.gridy++;
+						
+						for(int x =0; x < Reference.ImportedItemGroups.get(i).getSecondValue().size(); x++) {
+							scrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(x).getSecondValue()), gbc_ImItemLabel);
+							gbc_ImItemLabel.gridy++;
+						}
+						
+						for(int y = 0; y < Reference.ImportedItemGroups.get(i).getSecondValue().size(); y++) {
+							scrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(y).getFirstValue()), gbc_ImItemLabel2);
+							gbc_ImItemLabel2.gridy++;
+						}
+						
+						
+					}
 				}else if(tabbedPane.getSelectedIndex() == 5) {
 					queuePanel.removeAll();
 					queuePanel.revalidate();
@@ -648,6 +750,8 @@ public class AAMGui extends JFrame {
 				
 			}
 		});
+		
+		
 	}
 	
 	public static void AddFavorite(JNumberedButton button) {
@@ -661,5 +765,6 @@ public class AAMGui extends JFrame {
 	public static JPanel GetSCPanel() {
 		return simple_commands_panel;
 	}
+
 
 }
