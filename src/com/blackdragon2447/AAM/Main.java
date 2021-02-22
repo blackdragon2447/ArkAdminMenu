@@ -1,5 +1,6 @@
 package com.blackdragon2447.AAM;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
@@ -38,6 +39,16 @@ public class Main {
 		
 		for(int i=0; i < Reference.SimpleCommandList.size(); i++) {
 			System.out.println(Reference.SimpleCommandArgList.get(i).GetcsvValue());
+		}
+		
+		File dir = new File("ItemLists");
+		String[] ItemFileList = dir.list();
+		
+		for(int i = 0; i < ItemFileList.length; i++) {
+			Reference.ItemFileArray.add(ItemFileList[i]);
+		}
+		for(int i=0; i < Reference.ItemFileArray.size(); i++) {
+			System.out.println(Reference.ItemFileArray.get(i));
 		}
 		
 		//open gui

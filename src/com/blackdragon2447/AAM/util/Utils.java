@@ -1,7 +1,10 @@
 package com.blackdragon2447.AAM.util;
 
 import java.awt.Component;
+import java.awt.Font;
 import java.util.ArrayList;
+
+import javax.swing.JLabel;
 
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
@@ -52,6 +55,14 @@ public class Utils {
 		}
 		
 		return commandPrefix;
+	}
+	
+	public static JLabel generateTitleLabel(String text) {
+		
+		JLabel label = new JLabel(text);
+		label.setFont(new Font(label.getFont().getFontName(), label.getFont().getStyle(), 18));
+		return label;
+		
 	}
 
 }
