@@ -3,9 +3,11 @@ package com.blackdragon2447.AAM.gui.actionlistners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.UnsupportedLookAndFeelException;
 
+import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.gui.SimpleCommandDialog;
 import com.blackdragon2447.AAM.gui.components.JNumberedButton;
@@ -43,6 +45,58 @@ public class ActionlistnerAAM {
 			}
 			
 			
+		}
+	};
+	
+	public static ActionListener QueueRemoveListner = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JNumberedButton button = (JNumberedButton) e.getSource();
+			Reference.Queue.remove(button.getNumber());
+			
+			AAMGui.tabbedPaneOut.setSelectedIndex(0);
+			AAMGui.tabbedPaneOut.setSelectedIndex(5);
+		}
+	};
+	
+	public static ActionListener RunListner = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			for(int i = 0; i < Reference.Queue.size(); i++) {
+				System.out.println(Reference.Queue.get(i).generateCommand());
+			}
+			Reference.Queue.clear();
+			
+
+			AAMGui.tabbedPaneOut.setSelectedIndex(0);
+			AAMGui.tabbedPaneOut.setSelectedIndex(5);
+		}
+	};
+	
+	public static ActionListener RunDelayListner = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			double delay = (double) AAMGui.DelaySpinner.getValue();
+			
+			for(int i = 0; i < Reference.Queue.size(); i++) {
+				System.out.println(Reference.Queue.get(i).generateCommand());
+				AAMGui.tabbedPaneOut.setSelectedIndex(0);
+				AAMGui.tabbedPaneOut.setSelectedIndex(5);
+				try {
+					TimeUnit.SECONDS.sleep((long) delay);
+				} catch (NumberFormatException | InterruptedException e1) {
+					e1.printStackTrace();
+				}
+			}
+			Reference.Queue.clear();
+			
+			AAMGui.tabbedPaneOut.setSelectedIndex(0);
+			AAMGui.tabbedPaneOut.setSelectedIndex(5);
 		}
 	};
 	

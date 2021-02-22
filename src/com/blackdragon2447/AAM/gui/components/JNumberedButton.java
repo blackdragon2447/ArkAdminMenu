@@ -1,5 +1,6 @@
 package com.blackdragon2447.AAM.gui.components;
 
+import java.awt.event.ActionListener;
 import java.beans.ConstructorProperties;
 
 import javax.swing.Icon;
@@ -60,6 +61,20 @@ public class JNumberedButton extends JButton{
     public JNumberedButton(String text, int number) {
         super(text, null);
         this.number = number;
+    }
+    
+    public JNumberedButton(ActionListener actioListner, int number) {
+    	super(null, null);
+    	this.number = number;
+    	addActionListener(actioListner);
+    	
+    }
+    
+    public JNumberedButton(String text, ActionListener actioListner, int number) {
+    	super(text, null);
+    	this.number = number;
+    	addActionListener(actioListner);
+    	
     }
     
     public void setNumber(int number) {

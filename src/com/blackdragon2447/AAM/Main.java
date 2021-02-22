@@ -28,7 +28,6 @@ public class Main {
 	public static void main(String[] args){
 		
 		CSVReader reader = new CSVReader();
-		System.out.println(Reference.SimpleCommandArgList == null);
 		try {
 			Reference.SimpleCommandList = CSVReader.readCommandList("simpleCommands.csv");
 			Reference.SimpleCommandArgList = CSVReader.readArgList("simpleCommandsArgs.csv");

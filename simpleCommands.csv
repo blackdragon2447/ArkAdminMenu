@@ -3,8 +3,8 @@ playersonly,FALSE
 ToggleDamageNumbers,FALSE
 broadcast,TRUE
 serverchat,TRUE
-getgamelog,FALSE
 getchat,FALSE
+getgamelog,FALSE
 doexit,FALSE
 saveworld,FALSE
 destroywilddinos,FALSE

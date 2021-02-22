@@ -33,12 +33,25 @@ public class Utils {
 			commandPrefix = "cheat ";
 		}else if (AAMGui.PFacheatRadioItem.isSelected() == true) {
 			commandPrefix = "admincheat ";
+		}else {
+			commandPrefix = Reference.customPrefix + " ";
 		}
-		
-		System.out.println(Reference.SimpleCommandList.toString());
 		String ListItem = Reference.SimpleCommandList.get(commandNumber).getFirstValue();
 		
 		return commandPrefix + ListItem;
+	}
+	
+	public static String getPrefix() {
+		String commandPrefix = "";
+		if (AAMGui.PFcheatRadioItem.isSelected() == true) {
+			commandPrefix = "cheat ";
+		}else if (AAMGui.PFacheatRadioItem.isSelected() == true) {
+			commandPrefix = "admincheat ";
+		}else {
+			commandPrefix = Reference.customPrefix + " ";
+		}
+		
+		return commandPrefix;
 	}
 
 }
