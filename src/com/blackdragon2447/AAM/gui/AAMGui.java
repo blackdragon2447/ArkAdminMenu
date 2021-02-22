@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -33,6 +34,9 @@ import com.blackdragon2447.AAM.gui.components.JNumberedButton;
 import com.blackdragon2447.AAM.gui.components.JNumberedCheckbox;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.JButton;
+import javax.swing.JSpinner;
 
 public class AAMGui extends JFrame {
 	private static final long serialVersionUID = -735583961255908606L;
@@ -41,6 +45,21 @@ public class AAMGui extends JFrame {
 	public static JRadioButtonMenuItem PFcheatRadioItem = new JRadioButtonMenuItem("cheat");
 	public static JRadioButtonMenuItem PFacheatRadioItem = new JRadioButtonMenuItem("admin cheat");
 	public static JRadioButtonMenuItem PFcustomRadioItem = new JRadioButtonMenuItem("custom prefix");
+	ButtonGroup group = new ButtonGroup();
+	
+	public static JPanel queuePanel = new JPanel();
+	public static JPanel queueList = new JPanel();
+	public static GridBagConstraints gbc_queueList = new GridBagConstraints();
+	public static GridBagLayout gbl_queuePanel = new GridBagLayout();
+	public static GridBagLayout gbl_queueList = new GridBagLayout();
+	public static JLabel commandLable = new JLabel("Command");
+	public static GridBagConstraints gbc_commandLable = new GridBagConstraints();
+	public static JLabel RemoveLabel = new JLabel("remove");
+	public static GridBagConstraints gbc_RemoveLabel = new GridBagConstraints();
+	public static GridBagConstraints gbc_commandList = new GridBagConstraints();
+	public static GridBagConstraints gbc_commandButtonList = new GridBagConstraints();
+	public static JTabbedPane tabbedPaneOut;
+	public static JSpinner DelaySpinner = new JSpinner(new SpinnerNumberModel(0, 0, 30, 0.1));
 
 	/**
 	 * Launch the application.
@@ -49,9 +68,6 @@ public class AAMGui extends JFrame {
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
 	 */
-	public static void main(String[] args) throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
-		createGui();
-	}
 	
 	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 		
@@ -94,14 +110,23 @@ public class AAMGui extends JFrame {
 		
 		JMenu prefixMenu = new JMenu("command prefix");
 		settingsMenu.add(prefixMenu);
+		group.add(PFacheatRadioItem);
+		group.add(PFcheatRadioItem);
+		group.add(PFcustomRadioItem);
 		
 		prefixMenu.add(PFcheatRadioItem);
+		PFcheatRadioItem.setSelected(true);
 		
 		prefixMenu.add(PFacheatRadioItem);
 		
 		prefixMenu.add(PFcustomRadioItem);
 		
 		JMenuItem SetPFcustomMenuItem = new JMenuItem("set custom prefix");
+		SetPFcustomMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CustomPFDialog.createDialog();
+			}
+		});
 		prefixMenu.add(SetPFcustomMenuItem);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -130,8 +155,10 @@ public class AAMGui extends JFrame {
 			  }
 		});
 		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
+		tabbedPaneOut = tabbedPane;
 		
 		JPanel favorites_panel = new JPanel();
 		favorites_panel.setToolTipText("");
@@ -445,17 +472,84 @@ public class AAMGui extends JFrame {
 		JPanel impoted_items_panel = new JPanel();
 		tabbedPane.addTab("imported items", null, impoted_items_panel, null);
 		
+		tabbedPane.addTab("queue", null, queuePanel, null);
+		tabbedPane.setEnabledAt(5, true);
+		GridBagLayout gbl_queuePanel = new GridBagLayout();
+		gbl_queuePanel.columnWidths = new int[]{40, 293, 0, 40, 0};
+		gbl_queuePanel.rowHeights = new int[]{40, 0, 30, 30, 0};
+		gbl_queuePanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_queuePanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		queuePanel.setLayout(gbl_queuePanel);
+		
+		gbc_queueList.gridwidth = 2;
+		gbc_queueList.insets = new Insets(0, 0, 5, 5);
+		gbc_queueList.fill = GridBagConstraints.BOTH;
+		gbc_queueList.gridx = 1;
+		gbc_queueList.gridy = 1;
+		queuePanel.add(queueList, gbc_queueList);
+		GridBagLayout gbl_queueList = new GridBagLayout();
+		gbl_queueList.columnWidths = new int[]{514, 40, 0};
+		gbl_queueList.rowHeights = new int[]{30, 0};
+		gbl_queueList.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_queueList.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		queueList.setLayout(gbl_queueList);
+		
+		gbc_commandLable.insets = new Insets(0, 0, 0, 5);
+		gbc_commandLable.gridx = 0;
+		gbc_commandLable.gridy = 0;
+		queueList.add(commandLable, gbc_commandLable);
+		
+		gbc_RemoveLabel.gridx = 1;
+		gbc_RemoveLabel.gridy = 0;
+		queueList.add(RemoveLabel, gbc_RemoveLabel);
+		
+		GridBagConstraints gbc_DelaySpinner = new GridBagConstraints();
+		gbc_DelaySpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_DelaySpinner.gridx = 1;
+		gbc_DelaySpinner.gridy = 2;
+		queuePanel.add(DelaySpinner, gbc_DelaySpinner);
+		
+		JButton RunDelayButton = new JButton("Run With Delay");
+		GridBagConstraints gbc_RunDelayButton = new GridBagConstraints();
+		gbc_RunDelayButton.insets = new Insets(0, 0, 0, 5);
+		gbc_RunDelayButton.gridx = 1;
+		gbc_RunDelayButton.gridy = 3;
+		queuePanel.add(RunDelayButton, gbc_RunDelayButton);
+		
+		JButton RunButton = new JButton("Run");
+		GridBagConstraints gbc_RunButton = new GridBagConstraints();
+		gbc_RunButton.insets = new Insets(0, 0, 0, 5);
+		gbc_RunButton.gridx = 2;
+		gbc_RunButton.gridy = 3;
+		queuePanel.add(RunButton, gbc_RunButton);
+		RunButton.addActionListener(ActionlistnerAAM.RunListner);
+		
+		gbc_commandList.gridx = 0;
+		gbc_commandList.gridy = 1;
+		gbc_commandList.weighty = 1;
+		gbc_commandButtonList.gridx = 1;
+		gbc_commandButtonList.gridy = 1;
+		gbc_commandButtonList.weighty = 1;
+		for(int i = 0; i < Reference.Queue.size(); i ++) {
+			queueList.add(new JLabel(Reference.Queue.get(i).generateCommand()), gbc_commandList);
+			queueList.add(new JNumberedButton("X", ActionlistnerAAM.QueueRemoveListner, i), gbc_commandButtonList);
+			gbc_commandList.gridy++;
+			gbc_commandButtonList.gridy++;
+		}
+		
+		
 		tabbedPane.addChangeListener(new ChangeListener() {
 			
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				favorites_panel.removeAll();
-				favorites_panel.revalidate();
-				favorites_panel.repaint();
-				gbc_FavButtons.insets = new Insets(0, 0, 0, 5);
-				gbc_FavButtons.gridx = 0;
-				gbc_FavButtons.gridy = 0;
+				
 				if(tabbedPane.getSelectedIndex() == 0) {
+					favorites_panel.removeAll();
+					favorites_panel.revalidate();
+					favorites_panel.repaint();
+					gbc_FavButtons.insets = new Insets(0, 0, 0, 5);
+					gbc_FavButtons.gridx = 0;
+					gbc_FavButtons.gridy = 0;
 					if(Reference.FavoriteButtonList != null) {
 						for(JNumberedButton button : Reference.FavoriteButtonList) {
 							favorites_panel.add(button, gbc_FavButtons);
@@ -504,6 +598,52 @@ public class AAMGui extends JFrame {
 					simple_commands_panel.add(KickButton, gbc_KickButton);
 					simple_commands_panel.add(KickCheckBox, gbc_KickCheckBox);
 
+				}else if(tabbedPane.getSelectedIndex() == 5) {
+					queuePanel.removeAll();
+					queuePanel.revalidate();
+					queuePanel.repaint();
+					queuePanel.add(queueList, gbc_queueList);
+					
+					queueList.setLayout(gbl_queueList);
+					queueList.removeAll();
+					queueList.revalidate();
+					queueList.repaint();
+					
+					queueList.add(commandLable, gbc_commandLable);
+					queueList.add(RemoveLabel, gbc_RemoveLabel);
+					
+					
+					queuePanel.add(DelaySpinner, gbc_DelaySpinner);
+					
+					JButton RunDelayButton = new JButton("Run With Delay");
+					GridBagConstraints gbc_RunDelayButton = new GridBagConstraints();
+					gbc_RunDelayButton.insets = new Insets(0, 0, 0, 5);
+					gbc_RunDelayButton.gridx = 1;
+					gbc_RunDelayButton.gridy = 3;
+					queuePanel.add(RunDelayButton, gbc_RunDelayButton);
+					RunDelayButton.addActionListener(ActionlistnerAAM.RunDelayListner);
+					
+					JButton RunButton = new JButton("Run");
+					GridBagConstraints gbc_RunButton = new GridBagConstraints();
+					gbc_RunButton.insets = new Insets(0, 0, 0, 5);
+					gbc_RunButton.gridx = 2;
+					gbc_RunButton.gridy = 3;
+					queuePanel.add(RunButton, gbc_RunButton);
+					RunButton.addActionListener(ActionlistnerAAM.RunListner);
+					
+					GridBagConstraints gbc_commandList = new GridBagConstraints();
+					gbc_commandList.gridx = 0;
+					gbc_commandList.gridy = 1;
+					gbc_commandList.weighty = 1;
+					gbc_commandButtonList.gridx = 1;
+					gbc_commandButtonList.gridy = 1;
+					gbc_commandButtonList.weighty = 1;
+					for(int i = 0; i < Reference.Queue.size(); i ++) {
+						queueList.add(new JLabel(Reference.Queue.get(i).generateCommand()), gbc_commandList);
+						queueList.add(new JNumberedButton("X", ActionlistnerAAM.QueueRemoveListner, i), gbc_commandButtonList);
+						gbc_commandList.gridy++;
+						gbc_commandButtonList.gridy++;
+					}
 				}
 				
 			}

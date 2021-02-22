@@ -15,16 +15,16 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.SeparatorUI;
 
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.util.Utils;
+import com.blackdragon2447.AAM.util.obj.SimpleCommand;
 import com.formdev.flatlaf.FlatLightLaf;
-import javax.swing.JSeparator;
 
 public class SimpleCommandDialog extends JFrame {
 
@@ -127,13 +127,6 @@ public class SimpleCommandDialog extends JFrame {
 		gbc_ArgumentField.gridy = 5;
 		contentPane.add(ArgumentField, gbc_ArgumentField);
 		ArgumentField.setColumns(10);
-		ArgumentField.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				outPutLabel.setText(Utils.GenerateCommand(command) + " " + ArgumentField.getText());
-			}
-		});
 		ArgumentField.addKeyListener(new KeyListener() {
 			
 			@Override
@@ -154,17 +147,29 @@ public class SimpleCommandDialog extends JFrame {
 		gbc_RunButton.gridx = 1;
 		gbc_RunButton.gridy = 7;
 		contentPane.add(RunButton, gbc_RunButton);
-		
-		QueueButton = new JButton("Queue");
-		QueueButton.addActionListener(new ActionListener() {
+		RunButton.addActionListener(new ActionListener() {
+			
+			@Override
 			public void actionPerformed(ActionEvent e) {
+				System.out.println(outPutLabel.getText());
+				dispose();
 			}
 		});
+		
+		QueueButton = new JButton("Queue");
 		GridBagConstraints gbc_QueueButton = new GridBagConstraints();
 		gbc_QueueButton.insets = new Insets(0, 0, 0, 5);
 		gbc_QueueButton.gridx = 2;
 		gbc_QueueButton.gridy = 7;
 		contentPane.add(QueueButton, gbc_QueueButton);
+		QueueButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Reference.Queue.add(new SimpleCommand(Utils.getPrefix(), command, ArgumentField.getText()).generateGenericCommand());
+				dispose();
+			}
+		});
 		
 		if(Reference.SimpleCommandList.get(command).getSecondValue() == false) ArgumentField.setEnabled(false);
 	}
