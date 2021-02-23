@@ -9,9 +9,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
-import com.blackdragon2447.AAM.gui.SimpleCommandDialog;
 import com.blackdragon2447.AAM.gui.components.JNumberedButton;
 import com.blackdragon2447.AAM.gui.components.JNumberedCheckbox;
+import com.blackdragon2447.AAM.gui.dialog.SimpleCommandDialog;
 import com.blackdragon2447.AAM.util.Utils;
 
 public class ActionlistnerAAM {
