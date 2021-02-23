@@ -1,4 +1,4 @@
-package com.blackdragon2447.AAM.gui;
+package com.blackdragon2447.AAM.gui.dialog;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

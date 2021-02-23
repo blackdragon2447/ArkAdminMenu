@@ -1,10 +1,12 @@
-package com.blackdragon2447.AAM.gui;
+package com.blackdragon2447.AAM.gui.dialog;
 
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.RenderingHints.Key;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -12,6 +14,7 @@ import java.awt.event.KeyListener;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox.KeySelectionManager;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -130,15 +133,20 @@ public class SimpleCommandDialog extends JFrame {
 		ArgumentField.addKeyListener(new KeyListener() {
 			
 			@Override
-			public void keyTyped(KeyEvent e) {}
+			public void keyTyped(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) dispose();
+			}
 			
 			@Override
 			public void keyReleased(KeyEvent e) {
 				outPutLabel.setText(Utils.GenerateCommand(command) + " " + ArgumentField.getText());
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) dispose();
 			}
 			
 			@Override
-			public void keyPressed(KeyEvent e) {}
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) dispose();
+			}
 		});
 		
 		RunButton = new JButton("Run");
@@ -172,6 +180,59 @@ public class SimpleCommandDialog extends JFrame {
 		});
 		
 		if(Reference.SimpleCommandList.get(command).getSecondValue() == false) ArgumentField.setEnabled(false);
+		
+		addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) dispose();
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) dispose();
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) dispose();
+				
+			}
+		});
+		
+		setFocusable(true);
+		
+		Component[] components = getComponents();
+		
+		for(Component component : components) {
+			component.addKeyListener(new KeyListener() {
+
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) dispose();
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) dispose();
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) dispose();
+				
+				}
+			});
+			
+			component.setFocusable(true);
+			
+		}
+
 	}
 
 }
