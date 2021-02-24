@@ -6,7 +6,10 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.aeonbits.owner.ConfigFactory;
+
 import com.blackdragon2447.AAM.gui.AAMGui;
+import com.blackdragon2447.AAM.util.AAMConfig;
 import com.blackdragon2447.AAM.util.CSVReader;
 
 /**
@@ -28,18 +31,17 @@ public class Main {
 	@SuppressWarnings("unused")
 	public static void main(String[] args){
 		
+
+		AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
+		
 		CSVReader reader = new CSVReader();
 		try {
 			Reference.SimpleCommandList = CSVReader.readCommandList("simpleCommands.csv");
 			Reference.SimpleCommandArgList = CSVReader.readArgList("simpleCommandsArgs.csv");
 		} catch (IOException e) {
-			
 			e.printStackTrace();
 		}
 		
-		for(int i=0; i < Reference.SimpleCommandList.size(); i++) {
-			System.out.println(Reference.SimpleCommandArgList.get(i).GetcsvValue());
-		}
 		
 		File dir = new File("ItemLists");
 		String[] ItemFileList = dir.list();
@@ -47,9 +49,8 @@ public class Main {
 		for(int i = 0; i < ItemFileList.length; i++) {
 			Reference.ItemFileArray.add(ItemFileList[i]);
 		}
-		for(int i=0; i < Reference.ItemFileArray.size(); i++) {
-			System.out.println(Reference.ItemFileArray.get(i));
-		}
+		
+		Reference.customPrefix = cfg.customPrefix();
 		
 		//open gui
 		try {
