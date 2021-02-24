@@ -8,7 +8,10 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.aeonbits.owner.ConfigFactory;
+
 import com.blackdragon2447.AAM.Reference;
+import com.blackdragon2447.AAM.util.AAMConfig;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -17,6 +20,8 @@ import javax.swing.JTextField;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class CustomPFDialog extends JDialog {
 
@@ -26,6 +31,7 @@ public class CustomPFDialog extends JDialog {
 	private static final long serialVersionUID = -2635977732325130032L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
+	AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
 
 	public static void createDialog() {
 		try {
@@ -84,6 +90,13 @@ public class CustomPFDialog extends JDialog {
 					public void actionPerformed(ActionEvent arg0) {
 						Reference.customPrefix = textField.getText();
 						dispose();
+						cfg.setProperty("customPrefix", textField.getText());
+						try {
+							cfg.store(new FileOutputStream("AAMConfig.properties"), "no comments");
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+						System.out.println(cfg.customPrefix());
 					}
 					
 				});

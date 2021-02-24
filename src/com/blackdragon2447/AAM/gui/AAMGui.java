@@ -11,11 +11,14 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,6 +39,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.aeonbits.owner.ConfigFactory;
+
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.actionlistners.ActionlistnerAAM;
 import com.blackdragon2447.AAM.gui.components.JNumberedButton;
@@ -43,10 +48,10 @@ import com.blackdragon2447.AAM.gui.components.JNumberedCheckbox;
 import com.blackdragon2447.AAM.gui.dialog.CustomPFDialog;
 import com.blackdragon2447.AAM.gui.dialog.HelpDialog;
 import com.blackdragon2447.AAM.gui.dialog.ImportItemsDialog;
+import com.blackdragon2447.AAM.util.AAMConfig;
 import com.blackdragon2447.AAM.util.Utils;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import javax.swing.JCheckBox;
 
 public class AAMGui extends JFrame {
 	private static final long serialVersionUID = -735583961255908606L;
@@ -74,6 +79,7 @@ public class AAMGui extends JFrame {
 	Rectangle DefSPbounds;
 	JPanel scrollPanel;
 	JButton HelpButton;
+	AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
 
 	/**
 	 * Launch the application.
@@ -161,14 +167,36 @@ public class AAMGui extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		
+		System.out.println(cfg.Darkmode());
+		
+		if(cfg.Darkmode() == true) {
+			try {
+				UIManager.setLookAndFeel(new FlatDarkLaf());
+				SwingUtilities.updateComponentTreeUI(contentPane);
+				SwingUtilities.updateComponentTreeUI(menuBar);
+			} catch (UnsupportedLookAndFeelException e1) {
+				e1.printStackTrace();
+			}
+			DTCheckItem.setSelected(cfg.Darkmode());
+		}
+		
+		
 		DTCheckItem.addActionListener(new ActionListener() {
 			  public void actionPerformed(ActionEvent e) {
-					if(DTCheckItem.isSelected() == true == true) {
+					if(DTCheckItem.isSelected() == true) {
 						try {
 							UIManager.setLookAndFeel(new FlatDarkLaf());
 							SwingUtilities.updateComponentTreeUI(contentPane);
 							SwingUtilities.updateComponentTreeUI(menuBar);
 						} catch (UnsupportedLookAndFeelException e1) {
+							e1.printStackTrace();
+						}
+						cfg.setProperty("Darkmode", "true");
+						System.out.println(cfg.Darkmode());
+						try {
+							cfg.store(new FileOutputStream("AAMConfig.properties"), "no comments");
+						} catch (IOException e1) {
 							e1.printStackTrace();
 						}
 					}
@@ -178,6 +206,13 @@ public class AAMGui extends JFrame {
 							SwingUtilities.updateComponentTreeUI(contentPane);
 							SwingUtilities.updateComponentTreeUI(menuBar);
 						} catch (UnsupportedLookAndFeelException e1) {
+							e1.printStackTrace();
+						}
+						cfg.setProperty("Darkmode", "false");
+						System.out.println(cfg.Darkmode());
+						try {
+							cfg.store(new FileOutputStream("AAMConfig.properties"), "no comments");
+						} catch (IOException e1) {
 							e1.printStackTrace();
 						}
 					}
