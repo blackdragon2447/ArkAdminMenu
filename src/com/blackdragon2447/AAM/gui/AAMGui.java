@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -203,6 +204,7 @@ public class AAMGui extends JFrame {
 		gbc_FavButtons.gridy = 0;
 		gbc_FavButtons.fill = GridBagConstraints.BOTH;
 		
+		@SuppressWarnings("unused")
 		JButton FavHelp = new JButton("?");
 		GridBagConstraints gbc_FavHelp = new GridBagConstraints();
 		gbc_FavHelp.insets = new Insets(0, 0, 0, 5);
@@ -916,6 +918,11 @@ public class AAMGui extends JFrame {
 		int dismissDelay = Integer.MAX_VALUE;
 	    ToolTipManager.sharedInstance().setDismissDelay(dismissDelay);
 	    ToolTipManager.sharedInstance().setInitialDelay(0);
+
+	    scrollPane.setBorder(BorderFactory.createEmptyBorder());
+	    
+	    scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+
 	    
 	}
 	
