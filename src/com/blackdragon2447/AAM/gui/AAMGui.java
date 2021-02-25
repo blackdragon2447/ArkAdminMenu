@@ -109,6 +109,8 @@ public class AAMGui extends JFrame {
 	 * Create the frame.
 	 */
 	public AAMGui() {
+		
+		
 		setTitle("ArkAdminManager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 675, 500);
@@ -813,6 +815,7 @@ public class AAMGui extends JFrame {
 							}
 						}
 					}
+				
 
 					
 				}else if(tabbedPane.getSelectedIndex() == 1) {
