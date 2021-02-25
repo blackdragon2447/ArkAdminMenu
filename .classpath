@@ -12,5 +12,10 @@
 			<attribute name="javadoc_location" value="jar:file:/C:/Users/thoma/Desktop/java%20workspace/LIB/owner-1.0.12-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/thoma/Desktop/java workspace/LIB/firebase-admin-7.1.0.jar" sourcepath="C:/Users/thoma/Desktop/java workspace/LIB/firebase-admin-7.1.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/thoma/Desktop/java%20workspace/LIB/firebase-admin-7.1.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
