@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.gui.components.JNumberedButton;
+import com.blackdragon2447.AAM.gui.components.JNumberedCheckbox;
 
 public class Utils {
 	
@@ -17,7 +18,7 @@ public class Utils {
 		ArrayList<JNumberedButton> buttons = new ArrayList<JNumberedButton>();
 		
 		for(int i = 0; i < components.length; i++) {
-			if(components[i].getClass() == JNumberedButton.class) {
+			if(components[i] instanceof JNumberedButton) {
 				buttons.add((JNumberedButton) components[i]);
 			}
 		}
@@ -28,6 +29,24 @@ public class Utils {
 				  .orElse(null);
 		
 		return foundButton;
+	}
+	
+	public static JNumberedCheckbox findCheckboxByNumber(int Number){
+		Component[] components = AAMGui.GetSCPanel().getComponents();
+		ArrayList<JNumberedCheckbox> boxes = new ArrayList<JNumberedCheckbox>();
+		
+		for(int i = 0; i < components.length; i++) {
+			if(components[i] instanceof JNumberedCheckbox) {
+				boxes.add((JNumberedCheckbox) components[i]);
+			}
+		}
+		
+		JNumberedCheckbox foundBox = boxes.stream()
+				  .filter(JNumberedCheckbox -> Number==(JNumberedCheckbox.getNumber()))
+				  .findAny()
+				  .orElse(null);
+		
+		return foundBox;
 	}
 	
 	public static String GenerateCommand(int commandNumber) {

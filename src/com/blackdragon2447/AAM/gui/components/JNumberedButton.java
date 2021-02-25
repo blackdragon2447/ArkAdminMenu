@@ -77,6 +77,16 @@ public class JNumberedButton extends JButton{
     	
     }
     
+    public JNumberedButton(JButton button, int number) {
+    	super(button.getText(), button.getIcon());
+    	this.number = number;
+    	ActionListener[] listners = button.getActionListeners();
+    	for(ActionListener ActtioListner : listners) {
+    		addActionListener(ActtioListner);
+    	}
+    	setBounds(button.getBounds());
+    }
+    
     public void setNumber(int number) {
     	this.number = number;
     }
