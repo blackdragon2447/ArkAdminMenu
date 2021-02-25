@@ -11,9 +11,14 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -227,11 +232,7 @@ public class AAMGui extends JFrame {
 		gbl_favorites_panel.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
 		favorites_panel.setLayout(gbl_favorites_panel);
 		
-		GridBagConstraints gbc_FavButtons = new GridBagConstraints();
-		gbc_FavButtons.insets = new Insets(0, 0, 0, 5);
-		gbc_FavButtons.gridx = 0;
-		gbc_FavButtons.gridy = 0;
-		gbc_FavButtons.fill = GridBagConstraints.BOTH;
+		
 		
 		@SuppressWarnings("unused")
 		JButton FavHelp = new JButton("?");
@@ -239,6 +240,12 @@ public class AAMGui extends JFrame {
 		gbc_FavHelp.insets = new Insets(0, 0, 0, 5);
 		gbc_FavHelp.gridx = 0;
 		gbc_FavHelp.gridy = 0;
+		
+		GridBagConstraints gbc_FavButtons = new GridBagConstraints();
+		gbc_FavButtons.insets = new Insets(0, 0, 0, 5);
+		gbc_FavButtons.gridx = 0;
+		gbc_FavButtons.gridy = 0;
+		gbc_FavButtons.fill = GridBagConstraints.BOTH;
 		
 		if(Reference.FavoriteButtonList != null) {
 			for(JNumberedButton button : Reference.FavoriteButtonList) {
@@ -785,8 +792,30 @@ public class AAMGui extends JFrame {
 		
 		tabbedPane.addChangeListener(new ChangeListener() {
 			
+			
+			
+			
 			@Override
 			public void stateChanged(ChangeEvent e) {
+				if(DTCheckItem.isSelected() == true) {
+					try {
+						UIManager.setLookAndFeel(new FlatDarkLaf());
+						SwingUtilities.updateComponentTreeUI(contentPane);
+						SwingUtilities.updateComponentTreeUI(menuBar);
+					} catch (UnsupportedLookAndFeelException e1) {
+						e1.printStackTrace();
+					}
+				}
+				else {
+					try {
+						UIManager.setLookAndFeel(new FlatLightLaf());
+						SwingUtilities.updateComponentTreeUI(contentPane);
+						SwingUtilities.updateComponentTreeUI(menuBar);
+					} catch (UnsupportedLookAndFeelException e1) {
+						e1.printStackTrace();
+					}
+
+				}
 				
 				if(tabbedPane.getSelectedIndex() == 0) {
 					favorites_panel.removeAll();
@@ -953,6 +982,53 @@ public class AAMGui extends JFrame {
 	    scrollPane.setBorder(BorderFactory.createEmptyBorder());
 	    
 	    scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+	    
+	    addWindowListener(new WindowListener() {
+	    	
+	    	public void windowClosing(WindowEvent arg0) {
+				  
+				  System.out.println("exiting");
+				  
+				  ArrayList<Integer> ButtonNumbers = new ArrayList<Integer>();
+				  String ButtonNumbersString = "";
+				  
+				  for(JNumberedButton button : Reference.FavoriteButtonList) {
+					  ButtonNumbers.add(button.getNumber());
+					  ButtonNumbersString = ButtonNumbersString + "," + button.getNumber();
+				  }
+				  
+				  ButtonNumbersString = ButtonNumbersString.substring(1);
+				  
+				  System.out.println(ButtonNumbersString);
+				  
+				  cfg.setProperty("Favorites", ButtonNumbersString);
+				  System.out.println(cfg.Favorites());
+				  try {
+					  cfg.store(new FileOutputStream("AAMConfig.properties"), "no comments");
+				  } catch (IOException e1) {
+					  e1.printStackTrace();
+				  }
+				  
+				  PrintWriter pw;
+				  try {
+					  pw = new PrintWriter(new FileOutputStream("favorites.txt"));
+				  } catch (FileNotFoundException e) {
+					  e.printStackTrace();
+					  pw = null;
+				  }
+				  for (Integer number : ButtonNumbers)
+					  pw.println(number);
+				  pw.close();
+				  System.exit(0);
+			  }
+
+			  public void windowOpened(WindowEvent arg0) {}
+			  public void windowClosed(WindowEvent arg0) {}
+			  public void windowIconified(WindowEvent arg0) {}
+			  public void windowDeiconified(WindowEvent arg0) {}
+			  public void windowActivated(WindowEvent arg0) {}
+			  public void windowDeactivated(WindowEvent arg0) {}
+		});
 
 	    
 	}
@@ -968,6 +1044,8 @@ public class AAMGui extends JFrame {
 	public static JPanel GetSCPanel() {
 		return simple_commands_panel;
 	}
+	
+	
 
 
 }
