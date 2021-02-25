@@ -49,6 +49,7 @@ import com.blackdragon2447.AAM.gui.dialog.CustomPFDialog;
 import com.blackdragon2447.AAM.gui.dialog.HelpDialog;
 import com.blackdragon2447.AAM.gui.dialog.ImportItemsDialog;
 import com.blackdragon2447.AAM.util.AAMConfig;
+import com.blackdragon2447.AAM.util.FavButtonPanelBuilder;
 import com.blackdragon2447.AAM.util.Utils;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -81,13 +82,6 @@ public class AAMGui extends JFrame {
 	JButton HelpButton;
 	AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
 
-	/**
-	 * Launch the application.
-	 * @throws UnsupportedLookAndFeelException 
-	 * @throws InvocationTargetException 
-	 * @throws IllegalAccessException 
-	 * @throws IllegalArgumentException 
-	 */
 	
 	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 		
@@ -105,9 +99,7 @@ public class AAMGui extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public AAMGui() {
 		
 		
@@ -806,7 +798,8 @@ public class AAMGui extends JFrame {
 					
 					if(Reference.FavoriteButtonList != null) {
 						for(JNumberedButton button : Reference.FavoriteButtonList) {
-							favorites_panel.add(button, gbc_FavButtons);
+							//favorites_panel.add(button, gbc_FavButtons);
+							favorites_panel.add(FavButtonPanelBuilder.buildPanel(button), gbc_FavButtons);
 							if(gbc_FavButtons.gridx != 2) {
 								gbc_FavButtons.gridx++;
 							}

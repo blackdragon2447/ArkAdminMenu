@@ -1,10 +1,13 @@
 package com.blackdragon2447.AAM.gui.actionlistners;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.blackdragon2447.AAM.Reference;
@@ -97,6 +100,96 @@ public class ActionlistnerAAM {
 			
 			AAMGui.tabbedPaneOut.setSelectedIndex(0);
 			AAMGui.tabbedPaneOut.setSelectedIndex(5);
+		}
+	};
+	
+	public static ActionListener FavRemoveListner = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JButton source = (JButton) e.getSource();
+			JPanel parent = (JPanel) source.getParent();
+			JNumberedButton button = null;
+			JNumberedButton removeButton = null;
+			Component[] components = parent.getComponents();
+			for(Component component : components) {
+				if(component instanceof JNumberedButton) {
+					button = (JNumberedButton) component;
+					break;
+				}
+			}
+			int Number = button.getNumber();
+			for(JNumberedButton button2 : Reference.FavoriteButtonList) {
+				if(button2.getNumber() == Number) {
+					removeButton = button2;
+				}
+			}
+			
+			JNumberedCheckbox checkbox = Utils.findCheckboxByNumber(Number);
+			checkbox.setSelected(false);
+			
+			Reference.FavoriteButtonList.remove(removeButton);
+			AAMGui.tabbedPaneOut.setSelectedIndex(1);
+			AAMGui.tabbedPaneOut.setSelectedIndex(0);
+			
+		}
+	};
+	
+	public static ActionListener FavForwardListner = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			JButton source = (JButton) e.getSource();
+			JPanel parent = (JPanel) source.getParent();
+			JNumberedButton button = null;
+			int index = Integer.MAX_VALUE;
+			Component[] components = parent.getComponents();
+			for(Component component : components) {
+				if(component instanceof JNumberedButton) {
+					button = (JNumberedButton) component;
+					break;
+				}
+			}
+			
+			if(Reference.FavoriteButtonList.contains(button)) {
+				index = Reference.FavoriteButtonList.indexOf(button);
+			}
+			
+			Reference.FavoriteButtonList.remove(index);
+			Reference.FavoriteButtonList.add(index + 1, button);
+			AAMGui.tabbedPaneOut.setSelectedIndex(1);
+			AAMGui.tabbedPaneOut.setSelectedIndex(0);
+			
+		}
+	};
+	
+public static ActionListener FavBackwardListner = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			JButton source = (JButton) e.getSource();
+			JPanel parent = (JPanel) source.getParent();
+			JNumberedButton button = null;
+			int index = Integer.MAX_VALUE;
+			Component[] components = parent.getComponents();
+			for(Component component : components) {
+				if(component instanceof JNumberedButton) {
+					button = (JNumberedButton) component;
+					break;
+				}
+			}
+			
+			if(Reference.FavoriteButtonList.contains(button)) {
+				index = Reference.FavoriteButtonList.indexOf(button);
+			}
+			
+			Reference.FavoriteButtonList.remove(index);
+			Reference.FavoriteButtonList.add(index - 1, button);
+			AAMGui.tabbedPaneOut.setSelectedIndex(1);
+			AAMGui.tabbedPaneOut.setSelectedIndex(0);
+			
 		}
 	};
 	
