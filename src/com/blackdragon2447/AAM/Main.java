@@ -3,6 +3,7 @@ package com.blackdragon2447.AAM;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -11,6 +12,7 @@ import org.aeonbits.owner.ConfigFactory;
 import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.util.AAMConfig;
 import com.blackdragon2447.AAM.util.CSVReader;
+import com.blackdragon2447.AAM.util.Utils;
 
 /**
  * the main class of AAM
@@ -42,7 +44,6 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		
 		File dir = new File("ItemLists");
 		String[] ItemFileList = dir.list();
 		
@@ -51,6 +52,8 @@ public class Main {
 		}
 		
 		Reference.customPrefix = cfg.customPrefix();
+		
+		
 		
 		//open gui
 		try {
