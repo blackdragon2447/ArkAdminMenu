@@ -31,6 +31,17 @@ public class Utils {
 		return foundButton;
 	}
 	
+	public static JNumberedButton findButtonInListByNumber(int Number){
+		ArrayList<JNumberedButton> buttons = Reference.FavoriteButtonList;
+		
+		JNumberedButton foundButton = buttons.stream()
+				  .filter(JNumberedButton -> Number==(JNumberedButton.getNumber()))
+				  .findAny()
+				  .orElse(null);
+		
+		return foundButton;
+	}
+	
 	public static JNumberedCheckbox findCheckboxByNumber(int Number){
 		Component[] components = AAMGui.GetSCPanel().getComponents();
 		ArrayList<JNumberedCheckbox> boxes = new ArrayList<JNumberedCheckbox>();

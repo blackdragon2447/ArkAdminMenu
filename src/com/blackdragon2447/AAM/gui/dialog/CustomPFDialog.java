@@ -96,7 +96,6 @@ public class CustomPFDialog extends JDialog {
 						} catch (IOException e1) {
 							e1.printStackTrace();
 						}
-						System.out.println(cfg.customPrefix());
 					}
 					
 				});

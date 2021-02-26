@@ -6,7 +6,7 @@ import java.beans.ConstructorProperties;
 import javax.swing.Icon;
 import javax.swing.JButton;
 
-public class JNumberedButton extends JButton{
+public class JNumberedButton extends JButton implements Cloneable{
 
 	/**
 	 * 
@@ -85,6 +85,11 @@ public class JNumberedButton extends JButton{
     		addActionListener(ActtioListner);
     	}
     	setBounds(button.getBounds());
+    }
+    
+    @Override
+	public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
     
     public void setNumber(int number) {

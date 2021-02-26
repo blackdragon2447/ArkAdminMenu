@@ -7,13 +7,32 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import org.aeonbits.owner.ConfigFactory;
 
 import com.blackdragon2447.AAM.gui.actionlistners.ActionlistnerAAM;
 import com.blackdragon2447.AAM.gui.components.JNumberedPanel;
+import com.formdev.flatlaf.FlatDarkLaf;
 
 public class FavButtonPanelBuilder {
 	
+
+	static AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
+	
 	public static JNumberedPanel buildPanel(JButton button) {
+		
+		if(cfg.Darkmode() == true) {
+			try {
+				UIManager.setLookAndFeel(new FlatDarkLaf());
+			} catch (UnsupportedLookAndFeelException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+		if(button == null) return new JNumberedPanel();
+		
 		
 		JNumberedPanel panel = new JNumberedPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
