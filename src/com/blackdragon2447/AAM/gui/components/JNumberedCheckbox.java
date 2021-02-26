@@ -1,10 +1,12 @@
 package com.blackdragon2447.AAM.gui.components;
 
+import java.io.Serializable;
+
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JCheckBox;
 
-public class JNumberedCheckbox extends JCheckBox{
+public class JNumberedCheckbox extends JCheckBox implements Serializable{
 
 	/**
 	 * 

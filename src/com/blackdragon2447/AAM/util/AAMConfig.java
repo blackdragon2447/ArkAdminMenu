@@ -13,6 +13,9 @@ public interface AAMConfig extends Accessible, Mutable{
 	
 	String customPrefix();
 	
-	String Favorites();
+	int[] Favorites();
+	
+	@DefaultValue("true")
+	Boolean ShowWelcome();
 	
 }

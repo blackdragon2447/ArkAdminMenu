@@ -26,10 +26,15 @@ public class ActionlistnerAAM {
 		public void actionPerformed(ActionEvent e) {
 			JNumberedCheckbox component = (JNumberedCheckbox) e.getSource();
 			if(((JNumberedCheckbox)e.getSource()).isSelected() == true) {
-				AAMGui.AddFavorite(Utils.findButtonByNumber(component.getNumber()));
+				try {
+					AAMGui.AddFavorite((JNumberedButton) Utils.findButtonByNumber(component.getNumber()).clone());
+				} catch (CloneNotSupportedException e1) {
+					e1.printStackTrace();
+				}
 			}else {
-				AAMGui.RemoveFavorite(Utils.findButtonByNumber(component.getNumber()));
+				AAMGui.RemoveFavorite(Utils.findButtonInListByNumber(component.getNumber()));
 			}
+			
 
 			
 		}
@@ -119,11 +124,7 @@ public class ActionlistnerAAM {
 				}
 			}
 			int Number = button.getNumber();
-			for(JNumberedButton button2 : Reference.FavoriteButtonList) {
-				if(button2.getNumber() == Number) {
-					removeButton = button2;
-				}
-			}
+			removeButton = Utils.findButtonInListByNumber(Number);
 			
 			JNumberedCheckbox checkbox = Utils.findCheckboxByNumber(Number);
 			checkbox.setSelected(false);

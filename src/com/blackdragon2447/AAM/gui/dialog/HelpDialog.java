@@ -74,7 +74,7 @@ public class HelpDialog extends JDialog {
 		gbc_lblNewLabel.gridy = 0;
 		panel.add(lblNewLabel, gbc_lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("!warning, settings are not persistent!");
+		JLabel lblNewLabel_1 = new JLabel("!warning, no all settings implemented!");
 		lblNewLabel_1.setForeground(Color.RED);
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 0);

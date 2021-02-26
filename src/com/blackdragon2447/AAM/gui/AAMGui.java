@@ -13,10 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
@@ -86,6 +84,33 @@ public class AAMGui extends JFrame {
 	JPanel scrollPanel;
 	JButton HelpButton;
 	AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
+	GridBagConstraints gbc_FavButtons = new GridBagConstraints();
+	
+	JNumberedButton SetTimeButton = new JNumberedButton("set time", 1);
+	JNumberedCheckbox SetTimeCheckBox = new JNumberedCheckbox("", 1);
+	JNumberedButton PlayerOnlyButton = new JNumberedButton("players only", 2);
+	JNumberedCheckbox PlayerOnlyCheckBox = new JNumberedCheckbox("", 2);
+	JNumberedButton ToggleDNButton = new JNumberedButton("toggle damage numbers", 3);		
+	JNumberedCheckbox ToggleDNCheckBox = new JNumberedCheckbox("", 3);
+	JNumberedButton BroadCastButton = new JNumberedButton("broadcast", 4);
+	JNumberedCheckbox BroadCastCheckBox = new JNumberedCheckbox("", 4);
+	JNumberedButton ChatMessageButton = new JNumberedButton("send chat message", 5);
+	JNumberedCheckbox ChatMessageCheckBox = new JNumberedCheckbox("", 5);
+	JNumberedButton ChatLogButton = new JNumberedButton("get chat log", 6);
+	JNumberedCheckbox ChatLogCheckBox = new JNumberedCheckbox("", 6);
+	JNumberedButton GameLogButton = new JNumberedButton("get game log", 7);
+	JNumberedCheckbox GameLogCheckBox = new JNumberedCheckbox("", 7);
+	JNumberedButton StopServerButton = new JNumberedButton("stop server", 8);
+	JNumberedButton SaveGameButton = new JNumberedButton("save game files", 9);
+	JNumberedCheckbox SaveGameCheckBox = new JNumberedCheckbox("", 9);
+	JNumberedButton DinoWipeButton = new JNumberedButton("dino wipe", 10);
+	JNumberedCheckbox DinoWipeCheckBox = new JNumberedCheckbox("", 10);
+	JNumberedButton BanButton = new JNumberedButton("ban player", 11);
+	JNumberedCheckbox BanCheckBox = new JNumberedCheckbox("", 11);
+	JNumberedButton UnbanButton = new JNumberedButton("unban player", 12);
+	JNumberedCheckbox UnbanCheckBox = new JNumberedCheckbox("", 12);
+	JNumberedButton KickButton = new JNumberedButton("kick player", 13);
+	JNumberedCheckbox KickCheckBox = new JNumberedCheckbox("", 13);
 
 	
 	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
@@ -105,7 +130,7 @@ public class AAMGui extends JFrame {
 	}
 
 	
-	public AAMGui() {
+	public AAMGui() throws NumberFormatException, CloneNotSupportedException {
 		
 		
 		setTitle("ArkAdminManager");
@@ -167,7 +192,6 @@ public class AAMGui extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		System.out.println(cfg.Darkmode());
 		
 		if(cfg.Darkmode() == true) {
 			try {
@@ -192,7 +216,6 @@ public class AAMGui extends JFrame {
 							e1.printStackTrace();
 						}
 						cfg.setProperty("Darkmode", "true");
-						System.out.println(cfg.Darkmode());
 						try {
 							cfg.store(new FileOutputStream("AAMConfig.properties"), "no comments");
 						} catch (IOException e1) {
@@ -208,7 +231,6 @@ public class AAMGui extends JFrame {
 							e1.printStackTrace();
 						}
 						cfg.setProperty("Darkmode", "false");
-						System.out.println(cfg.Darkmode());
 						try {
 							cfg.store(new FileOutputStream("AAMConfig.properties"), "no comments");
 						} catch (IOException e1) {
@@ -241,23 +263,6 @@ public class AAMGui extends JFrame {
 		gbc_FavHelp.gridx = 0;
 		gbc_FavHelp.gridy = 0;
 		
-		GridBagConstraints gbc_FavButtons = new GridBagConstraints();
-		gbc_FavButtons.insets = new Insets(0, 0, 0, 5);
-		gbc_FavButtons.gridx = 0;
-		gbc_FavButtons.gridy = 0;
-		gbc_FavButtons.fill = GridBagConstraints.BOTH;
-		
-		if(Reference.FavoriteButtonList != null) {
-			for(JNumberedButton button : Reference.FavoriteButtonList) {
-				favorites_panel.add(button, gbc_FavButtons);
-				if(gbc_FavButtons.gridx != 2) {
-					gbc_FavButtons.gridx++;
-				}
-				else{
-					gbc_FavButtons.gridx = 0; gbc_FavButtons.gridy++;
-				}
-			}
-		}
 		
 		
 		simple_commands_panel.setToolTipText("");
@@ -295,7 +300,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(HelpButton, gbc_HelpButton);
 		HelpButton.setToolTipText("<html>these are simple commands, thier argument can<br>be set after clicking the button and will need to be<br>reset after every run. saving of full comands is comming, hopefully.</html>");
 		
-		JNumberedButton SetTimeButton = new JNumberedButton("set time", 1);
 		GridBagConstraints gbc_SetTimeButton = new GridBagConstraints();
 		gbc_SetTimeButton.fill = GridBagConstraints.BOTH;
 		gbc_SetTimeButton.insets = new Insets(0, 0, 5, 5);
@@ -304,7 +308,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(SetTimeButton, gbc_SetTimeButton);
 		SetTimeButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
 		
-		JNumberedCheckbox SetTimeCheckBox = new JNumberedCheckbox("", 1);
 		GridBagConstraints gbc_SetTimeCheckBox = new GridBagConstraints();
 		gbc_SetTimeCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_SetTimeCheckBox.gridx = 1;
@@ -312,7 +315,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(SetTimeCheckBox, gbc_SetTimeCheckBox);
 		SetTimeCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
-		JNumberedButton PlayerOnlyButton = new JNumberedButton("players only", 2);
 		GridBagConstraints gbc_PlayerOnlyButton = new GridBagConstraints();
 		gbc_PlayerOnlyButton.fill = GridBagConstraints.BOTH;
 		gbc_PlayerOnlyButton.insets = new Insets(0, 0, 5, 5);
@@ -321,7 +323,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(PlayerOnlyButton, gbc_PlayerOnlyButton);
 		PlayerOnlyButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
 		
-		JNumberedCheckbox PlayerOnlyCheckBox = new JNumberedCheckbox("", 2);
 		GridBagConstraints gbc_PlayerOnlyCheckBox = new GridBagConstraints();
 		gbc_PlayerOnlyCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_PlayerOnlyCheckBox.gridx = 3;
@@ -329,7 +330,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(PlayerOnlyCheckBox, gbc_PlayerOnlyCheckBox);
 		PlayerOnlyCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
-		JNumberedButton ToggleDNButton = new JNumberedButton("toggle damage numbers", 3);
 		GridBagConstraints gbc_ToggleDNNewButton = new GridBagConstraints();
 		gbc_ToggleDNNewButton.insets = new Insets(0, 0, 5, 5);
 		gbc_ToggleDNNewButton.fill = GridBagConstraints.BOTH;
@@ -337,8 +337,7 @@ public class AAMGui extends JFrame {
 		gbc_ToggleDNNewButton.gridy = 2;
 		simple_commands_panel.add(ToggleDNButton, gbc_ToggleDNNewButton);
 		ToggleDNButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
-		
-		JNumberedCheckbox ToggleDNCheckBox = new JNumberedCheckbox("", 3);
+
 		GridBagConstraints gbc_ToggleDNCheckBox = new GridBagConstraints();
 		gbc_ToggleDNCheckBox.insets = new Insets(0, 0, 5, 0);
 		gbc_ToggleDNCheckBox.gridx = 5;
@@ -353,7 +352,6 @@ public class AAMGui extends JFrame {
 		gbc_MessagingCLabel.gridy = 3;
 		simple_commands_panel.add(MessagingCLabel, gbc_MessagingCLabel);
 		
-		JNumberedButton BroadCastButton = new JNumberedButton("broadcast", 4);
 		GridBagConstraints gbc_BroadCastButton = new GridBagConstraints();
 		gbc_BroadCastButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_BroadCastButton.anchor = GridBagConstraints.SOUTH;
@@ -363,7 +361,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(BroadCastButton, gbc_BroadCastButton);
 		BroadCastButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
 		
-		JNumberedCheckbox BroadCastCheckBox = new JNumberedCheckbox("", 4);
 		GridBagConstraints gbc_BroadCastCheckBox = new GridBagConstraints();
 		gbc_BroadCastCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_BroadCastCheckBox.gridx = 1;
@@ -371,7 +368,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(BroadCastCheckBox, gbc_BroadCastCheckBox);
 		BroadCastCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
-		JNumberedButton ChatMessageButton = new JNumberedButton("send chat message", 5);
 		GridBagConstraints gbc_ChatMessageButton = new GridBagConstraints();
 		gbc_ChatMessageButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_ChatMessageButton.insets = new Insets(0, 0, 5, 5);
@@ -380,7 +376,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(ChatMessageButton, gbc_ChatMessageButton);
 		ChatMessageButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
 		
-		JNumberedCheckbox ChatMessageCheckBox = new JNumberedCheckbox("", 5);
 		GridBagConstraints gbc_ChatMessageCheckBox = new GridBagConstraints();
 		gbc_ChatMessageCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_ChatMessageCheckBox.gridx = 3;
@@ -396,7 +391,6 @@ public class AAMGui extends JFrame {
 		gbc_LogsLabel.gridy = 5;
 		simple_commands_panel.add(LogsLabel, gbc_LogsLabel);
 		
-		JNumberedButton ChatLogButton = new JNumberedButton("get chat log", 6);
 		GridBagConstraints gbc_ChatLogButton = new GridBagConstraints();
 		gbc_ChatLogButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_ChatLogButton.insets = new Insets(0, 0, 5, 5);
@@ -405,7 +399,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(ChatLogButton, gbc_ChatLogButton);
 		ChatLogButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
 		
-		JNumberedCheckbox ChatLogCheckBox = new JNumberedCheckbox("", 6);
 		GridBagConstraints gbc_ChatLogCheckBox = new GridBagConstraints();
 		gbc_ChatLogCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_ChatLogCheckBox.gridx = 1;
@@ -413,7 +406,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(ChatLogCheckBox, gbc_ChatLogCheckBox);
 		ChatLogCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
-		JNumberedButton GameLogButton = new JNumberedButton("get game log", 7);
 		GridBagConstraints gbc_GameLogButton = new GridBagConstraints();
 		gbc_GameLogButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_GameLogButton.insets = new Insets(0, 0, 5, 5);
@@ -422,7 +414,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(GameLogButton, gbc_GameLogButton);
 		GameLogButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
 		
-		JNumberedCheckbox GameLogCheckBox = new JNumberedCheckbox("", 7);
 		GridBagConstraints gbc_GameLogCheckBox = new GridBagConstraints();
 		gbc_GameLogCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_GameLogCheckBox.gridx = 3;
@@ -438,7 +429,6 @@ public class AAMGui extends JFrame {
 		gbc_ServerManagementLabel.gridy = 7;
 		simple_commands_panel.add(ServerManagementLabel, gbc_ServerManagementLabel);
 		
-		JNumberedButton StopServerButton = new JNumberedButton("stop server", 8);
 		GridBagConstraints gbc_StopServerButton = new GridBagConstraints();
 		gbc_StopServerButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_StopServerButton.insets = new Insets(0, 0, 5, 5);
@@ -455,7 +445,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(StopServerCheckBox, gbc_StopServerCheckBox);
 		StopServerCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
-		JNumberedButton SaveGameButton = new JNumberedButton("save game files", 9);
 		GridBagConstraints gbc_SaveGameButton = new GridBagConstraints();
 		gbc_SaveGameButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_SaveGameButton.insets = new Insets(0, 0, 5, 5);
@@ -464,7 +453,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(SaveGameButton, gbc_SaveGameButton);
 		SaveGameButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
 		
-		JNumberedCheckbox SaveGameCheckBox = new JNumberedCheckbox("", 9);
 		GridBagConstraints gbc_SaveGameCheckBox = new GridBagConstraints();
 		gbc_SaveGameCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_SaveGameCheckBox.gridx = 3;
@@ -472,7 +460,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(SaveGameCheckBox, gbc_SaveGameCheckBox);
 		SaveGameCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
-		JNumberedButton DinoWipeButton = new JNumberedButton("dino wipe", 10);
 		GridBagConstraints gbc_DinoWipeButton = new GridBagConstraints();
 		gbc_DinoWipeButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_DinoWipeButton.insets = new Insets(0, 0, 5, 5);
@@ -481,7 +468,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(DinoWipeButton, gbc_DinoWipeButton);
 		DinoWipeButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
 		
-		JNumberedCheckbox DinoWipeCheckBox = new JNumberedCheckbox("", 10);
 		GridBagConstraints gbc_DinoWipeCheckBox = new GridBagConstraints();
 		gbc_DinoWipeCheckBox.insets = new Insets(0, 0, 5, 0);
 		gbc_DinoWipeCheckBox.gridx = 5;
@@ -496,7 +482,6 @@ public class AAMGui extends JFrame {
 		gbc_Moderation.gridy = 9;
 		simple_commands_panel.add(Moderation, gbc_Moderation);
 		
-		JNumberedButton BanButton = new JNumberedButton("ban player", 11);
 		GridBagConstraints gbc_BanButton = new GridBagConstraints();
 		gbc_BanButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_BanButton.insets = new Insets(0, 0, 5, 5);
@@ -505,7 +490,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(BanButton, gbc_BanButton);
 		BanButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
 		
-		JNumberedCheckbox BanCheckBox = new JNumberedCheckbox("", 11);
 		GridBagConstraints gbc_BanCheckBox = new GridBagConstraints();
 		gbc_BanCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_BanCheckBox.gridx = 1;
@@ -513,7 +497,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(BanCheckBox, gbc_BanCheckBox);
 		BanCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
-		JNumberedButton UnbanButton = new JNumberedButton("unban player", 12);
 		GridBagConstraints gbc_UnbanButton = new GridBagConstraints();
 		gbc_UnbanButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_UnbanButton.insets = new Insets(0, 0, 5, 5);
@@ -522,7 +505,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(UnbanButton, gbc_UnbanButton);
 		UnbanButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
 		
-		JNumberedCheckbox UnbanCheckBox = new JNumberedCheckbox("", 12);
 		GridBagConstraints gbc_UnbanCheckBox = new GridBagConstraints();
 		gbc_UnbanCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_UnbanCheckBox.gridx = 3;
@@ -530,7 +512,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(UnbanCheckBox, gbc_UnbanCheckBox);
 		UnbanCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
-		JNumberedButton KickButton = new JNumberedButton("kick player", 13);
 		GridBagConstraints gbc_KickButton = new GridBagConstraints();
 		gbc_KickButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_KickButton.insets = new Insets(0, 0, 5, 5);
@@ -539,7 +520,6 @@ public class AAMGui extends JFrame {
 		simple_commands_panel.add(KickButton, gbc_KickButton);
 		KickButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
 		
-		JNumberedCheckbox KickCheckBox = new JNumberedCheckbox("", 13);
 		GridBagConstraints gbc_KickCheckBox = new GridBagConstraints();
 		gbc_KickCheckBox.insets = new Insets(0, 0, 5, 0);
 		gbc_KickCheckBox.gridx = 5;
@@ -789,35 +769,102 @@ public class AAMGui extends JFrame {
 			gbc_commandButtonList.gridy++;
 		}
 		
+		int[] favoriteString = cfg.Favorites();
 		
-		tabbedPane.addChangeListener(new ChangeListener() {
-			
-			
-			
+		for (int integer : favoriteString) {
+			if(integer == 0) continue;
+			Reference.FavoriteButtonList.add((JNumberedButton)Utils.findButtonByNumber(integer).clone());
+		}
+		
+		gbc_FavButtons.insets = new Insets(0, 0, 0, 5);
+		gbc_FavButtons.gridx = 0;
+		gbc_FavButtons.gridy = 0;
+		gbc_FavButtons.fill = GridBagConstraints.BOTH;
+		
+		if(Reference.FavoriteButtonList != null) {
+			for(JNumberedButton button : Reference.FavoriteButtonList) {
+				if(button != null) favorites_panel.add(FavButtonPanelBuilder.buildPanel(button), gbc_FavButtons);
+				if(gbc_FavButtons.gridx != 2) {
+					gbc_FavButtons.gridx++;
+				}
+				else{
+					gbc_FavButtons.gridx = 0; gbc_FavButtons.gridy++;
+				}
+			}
+		}
+		
+
+	    final JPanel glass = (JPanel) getGlassPane();
+	    
+	    GridBagLayout gbl_WelcomePanel = new GridBagLayout();
+	    gbl_WelcomePanel.columnWidths = new int[]{0, 0, 0, 0};
+	    gbl_WelcomePanel.rowHeights = new int[]{0, 0, 29, 0, 0, 0};
+	    gbl_WelcomePanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+	    gbl_WelcomePanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+	    glass.setLayout(gbl_WelcomePanel);
+	    
+	    JLabel welcomeLabel = new JLabel("Welcome");
+	    welcomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 38));
+	    GridBagConstraints gbc_welcomeLabel = new GridBagConstraints();
+	    gbc_welcomeLabel.insets = new Insets(0, 0, 5, 5);
+	    gbc_welcomeLabel.gridx = 1;
+	    gbc_welcomeLabel.gridy = 1;
+	    glass.add(welcomeLabel, gbc_welcomeLabel);
+	    
+	    JLabel WelcomeTextLabel = new JLabel("<html>Welcome to Ark Admin Manager aka AAM, this is a \"simple\" tool to help ark server admins manage their<br>\r\nservers, to get started choose one of the tabs on the top or read the help under setting.<html>");
+	    GridBagConstraints gbc_WelcomeTextLabel = new GridBagConstraints();
+	    gbc_WelcomeTextLabel.insets = new Insets(0, 0, 5, 5);
+	    gbc_WelcomeTextLabel.gridx = 1;
+	    gbc_WelcomeTextLabel.gridy = 2;
+	    glass.add(WelcomeTextLabel, gbc_WelcomeTextLabel);
+	    
+	    JButton btnNewButton_8 = new JButton("OK");
+	    GridBagConstraints gbc_btnNewButton_8 = new GridBagConstraints();
+	    gbc_btnNewButton_8.insets = new Insets(0, 0, 5, 5);
+	    gbc_btnNewButton_8.gridx = 1;
+	    gbc_btnNewButton_8.gridy = 3;
+	    glass.add(btnNewButton_8, gbc_btnNewButton_8);
+	    btnNewButton_8.addActionListener(new ActionListener() {
 			
 			@Override
-			public void stateChanged(ChangeEvent e) {
-				if(DTCheckItem.isSelected() == true) {
-					try {
-						UIManager.setLookAndFeel(new FlatDarkLaf());
-						SwingUtilities.updateComponentTreeUI(contentPane);
-						SwingUtilities.updateComponentTreeUI(menuBar);
-					} catch (UnsupportedLookAndFeelException e1) {
-						e1.printStackTrace();
-					}
-				}
-				else {
-					try {
-						UIManager.setLookAndFeel(new FlatLightLaf());
-						SwingUtilities.updateComponentTreeUI(contentPane);
-						SwingUtilities.updateComponentTreeUI(menuBar);
-					} catch (UnsupportedLookAndFeelException e1) {
-						e1.printStackTrace();
-					}
+			public void actionPerformed(ActionEvent e) {
+				glass.setVisible(false);
+				
+			}
+		});
+	    
+	    JCheckBox chckbxNewCheckBox_3 = new JCheckBox("Dont Show Again\r\n");
+	    GridBagConstraints gbc_chckbxNewCheckBox_3 = new GridBagConstraints();
+	    gbc_chckbxNewCheckBox_3.insets = new Insets(0, 0, 0, 5);
+	    gbc_chckbxNewCheckBox_3.gridx = 1;
+	    gbc_chckbxNewCheckBox_3.gridy = 4;
+	    glass.add(chckbxNewCheckBox_3, gbc_chckbxNewCheckBox_3);
+	    chckbxNewCheckBox_3.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				cfg.setProperty("ShowWelcome", "false");
+				
+			}
+		});
+	    
+	    glass.setOpaque(true);
+	    glass.setBackground(Color.DARK_GRAY);
+	    
+	    if(cfg.ShowWelcome()) glass.setVisible(true);
+	    
 
-				}
+	    AAMGui.tabbedPaneOut.setSelectedIndex(-1);
+		
+		tabbedPane.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				
 				
 				if(tabbedPane.getSelectedIndex() == 0) {
+
+					SwingUtilities.updateComponentTreeUI(favorites_panel);
 					favorites_panel.removeAll();
 					favorites_panel.revalidate();
 					favorites_panel.repaint();
@@ -840,45 +887,14 @@ public class AAMGui extends JFrame {
 				
 
 					
-				}else if(tabbedPane.getSelectedIndex() == 1) {
-					simple_commands_panel.removeAll();
-					simple_commands_panel.revalidate();
-					simple_commands_panel.repaint();
-					simple_commands_panel.add(SCDescLabel, gbc_SCDescLabel);
-					simple_commands_panel.add(BasicCLabel, gbc_BasicCLabel);
-					simple_commands_panel.add(SetTimeButton, gbc_SetTimeButton);
-					simple_commands_panel.add(SetTimeCheckBox, gbc_SetTimeCheckBox);
-					simple_commands_panel.add(PlayerOnlyButton, gbc_PlayerOnlyButton);
-					simple_commands_panel.add(PlayerOnlyCheckBox, gbc_PlayerOnlyCheckBox);
-					simple_commands_panel.add(ToggleDNButton, gbc_ToggleDNNewButton);
-					simple_commands_panel.add(ToggleDNCheckBox, gbc_ToggleDNCheckBox);
-					simple_commands_panel.add(MessagingCLabel, gbc_MessagingCLabel);
-					simple_commands_panel.add(BroadCastButton, gbc_BroadCastButton);
-					simple_commands_panel.add(BroadCastCheckBox, gbc_BroadCastCheckBox);
-					simple_commands_panel.add(ChatMessageButton, gbc_ChatMessageButton);
-					simple_commands_panel.add(ChatMessageCheckBox, gbc_ChatMessageCheckBox);
-					simple_commands_panel.add(LogsLabel, gbc_LogsLabel);
-					simple_commands_panel.add(ChatLogButton, gbc_ChatLogButton);
-					simple_commands_panel.add(ChatLogCheckBox, gbc_ChatLogCheckBox);
-					simple_commands_panel.add(GameLogButton, gbc_GameLogButton);
-					simple_commands_panel.add(GameLogCheckBox, gbc_GameLogCheckBox);
-					simple_commands_panel.add(ServerManagementLabel, gbc_ServerManagementLabel);
-					simple_commands_panel.add(StopServerButton, gbc_StopServerButton);
-					simple_commands_panel.add(StopServerCheckBox, gbc_StopServerCheckBox);
-					simple_commands_panel.add(SaveGameButton, gbc_SaveGameButton);
-					simple_commands_panel.add(SaveGameCheckBox, gbc_SaveGameCheckBox);
-					simple_commands_panel.add(DinoWipeButton, gbc_DinoWipeButton);
-					simple_commands_panel.add(DinoWipeCheckBox, gbc_DinoWipeCheckBox);
-					simple_commands_panel.add(Moderation, gbc_Moderation);
-					simple_commands_panel.add(BanButton, gbc_BanButton);
-					simple_commands_panel.add(BanCheckBox, gbc_BanCheckBox);
-					simple_commands_panel.add(UnbanButton, gbc_UnbanButton);
-					simple_commands_panel.add(UnbanCheckBox, gbc_UnbanCheckBox);
-					simple_commands_panel.add(KickButton, gbc_KickButton);
-					simple_commands_panel.add(KickCheckBox, gbc_KickCheckBox);
-					simple_commands_panel.add(HelpButton, gbc_HelpButton);
-
+				}else if (tabbedPane.getSelectedIndex() == 1) {
+					SwingUtilities.updateComponentTreeUI(simple_commands_panel);
+				}else if (tabbedPane.getSelectedIndex() == 2) {
+					SwingUtilities.updateComponentTreeUI(advanced_commands_panel);
+				}else if (tabbedPane.getSelectedIndex() == 3) {
+					SwingUtilities.updateComponentTreeUI(custom_commands_panel);
 				}else if(tabbedPane.getSelectedIndex() == 4) {
+					SwingUtilities.updateComponentTreeUI(impoted_items_panel);
 					GridBagConstraints gbc_ImItemLabel = new GridBagConstraints();
 					gbc_ImItemLabel.insets = new Insets(0, 0, 0, 5);
 					gbc_ImItemLabel.gridx = 0;
@@ -914,6 +930,7 @@ public class AAMGui extends JFrame {
 						
 					}
 				}else if(tabbedPane.getSelectedIndex() == 5) {
+					SwingUtilities.updateComponentTreeUI(queuePanel);
 					queuePanel.removeAll();
 					queuePanel.revalidate();
 					queuePanel.repaint();
@@ -962,6 +979,9 @@ public class AAMGui extends JFrame {
 					
 
 					queuePanel.add(btnNewButton_6, gbc_btnNewButton_6);
+				}else if (tabbedPane.getSelectedIndex() != 6 && tabbedPane.getComponent(6) != null) {
+					tabbedPane.remove(6);
+					
 				}
 				
 			}
@@ -987,38 +1007,26 @@ public class AAMGui extends JFrame {
 	    	
 	    	public void windowClosing(WindowEvent arg0) {
 				  
-				  System.out.println("exiting");
 				  
 				  ArrayList<Integer> ButtonNumbers = new ArrayList<Integer>();
-				  String ButtonNumbersString = "";
+				  String ButtonNumbersString = "0";
 				  
 				  for(JNumberedButton button : Reference.FavoriteButtonList) {
 					  ButtonNumbers.add(button.getNumber());
 					  ButtonNumbersString = ButtonNumbersString + "," + button.getNumber();
 				  }
 				  
-				  ButtonNumbersString = ButtonNumbersString.substring(1);
+				  //if(ButtonNumbersString != "") ButtonNumbersString = ButtonNumbersString.substring(1);
 				  
-				  System.out.println(ButtonNumbersString);
 				  
 				  cfg.setProperty("Favorites", ButtonNumbersString);
-				  System.out.println(cfg.Favorites());
 				  try {
 					  cfg.store(new FileOutputStream("AAMConfig.properties"), "no comments");
 				  } catch (IOException e1) {
 					  e1.printStackTrace();
 				  }
 				  
-				  PrintWriter pw;
-				  try {
-					  pw = new PrintWriter(new FileOutputStream("favorites.txt"));
-				  } catch (FileNotFoundException e) {
-					  e.printStackTrace();
-					  pw = null;
-				  }
-				  for (Integer number : ButtonNumbers)
-					  pw.println(number);
-				  pw.close();
+				  
 				  System.exit(0);
 			  }
 
@@ -1029,6 +1037,8 @@ public class AAMGui extends JFrame {
 			  public void windowActivated(WindowEvent arg0) {}
 			  public void windowDeactivated(WindowEvent arg0) {}
 		});
+	    
+	    
 
 	    
 	}
