@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 public class JNumberedPanel extends JPanel implements Accessible, Serializable{
 
 	private static final long serialVersionUID = 1L;
-	private int number;
+	private int Number;
 	
 	public JNumberedPanel(LayoutManager layout, boolean isDoubleBuffered) {
         super(layout, isDoubleBuffered);
@@ -31,30 +31,30 @@ public class JNumberedPanel extends JPanel implements Accessible, Serializable{
 
 	public JNumberedPanel(LayoutManager layout, boolean isDoubleBuffered, int Number) {
         super(layout, isDoubleBuffered);
-        this.number = Number;
+        this.Number = Number;
     }
 
     public JNumberedPanel(LayoutManager layout, int Number) {
         this(layout, true);
-        this.number = Number;
+        this.Number = Number;
     }
 
     public JNumberedPanel(boolean isDoubleBuffered, int Number) {
         this(new FlowLayout(), isDoubleBuffered);
-        this.number = Number;
+        this.Number = Number;
     }
 
     public JNumberedPanel(int Number) {
         this(true);
-        this.number = Number;
+        this.Number = Number;
     }
     
     public int getNumber() {
-		return number;
+		return Number;
 	}
     
     public void setNumber(int number) {
-		this.number = number;
+		this.Number = number;
 	}
 
     

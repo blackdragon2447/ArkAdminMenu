@@ -11,7 +11,7 @@ public interface AAMConfig extends Accessible, Mutable{
 	@DefaultValue("false")
 	Boolean Darkmode();
 	
-	String customPrefix();
+	String CustomPrefix();
 	
 	int[] Favorites();
 	

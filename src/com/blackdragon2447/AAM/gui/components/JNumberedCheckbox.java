@@ -12,7 +12,7 @@ public class JNumberedCheckbox extends JCheckBox implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public int number;
+	public int Number;
 	
 	 public JNumberedCheckbox () {
 	        super(null, null, false);
@@ -86,7 +86,7 @@ public class JNumberedCheckbox extends JCheckBox implements Serializable{
 	    
 		public JNumberedCheckbox (int number) {
 	        super(null, null, false);
-			this.number = number;
+			this.Number = number;
 	    }
 
 		    /**
@@ -96,7 +96,7 @@ public class JNumberedCheckbox extends JCheckBox implements Serializable{
 		     */
 		public JNumberedCheckbox(Icon icon, int number) {
 			super(null, icon, false);
-			this.number = number;
+			this.Number = number;
 		}
 	
 	    /**
@@ -109,7 +109,7 @@ public class JNumberedCheckbox extends JCheckBox implements Serializable{
 	     */
 	    public JNumberedCheckbox(Icon icon, boolean selected, int number) {
 	        super(null, icon, selected);
-			this.number = number;
+			this.Number = number;
 	    }
 	
 	    /**
@@ -120,7 +120,7 @@ public class JNumberedCheckbox extends JCheckBox implements Serializable{
 	     */
 	    public JNumberedCheckbox (String text, int number) {
 	        super(text, null, false);
-			this.number = number;
+			this.Number = number;
 	    }
 	
 	    /**
@@ -134,7 +134,7 @@ public class JNumberedCheckbox extends JCheckBox implements Serializable{
 	    public JNumberedCheckbox(Action a, int number) {
 	        this();
 	        setAction(a);
-			this.number = number;
+			this.Number = number;
 	    }
 	
 	
@@ -149,7 +149,7 @@ public class JNumberedCheckbox extends JCheckBox implements Serializable{
 	     */
 	    public JNumberedCheckbox (String text, boolean selected, int number) {
 	        super(text, null, selected);
-			this.number = number;
+			this.Number = number;
 	    }
 	
 	    /**
@@ -162,15 +162,15 @@ public class JNumberedCheckbox extends JCheckBox implements Serializable{
 	     */
 	    public JNumberedCheckbox(String text, Icon icon, int number) {
 	        super(text, icon, false);
-			this.number = number;
+			this.Number = number;
 	    }
 
 		public void setNumber(int number) {
-			this.number = number;
+			this.Number = number;
 		}
 		
 		public int getNumber() {
-			return this.number;
+			return this.Number;
 		}
 
 }

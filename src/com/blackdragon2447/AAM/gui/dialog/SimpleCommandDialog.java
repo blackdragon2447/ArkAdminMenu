@@ -22,9 +22,14 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
+import org.aeonbits.owner.ConfigFactory;
+
 import com.blackdragon2447.AAM.Reference;
+import com.blackdragon2447.AAM.gui.AAMGui;
+import com.blackdragon2447.AAM.util.AAMConfig;
 import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.obj.SimpleCommand;
+import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
 public class SimpleCommandDialog extends JFrame {
@@ -37,15 +42,15 @@ public class SimpleCommandDialog extends JFrame {
 	private JTextField ArgumentField;
 	private JButton RunButton;
 	private JButton QueueButton;
-	private JLabel outPutLabel;
-	private JLabel argumentLabel;
+	private JLabel OutPutLabel;
+	private JLabel ArgumentLabel;
 	private JLabel ArgDescLabel;
-	private JSeparator separator;
+	private JSeparator Separator;
+	AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
 
 	
 	public static void createGui(int CommandNumber) throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 		
-		UIManager.setLookAndFeel(new FlatLightLaf());
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -63,8 +68,17 @@ public class SimpleCommandDialog extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws UnsupportedLookAndFeelException 
 	 */
-	public SimpleCommandDialog(int command) {
+	public SimpleCommandDialog(int command) throws UnsupportedLookAndFeelException {
+		
+
+		try {
+			UIManager.setLookAndFeel(AAMGui.getLookAndFeel());
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 250);
 		contentPane = new JPanel();
@@ -77,13 +91,13 @@ public class SimpleCommandDialog extends JFrame {
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		separator = new JSeparator();
+		Separator = new JSeparator();
 		GridBagConstraints gbc_separator = new GridBagConstraints();
 		gbc_separator.gridwidth = 2;
 		gbc_separator.insets = new Insets(0, 0, 5, 5);
 		gbc_separator.gridx = 1;
 		gbc_separator.gridy = 0;
-		contentPane.add(separator, gbc_separator);
+		contentPane.add(Separator, gbc_separator);
 		
 		JLabel CommandLabel = new JLabel("command");
 		CommandLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -94,22 +108,22 @@ public class SimpleCommandDialog extends JFrame {
 		gbc_CommandLabel.gridy = 1;
 		contentPane.add(CommandLabel, gbc_CommandLabel);
 		
-		outPutLabel = new JLabel(Utils.GenerateCommand(command));
+		OutPutLabel = new JLabel(Utils.GenerateCommand(command));
 		GridBagConstraints gbc_outPutLabel = new GridBagConstraints();
 		gbc_outPutLabel.gridwidth = 2;
 		gbc_outPutLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_outPutLabel.gridx = 1;
 		gbc_outPutLabel.gridy = 2;
-		contentPane.add(outPutLabel, gbc_outPutLabel);
+		contentPane.add(OutPutLabel, gbc_outPutLabel);
 		
-		argumentLabel = new JLabel("argument description");
-		argumentLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		ArgumentLabel = new JLabel("argument description");
+		ArgumentLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		GridBagConstraints gbc_argumentLabel = new GridBagConstraints();
 		gbc_argumentLabel.gridwidth = 2;
 		gbc_argumentLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_argumentLabel.gridx = 1;
 		gbc_argumentLabel.gridy = 3;
-		contentPane.add(argumentLabel, gbc_argumentLabel);
+		contentPane.add(ArgumentLabel, gbc_argumentLabel);
 		
 		ArgDescLabel = new JLabel(String.valueOf(Reference.SimpleCommandArgList.get(command).getSecondValue()));
 		GridBagConstraints gbc_ArgDescLabel = new GridBagConstraints();
@@ -137,7 +151,7 @@ public class SimpleCommandDialog extends JFrame {
 			
 			@Override
 			public void keyReleased(KeyEvent e) {
-				outPutLabel.setText(Utils.GenerateCommand(command) + " " + ArgumentField.getText());
+				OutPutLabel.setText(Utils.GenerateCommand(command) + " " + ArgumentField.getText());
 				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) dispose();
 			}
 			
@@ -157,7 +171,7 @@ public class SimpleCommandDialog extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(outPutLabel.getText());
+				System.out.println(OutPutLabel.getText());
 				dispose();
 			}
 		});

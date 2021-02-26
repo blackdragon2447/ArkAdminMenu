@@ -12,7 +12,7 @@ public class JNumberedButton extends JButton implements Cloneable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public int number;
+	public int Number;
 	
 	public JNumberedButton() {
         super(null, null);
@@ -39,7 +39,7 @@ public class JNumberedButton extends JButton implements Cloneable{
     
     public JNumberedButton(int number) {
         super(null, null);
-        this.number = number;
+        this.Number = number;
     }
 
     /**
@@ -49,7 +49,7 @@ public class JNumberedButton extends JButton implements Cloneable{
      */
     public JNumberedButton(Icon icon, int number) {
         super(null, icon);
-        this.number = number;
+        this.Number = number;
     }
 
     /**
@@ -60,26 +60,26 @@ public class JNumberedButton extends JButton implements Cloneable{
     @ConstructorProperties({"text"})
     public JNumberedButton(String text, int number) {
         super(text, null);
-        this.number = number;
+        this.Number = number;
     }
     
     public JNumberedButton(ActionListener actioListner, int number) {
     	super(null, null);
-    	this.number = number;
+    	this.Number = number;
     	addActionListener(actioListner);
     	
     }
     
     public JNumberedButton(String text, ActionListener actioListner, int number) {
     	super(text, null);
-    	this.number = number;
+    	this.Number = number;
     	addActionListener(actioListner);
     	
     }
     
     public JNumberedButton(JButton button, int number) {
     	super(button.getText(), button.getIcon());
-    	this.number = number;
+    	this.Number = number;
     	ActionListener[] listners = button.getActionListeners();
     	for(ActionListener ActtioListner : listners) {
     		addActionListener(ActtioListner);
@@ -93,11 +93,11 @@ public class JNumberedButton extends JButton implements Cloneable{
     }
     
     public void setNumber(int number) {
-    	this.number = number;
+    	this.Number = number;
     }
     
     public int getNumber() {
-    	return this.number;
+    	return this.Number;
     }
 
 
