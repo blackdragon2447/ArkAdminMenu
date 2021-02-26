@@ -29,8 +29,6 @@ import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.util.AAMConfig;
 import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.obj.SimpleCommand;
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 
 public class SimpleCommandDialog extends JFrame {
 

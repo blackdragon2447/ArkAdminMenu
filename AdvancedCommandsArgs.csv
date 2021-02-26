@@ -1,0 +1,6 @@
+﻿0,"the player id if the player that gets the items, the PBPath of the item, the quantity and quality of the items, and if it needs to be a PB.  (ingame id, can be converted from steam id using the convert id command)"
+1,the current name of the player in quotes and the new name without quotes
+2,the current name of the tribe in quotes and the new name without quotes
+3,"the id of the player and the tribe name (ingame id, can be converted from steam id using the convert id command)"
+4,"the id of the player, how much xp to add, false, if the xp should be shared with tribe  (ingame id, can be converted from steam id using the convert id command)"
+5,converts a steam id to ingame id

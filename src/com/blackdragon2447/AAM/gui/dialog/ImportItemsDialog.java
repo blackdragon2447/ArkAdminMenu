@@ -7,17 +7,21 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
@@ -30,8 +34,8 @@ public class ImportItemsDialog extends JDialog {
 	 */
 	private static final long serialVersionUID = -2730499381240887555L;
 	private final JPanel ContentPanel = new JPanel();
-	private JTextField TextField;
-	JComboBox<String> ComboBox;
+	private JFileChooser FileChooser = new JFileChooser();
+	private File SelectedFile;
 	
 	public static void createDialog() {
 		try {
@@ -59,9 +63,9 @@ public class ImportItemsDialog extends JDialog {
 		ContentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(ContentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{0, 60, 0, 0};
+		gbl_contentPanel.columnWidths = new int[]{0, 60, 100, 0, 0};
 		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		ContentPanel.setLayout(gbl_contentPanel);
 		{
@@ -74,35 +78,39 @@ public class ImportItemsDialog extends JDialog {
 			ContentPanel.add(setFileLabel, gbc_setFileLabel);
 		}
 		{
-			ComboBox = new JComboBox<String>();
-			GridBagConstraints gbc_comboBox = new GridBagConstraints();
-			gbc_comboBox.insets = new Insets(0, 0, 5, 0);
-			gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-			gbc_comboBox.gridx = 2;
-			gbc_comboBox.gridy = 1;
-			ContentPanel.add(ComboBox, gbc_comboBox);
-			ComboBox.addItem(null);
-			for(int i=0; i < Reference.ItemFileArray.size(); i++) {
-				ComboBox.addItem(Reference.ItemFileArray.get(i));
-			}
+			JLabel lblNewLabel = new JLabel("");
+			GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+			gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+			gbc_lblNewLabel.gridx = 2;
+			gbc_lblNewLabel.gridy = 1;
+			ContentPanel.add(lblNewLabel, gbc_lblNewLabel);
+			
+
+			FileChooser.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					lblNewLabel.setText(FileChooser.getSelectedFile().getName());
+					SelectedFile = FileChooser.getSelectedFile();
+				}
+			});
+			
 		}
 		{
-			JLabel setNameLabel = new JLabel("set name");
-			GridBagConstraints gbc_setNameLabel = new GridBagConstraints();
-			gbc_setNameLabel.anchor = GridBagConstraints.EAST;
-			gbc_setNameLabel.insets = new Insets(0, 0, 0, 5);
-			gbc_setNameLabel.gridx = 1;
-			gbc_setNameLabel.gridy = 3;
-			ContentPanel.add(setNameLabel, gbc_setNameLabel);
-		}
-		{
-			TextField = new JTextField();
-			GridBagConstraints gbc_textField = new GridBagConstraints();
-			gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textField.gridx = 2;
-			gbc_textField.gridy = 3;
-			ContentPanel.add(TextField, gbc_textField);
-			TextField.setColumns(10);
+			JButton btnNewButton = new JButton("open");
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV Files", "csv");
+					FileChooser.setFileFilter(filter);
+					FileChooser.showOpenDialog(ContentPanel);
+					
+				}
+			});
+			GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+			gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
+			gbc_btnNewButton.gridx = 3;
+			gbc_btnNewButton.gridy = 1;
+			ContentPanel.add(btnNewButton, gbc_btnNewButton);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -117,11 +125,22 @@ public class ImportItemsDialog extends JDialog {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
+						
+						System.out.println(SelectedFile == null);
+						System.out.println(SelectedFile.getAbsolutePath());
 						try {
-							Reference.ImportedItemGroups.add(ItemSetBuilder.generatePair(TextField.getText(), "ItemLists\\" + (String) ComboBox.getSelectedItem()));
+							Files.copy(Paths.get(SelectedFile.getAbsolutePath()), Paths.get("ItemLists\\" + SelectedFile.getName()), StandardCopyOption.REPLACE_EXISTING);
 						} catch (IOException e1) {
 							e1.printStackTrace();
 						}
+						
+						Reference.ItemFileArray.add(FileChooser.getSelectedFile().getName());
+						try {
+							Reference.ImportedItemGroups.add(ItemSetBuilder.generatePair(SelectedFile.getName().substring(0, SelectedFile.getName().length() - 4), "ItemLists\\" + FileChooser.getSelectedFile().getName()));
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+						
 						dispose();
 					}
 				});
@@ -134,6 +153,8 @@ public class ImportItemsDialog extends JDialog {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
+						
+						
 						dispose();
 					}
 				});

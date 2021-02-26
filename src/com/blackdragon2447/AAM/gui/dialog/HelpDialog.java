@@ -27,8 +27,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 import com.blackdragon2447.AAM.gui.AAMGui;
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 
 public class HelpDialog extends JDialog {
 

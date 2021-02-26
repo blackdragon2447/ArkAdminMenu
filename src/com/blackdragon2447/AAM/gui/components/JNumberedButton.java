@@ -14,6 +14,18 @@ public class JNumberedButton extends JButton implements Cloneable{
 	private static final long serialVersionUID = 1L;
 	public int Number;
 	
+
+    /**
+     * Creates a button with text.
+     *
+     * @param text  the text of the button
+     */
+    @ConstructorProperties({"text"})
+    public JNumberedButton(String text, int number) {
+        super(text, null);
+        this.Number = number;
+    }
+	
 	public JNumberedButton() {
         super(null, null);
     }
@@ -52,16 +64,6 @@ public class JNumberedButton extends JButton implements Cloneable{
         this.Number = number;
     }
 
-    /**
-     * Creates a button with text.
-     *
-     * @param text  the text of the button
-     */
-    @ConstructorProperties({"text"})
-    public JNumberedButton(String text, int number) {
-        super(text, null);
-        this.Number = number;
-    }
     
     public JNumberedButton(ActionListener actioListner, int number) {
     	super(null, null);
