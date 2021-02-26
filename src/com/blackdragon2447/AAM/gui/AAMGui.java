@@ -33,6 +33,7 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
+import javax.swing.LookAndFeel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
@@ -59,19 +60,19 @@ import com.formdev.flatlaf.FlatLightLaf;
 
 public class AAMGui extends JFrame {
 	private static final long serialVersionUID = -735583961255908606L;
-	private JPanel contentPane;
-	static JPanel simple_commands_panel = new JPanel();
+	private JPanel ContentPane;
+	static JPanel SimpleCommandsPanel = new JPanel();
 	public static JRadioButtonMenuItem PFcheatRadioItem = new JRadioButtonMenuItem("cheat");
 	public static JRadioButtonMenuItem PFacheatRadioItem = new JRadioButtonMenuItem("admin cheat");
 	public static JRadioButtonMenuItem PFcustomRadioItem = new JRadioButtonMenuItem("custom prefix");
 	ButtonGroup group = new ButtonGroup();
 	
-	public static JPanel queuePanel = new JPanel();
-	public static JPanel queueList = new JPanel();
-	public static GridBagConstraints gbc_queueList = new GridBagConstraints();
+	public static JPanel QueuePanel = new JPanel();
+	public static JPanel QueueList = new JPanel();
+	public static GridBagConstraints gbc_QueueList = new GridBagConstraints();
 	public static GridBagLayout gbl_queuePanel = new GridBagLayout();
-	public static GridBagLayout gbl_queueList = new GridBagLayout();
-	public static JLabel commandLable = new JLabel("command");
+	public static GridBagLayout gbl_QueueList = new GridBagLayout();
+	public static JLabel CommandLable = new JLabel("command");
 	public static GridBagConstraints gbc_commandLable = new GridBagConstraints();
 	public static JLabel RemoveLabel = new JLabel("remove");
 	public static GridBagConstraints gbc_RemoveLabel = new GridBagConstraints();
@@ -79,10 +80,10 @@ public class AAMGui extends JFrame {
 	public static GridBagConstraints gbc_commandButtonList = new GridBagConstraints();
 	public static JTabbedPane tabbedPaneOut;
 	public static JSpinner DelaySpinner = new JSpinner(new SpinnerNumberModel(0, 0, 30, 0.1));
-	JScrollPane scrollPane;
+	JScrollPane ScrollPane;
 	Rectangle DefSPbounds;
-	JPanel scrollPanel;
-	JButton HelpButton;
+	JPanel ScrollPanel;
+	JButton SCHelpButton;
 	AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
 	GridBagConstraints gbc_FavButtons = new GridBagConstraints();
 	
@@ -115,7 +116,6 @@ public class AAMGui extends JFrame {
 	
 	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 		
-		UIManager.setLookAndFeel(new FlatLightLaf());
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -187,16 +187,16 @@ public class AAMGui extends JFrame {
 			}
 		});
 		settingsMenu.add(helpMenuItem);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+		ContentPane = new JPanel();
+		ContentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		ContentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(ContentPane);
 		
 		
 		if(cfg.Darkmode() == true) {
 			try {
 				UIManager.setLookAndFeel(new FlatDarkLaf());
-				SwingUtilities.updateComponentTreeUI(contentPane);
+				SwingUtilities.updateComponentTreeUI(ContentPane);
 				SwingUtilities.updateComponentTreeUI(menuBar);
 			} catch (UnsupportedLookAndFeelException e1) {
 				e1.printStackTrace();
@@ -210,7 +210,7 @@ public class AAMGui extends JFrame {
 					if(DTCheckItem.isSelected() == true) {
 						try {
 							UIManager.setLookAndFeel(new FlatDarkLaf());
-							SwingUtilities.updateComponentTreeUI(contentPane);
+							SwingUtilities.updateComponentTreeUI(ContentPane);
 							SwingUtilities.updateComponentTreeUI(menuBar);
 						} catch (UnsupportedLookAndFeelException e1) {
 							e1.printStackTrace();
@@ -225,7 +225,7 @@ public class AAMGui extends JFrame {
 					else {
 						try {
 							UIManager.setLookAndFeel(new FlatLightLaf());
-							SwingUtilities.updateComponentTreeUI(contentPane);
+							SwingUtilities.updateComponentTreeUI(ContentPane);
 							SwingUtilities.updateComponentTreeUI(menuBar);
 						} catch (UnsupportedLookAndFeelException e1) {
 							e1.printStackTrace();
@@ -242,17 +242,17 @@ public class AAMGui extends JFrame {
 		
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		contentPane.add(tabbedPane, BorderLayout.CENTER);
+		ContentPane.add(tabbedPane, BorderLayout.CENTER);
 		tabbedPaneOut = tabbedPane;
 		
-		JPanel favorites_panel = new JPanel();
-		favorites_panel.setToolTipText("");
-		tabbedPane.addTab("favorites", null, favorites_panel, null);
-		GridBagLayout gbl_favorites_panel = new GridBagLayout();
-		gbl_favorites_panel.rowWeights = new double[]{};
-		gbl_favorites_panel.columnWidths = new int[]{215, 215, 215, 0};
-		gbl_favorites_panel.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
-		favorites_panel.setLayout(gbl_favorites_panel);
+		JPanel FavoritesPanel = new JPanel();
+		FavoritesPanel.setToolTipText("");
+		tabbedPane.addTab("favorites", null, FavoritesPanel, null);
+		GridBagLayout gbl_FavoritesPanel = new GridBagLayout();
+		gbl_FavoritesPanel.rowWeights = new double[]{};
+		gbl_FavoritesPanel.columnWidths = new int[]{215, 215, 215, 0};
+		gbl_FavoritesPanel.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
+		FavoritesPanel.setLayout(gbl_FavoritesPanel);
 		
 		
 		
@@ -265,54 +265,54 @@ public class AAMGui extends JFrame {
 		
 		
 		
-		simple_commands_panel.setToolTipText("");
-		tabbedPane.addTab("simple commands", null, simple_commands_panel, null);
-		GridBagLayout gbl_simple_commands_panel = new GridBagLayout();
-		gbl_simple_commands_panel.columnWidths = new int[]{185, 0, 185, 0, 185, 0, 0};
-		gbl_simple_commands_panel.rowHeights = new int[]{23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_simple_commands_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_simple_commands_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		simple_commands_panel.setLayout(gbl_simple_commands_panel);
+		SimpleCommandsPanel.setToolTipText("");
+		tabbedPane.addTab("simple commands", null, SimpleCommandsPanel, null);
+		GridBagLayout gbl_SimpleCommandsPanel = new GridBagLayout();
+		gbl_SimpleCommandsPanel.columnWidths = new int[]{185, 0, 185, 0, 185, 0, 0};
+		gbl_SimpleCommandsPanel.rowHeights = new int[]{23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_SimpleCommandsPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_SimpleCommandsPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		SimpleCommandsPanel.setLayout(gbl_SimpleCommandsPanel);
 		
-		JLabel SCDescLabel = new JLabel("commands with one argument.");
-		SCDescLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		JLabel SCDescLabel = new JLabel("Simple Commands");
+		SCDescLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		GridBagConstraints gbc_SCDescLabel = new GridBagConstraints();
 		gbc_SCDescLabel.gridwidth = 5;
 		gbc_SCDescLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_SCDescLabel.gridx = 0;
 		gbc_SCDescLabel.gridy = 0;
-		simple_commands_panel.add(SCDescLabel, gbc_SCDescLabel);
+		SimpleCommandsPanel.add(SCDescLabel, gbc_SCDescLabel);
 		
 		JLabel BasicCLabel = new JLabel("basic commands");
 		GridBagConstraints gbc_BasicCLabel = new GridBagConstraints();
 		gbc_BasicCLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_BasicCLabel.gridx = 2;
 		gbc_BasicCLabel.gridy = 1;
-		simple_commands_panel.add(BasicCLabel, gbc_BasicCLabel);
+		SimpleCommandsPanel.add(BasicCLabel, gbc_BasicCLabel);
 		
-		HelpButton = new JButton("?");
-		HelpButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		GridBagConstraints gbc_HelpButton = new GridBagConstraints();
-		gbc_HelpButton.insets = new Insets(0, 0, 5, 0);
-		gbc_HelpButton.fill = GridBagConstraints.BOTH;
-		gbc_HelpButton.gridx = 5;
-		gbc_HelpButton.gridy = 1;
-		simple_commands_panel.add(HelpButton, gbc_HelpButton);
-		HelpButton.setToolTipText("<html>these are simple commands, thier argument can<br>be set after clicking the button and will need to be<br>reset after every run. saving of full comands is comming, hopefully.</html>");
+		SCHelpButton = new JButton("?");
+		SCHelpButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		GridBagConstraints gbc_SCHelpButton = new GridBagConstraints();
+		gbc_SCHelpButton.insets = new Insets(0, 0, 5, 0);
+		gbc_SCHelpButton.fill = GridBagConstraints.BOTH;
+		gbc_SCHelpButton.gridx = 5;
+		gbc_SCHelpButton.gridy = 1;
+		SimpleCommandsPanel.add(SCHelpButton, gbc_SCHelpButton);
+		SCHelpButton.setToolTipText("<html>these are simple commands, thier argument can<br>be set after clicking the button and will need to be<br>reset after every run. saving of full comands is comming, hopefully.</html>");
 		
 		GridBagConstraints gbc_SetTimeButton = new GridBagConstraints();
 		gbc_SetTimeButton.fill = GridBagConstraints.BOTH;
 		gbc_SetTimeButton.insets = new Insets(0, 0, 5, 5);
 		gbc_SetTimeButton.gridx = 0;
 		gbc_SetTimeButton.gridy = 2;
-		simple_commands_panel.add(SetTimeButton, gbc_SetTimeButton);
-		SetTimeButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
+		SimpleCommandsPanel.add(SetTimeButton, gbc_SetTimeButton);
+		SetTimeButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
 		
 		GridBagConstraints gbc_SetTimeCheckBox = new GridBagConstraints();
 		gbc_SetTimeCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_SetTimeCheckBox.gridx = 1;
 		gbc_SetTimeCheckBox.gridy = 2;
-		simple_commands_panel.add(SetTimeCheckBox, gbc_SetTimeCheckBox);
+		SimpleCommandsPanel.add(SetTimeCheckBox, gbc_SetTimeCheckBox);
 		SetTimeCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		GridBagConstraints gbc_PlayerOnlyButton = new GridBagConstraints();
@@ -320,14 +320,14 @@ public class AAMGui extends JFrame {
 		gbc_PlayerOnlyButton.insets = new Insets(0, 0, 5, 5);
 		gbc_PlayerOnlyButton.gridx = 2;
 		gbc_PlayerOnlyButton.gridy = 2;
-		simple_commands_panel.add(PlayerOnlyButton, gbc_PlayerOnlyButton);
-		PlayerOnlyButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
+		SimpleCommandsPanel.add(PlayerOnlyButton, gbc_PlayerOnlyButton);
+		PlayerOnlyButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
 		
 		GridBagConstraints gbc_PlayerOnlyCheckBox = new GridBagConstraints();
 		gbc_PlayerOnlyCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_PlayerOnlyCheckBox.gridx = 3;
 		gbc_PlayerOnlyCheckBox.gridy = 2;
-		simple_commands_panel.add(PlayerOnlyCheckBox, gbc_PlayerOnlyCheckBox);
+		SimpleCommandsPanel.add(PlayerOnlyCheckBox, gbc_PlayerOnlyCheckBox);
 		PlayerOnlyCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		GridBagConstraints gbc_ToggleDNNewButton = new GridBagConstraints();
@@ -335,14 +335,14 @@ public class AAMGui extends JFrame {
 		gbc_ToggleDNNewButton.fill = GridBagConstraints.BOTH;
 		gbc_ToggleDNNewButton.gridx = 4;
 		gbc_ToggleDNNewButton.gridy = 2;
-		simple_commands_panel.add(ToggleDNButton, gbc_ToggleDNNewButton);
-		ToggleDNButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
+		SimpleCommandsPanel.add(ToggleDNButton, gbc_ToggleDNNewButton);
+		ToggleDNButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
 
 		GridBagConstraints gbc_ToggleDNCheckBox = new GridBagConstraints();
 		gbc_ToggleDNCheckBox.insets = new Insets(0, 0, 5, 0);
 		gbc_ToggleDNCheckBox.gridx = 5;
 		gbc_ToggleDNCheckBox.gridy = 2;
-		simple_commands_panel.add(ToggleDNCheckBox, gbc_ToggleDNCheckBox);
+		SimpleCommandsPanel.add(ToggleDNCheckBox, gbc_ToggleDNCheckBox);
 		ToggleDNCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		JLabel MessagingCLabel = new JLabel("messaging");
@@ -350,7 +350,7 @@ public class AAMGui extends JFrame {
 		gbc_MessagingCLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_MessagingCLabel.gridx = 2;
 		gbc_MessagingCLabel.gridy = 3;
-		simple_commands_panel.add(MessagingCLabel, gbc_MessagingCLabel);
+		SimpleCommandsPanel.add(MessagingCLabel, gbc_MessagingCLabel);
 		
 		GridBagConstraints gbc_BroadCastButton = new GridBagConstraints();
 		gbc_BroadCastButton.fill = GridBagConstraints.HORIZONTAL;
@@ -358,14 +358,14 @@ public class AAMGui extends JFrame {
 		gbc_BroadCastButton.insets = new Insets(0, 0, 5, 5);
 		gbc_BroadCastButton.gridx = 0;
 		gbc_BroadCastButton.gridy = 4;
-		simple_commands_panel.add(BroadCastButton, gbc_BroadCastButton);
-		BroadCastButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
+		SimpleCommandsPanel.add(BroadCastButton, gbc_BroadCastButton);
+		BroadCastButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
 		
 		GridBagConstraints gbc_BroadCastCheckBox = new GridBagConstraints();
 		gbc_BroadCastCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_BroadCastCheckBox.gridx = 1;
 		gbc_BroadCastCheckBox.gridy = 4;
-		simple_commands_panel.add(BroadCastCheckBox, gbc_BroadCastCheckBox);
+		SimpleCommandsPanel.add(BroadCastCheckBox, gbc_BroadCastCheckBox);
 		BroadCastCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		GridBagConstraints gbc_ChatMessageButton = new GridBagConstraints();
@@ -373,37 +373,36 @@ public class AAMGui extends JFrame {
 		gbc_ChatMessageButton.insets = new Insets(0, 0, 5, 5);
 		gbc_ChatMessageButton.gridx = 2;
 		gbc_ChatMessageButton.gridy = 4;
-		simple_commands_panel.add(ChatMessageButton, gbc_ChatMessageButton);
-		ChatMessageButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
+		SimpleCommandsPanel.add(ChatMessageButton, gbc_ChatMessageButton);
+		ChatMessageButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
 		
 		GridBagConstraints gbc_ChatMessageCheckBox = new GridBagConstraints();
 		gbc_ChatMessageCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_ChatMessageCheckBox.gridx = 3;
 		gbc_ChatMessageCheckBox.gridy = 4;
-		simple_commands_panel.add(ChatMessageCheckBox, gbc_ChatMessageCheckBox);
+		SimpleCommandsPanel.add(ChatMessageCheckBox, gbc_ChatMessageCheckBox);
 		ChatMessageCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		JLabel LogsLabel = new JLabel("logs");
-		LogsLabel.setBackground(Color.GRAY);
 		GridBagConstraints gbc_LogsLabel = new GridBagConstraints();
 		gbc_LogsLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_LogsLabel.gridx = 2;
 		gbc_LogsLabel.gridy = 5;
-		simple_commands_panel.add(LogsLabel, gbc_LogsLabel);
+		SimpleCommandsPanel.add(LogsLabel, gbc_LogsLabel);
 		
 		GridBagConstraints gbc_ChatLogButton = new GridBagConstraints();
 		gbc_ChatLogButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_ChatLogButton.insets = new Insets(0, 0, 5, 5);
 		gbc_ChatLogButton.gridx = 0;
 		gbc_ChatLogButton.gridy = 6;
-		simple_commands_panel.add(ChatLogButton, gbc_ChatLogButton);
-		ChatLogButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
+		SimpleCommandsPanel.add(ChatLogButton, gbc_ChatLogButton);
+		ChatLogButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
 		
 		GridBagConstraints gbc_ChatLogCheckBox = new GridBagConstraints();
 		gbc_ChatLogCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_ChatLogCheckBox.gridx = 1;
 		gbc_ChatLogCheckBox.gridy = 6;
-		simple_commands_panel.add(ChatLogCheckBox, gbc_ChatLogCheckBox);
+		SimpleCommandsPanel.add(ChatLogCheckBox, gbc_ChatLogCheckBox);
 		ChatLogCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		GridBagConstraints gbc_GameLogButton = new GridBagConstraints();
@@ -411,38 +410,37 @@ public class AAMGui extends JFrame {
 		gbc_GameLogButton.insets = new Insets(0, 0, 5, 5);
 		gbc_GameLogButton.gridx = 2;
 		gbc_GameLogButton.gridy = 6;
-		simple_commands_panel.add(GameLogButton, gbc_GameLogButton);
-		GameLogButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
+		SimpleCommandsPanel.add(GameLogButton, gbc_GameLogButton);
+		GameLogButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
 		
 		GridBagConstraints gbc_GameLogCheckBox = new GridBagConstraints();
 		gbc_GameLogCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_GameLogCheckBox.gridx = 3;
 		gbc_GameLogCheckBox.gridy = 6;
-		simple_commands_panel.add(GameLogCheckBox, gbc_GameLogCheckBox);
+		SimpleCommandsPanel.add(GameLogCheckBox, gbc_GameLogCheckBox);
 		GameLogCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		JLabel ServerManagementLabel = new JLabel("server managemnt");
-		ServerManagementLabel.setBackground(Color.GRAY);
 		GridBagConstraints gbc_ServerManagementLabel = new GridBagConstraints();
 		gbc_ServerManagementLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_ServerManagementLabel.gridx = 2;
 		gbc_ServerManagementLabel.gridy = 7;
-		simple_commands_panel.add(ServerManagementLabel, gbc_ServerManagementLabel);
+		SimpleCommandsPanel.add(ServerManagementLabel, gbc_ServerManagementLabel);
 		
 		GridBagConstraints gbc_StopServerButton = new GridBagConstraints();
 		gbc_StopServerButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_StopServerButton.insets = new Insets(0, 0, 5, 5);
 		gbc_StopServerButton.gridx = 0;
 		gbc_StopServerButton.gridy = 8;
-		simple_commands_panel.add(StopServerButton, gbc_StopServerButton);
-		StopServerButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
+		SimpleCommandsPanel.add(StopServerButton, gbc_StopServerButton);
+		StopServerButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
 		
 		JNumberedCheckbox StopServerCheckBox = new JNumberedCheckbox("", 8);
 		GridBagConstraints gbc_StopServerCheckBox = new GridBagConstraints();
 		gbc_StopServerCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_StopServerCheckBox.gridx = 1;
 		gbc_StopServerCheckBox.gridy = 8;
-		simple_commands_panel.add(StopServerCheckBox, gbc_StopServerCheckBox);
+		SimpleCommandsPanel.add(StopServerCheckBox, gbc_StopServerCheckBox);
 		StopServerCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		GridBagConstraints gbc_SaveGameButton = new GridBagConstraints();
@@ -450,14 +448,14 @@ public class AAMGui extends JFrame {
 		gbc_SaveGameButton.insets = new Insets(0, 0, 5, 5);
 		gbc_SaveGameButton.gridx = 2;
 		gbc_SaveGameButton.gridy = 8;
-		simple_commands_panel.add(SaveGameButton, gbc_SaveGameButton);
-		SaveGameButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
+		SimpleCommandsPanel.add(SaveGameButton, gbc_SaveGameButton);
+		SaveGameButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
 		
 		GridBagConstraints gbc_SaveGameCheckBox = new GridBagConstraints();
 		gbc_SaveGameCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_SaveGameCheckBox.gridx = 3;
 		gbc_SaveGameCheckBox.gridy = 8;
-		simple_commands_panel.add(SaveGameCheckBox, gbc_SaveGameCheckBox);
+		SimpleCommandsPanel.add(SaveGameCheckBox, gbc_SaveGameCheckBox);
 		SaveGameCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		GridBagConstraints gbc_DinoWipeButton = new GridBagConstraints();
@@ -465,14 +463,14 @@ public class AAMGui extends JFrame {
 		gbc_DinoWipeButton.insets = new Insets(0, 0, 5, 5);
 		gbc_DinoWipeButton.gridx = 4;
 		gbc_DinoWipeButton.gridy = 8;
-		simple_commands_panel.add(DinoWipeButton, gbc_DinoWipeButton);
-		DinoWipeButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
+		SimpleCommandsPanel.add(DinoWipeButton, gbc_DinoWipeButton);
+		DinoWipeButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
 		
 		GridBagConstraints gbc_DinoWipeCheckBox = new GridBagConstraints();
 		gbc_DinoWipeCheckBox.insets = new Insets(0, 0, 5, 0);
 		gbc_DinoWipeCheckBox.gridx = 5;
 		gbc_DinoWipeCheckBox.gridy = 8;
-		simple_commands_panel.add(DinoWipeCheckBox, gbc_DinoWipeCheckBox);
+		SimpleCommandsPanel.add(DinoWipeCheckBox, gbc_DinoWipeCheckBox);
 		DinoWipeCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		JLabel Moderation = new JLabel("moderation");
@@ -480,21 +478,21 @@ public class AAMGui extends JFrame {
 		gbc_Moderation.insets = new Insets(0, 0, 5, 5);
 		gbc_Moderation.gridx = 2;
 		gbc_Moderation.gridy = 9;
-		simple_commands_panel.add(Moderation, gbc_Moderation);
+		SimpleCommandsPanel.add(Moderation, gbc_Moderation);
 		
 		GridBagConstraints gbc_BanButton = new GridBagConstraints();
 		gbc_BanButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_BanButton.insets = new Insets(0, 0, 5, 5);
 		gbc_BanButton.gridx = 0;
 		gbc_BanButton.gridy = 10;
-		simple_commands_panel.add(BanButton, gbc_BanButton);
-		BanButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
+		SimpleCommandsPanel.add(BanButton, gbc_BanButton);
+		BanButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
 		
 		GridBagConstraints gbc_BanCheckBox = new GridBagConstraints();
 		gbc_BanCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_BanCheckBox.gridx = 1;
 		gbc_BanCheckBox.gridy = 10;
-		simple_commands_panel.add(BanCheckBox, gbc_BanCheckBox);
+		SimpleCommandsPanel.add(BanCheckBox, gbc_BanCheckBox);
 		BanCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		GridBagConstraints gbc_UnbanButton = new GridBagConstraints();
@@ -502,14 +500,14 @@ public class AAMGui extends JFrame {
 		gbc_UnbanButton.insets = new Insets(0, 0, 5, 5);
 		gbc_UnbanButton.gridx = 2;
 		gbc_UnbanButton.gridy = 10;
-		simple_commands_panel.add(UnbanButton, gbc_UnbanButton);
-		UnbanButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
+		SimpleCommandsPanel.add(UnbanButton, gbc_UnbanButton);
+		UnbanButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
 		
 		GridBagConstraints gbc_UnbanCheckBox = new GridBagConstraints();
 		gbc_UnbanCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_UnbanCheckBox.gridx = 3;
 		gbc_UnbanCheckBox.gridy = 10;
-		simple_commands_panel.add(UnbanCheckBox, gbc_UnbanCheckBox);
+		SimpleCommandsPanel.add(UnbanCheckBox, gbc_UnbanCheckBox);
 		UnbanCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		GridBagConstraints gbc_KickButton = new GridBagConstraints();
@@ -517,14 +515,14 @@ public class AAMGui extends JFrame {
 		gbc_KickButton.insets = new Insets(0, 0, 5, 5);
 		gbc_KickButton.gridx = 4;
 		gbc_KickButton.gridy = 10;
-		simple_commands_panel.add(KickButton, gbc_KickButton);
-		KickButton.addActionListener(ActionlistnerAAM.simpleSCBListner);
+		SimpleCommandsPanel.add(KickButton, gbc_KickButton);
+		KickButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
 		
 		GridBagConstraints gbc_KickCheckBox = new GridBagConstraints();
 		gbc_KickCheckBox.insets = new Insets(0, 0, 5, 0);
 		gbc_KickCheckBox.gridx = 5;
 		gbc_KickCheckBox.gridy = 10;
-		simple_commands_panel.add(KickCheckBox, gbc_KickCheckBox);
+		SimpleCommandsPanel.add(KickCheckBox, gbc_KickCheckBox);
 		KickCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		JPanel advanced_commands_panel = new JPanel();
@@ -536,14 +534,22 @@ public class AAMGui extends JFrame {
 		gbl_advanced_commands_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		advanced_commands_panel.setLayout(gbl_advanced_commands_panel);
 		
-		JButton btnNewButton_3 = new JButton("?");
-		btnNewButton_3.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		btnNewButton_3.setToolTipText("<html>this tab is going to have more<br>\r\nadvanced commands like:<br>\r\nGFI<br>\r\nchanging a players name<br>\r\nand more but for now it is a nonfuctional<br>\r\nmess of placeholders</html>");
-		GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
-		gbc_btnNewButton_3.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_3.gridx = 5;
-		gbc_btnNewButton_3.gridy = 1;
-		advanced_commands_panel.add(btnNewButton_3, gbc_btnNewButton_3);
+		JLabel ACDescLabel = new JLabel("Advanced Commands\r\n");
+		ACDescLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		GridBagConstraints gbc_ACDescLabel = new GridBagConstraints();
+		gbc_ACDescLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_ACDescLabel.gridx = 2;
+		gbc_ACDescLabel.gridy = 0;
+		advanced_commands_panel.add(ACDescLabel, gbc_ACDescLabel);
+		
+		JButton ACHelpButton = new JButton("?");
+		ACHelpButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		ACHelpButton.setToolTipText("<html>this tab is going to have more<br>\r\nadvanced commands like:<br>\r\nGFI<br>\r\nchanging a players name<br>\r\nand more but for now it is a nonfuctional<br>\r\nmess of placeholders</html>");
+		GridBagConstraints gbc_ACHelpButton = new GridBagConstraints();
+		gbc_ACHelpButton.insets = new Insets(0, 0, 5, 0);
+		gbc_ACHelpButton.gridx = 5;
+		gbc_ACHelpButton.gridy = 1;
+		advanced_commands_panel.add(ACHelpButton, gbc_ACHelpButton);
 		
 		JButton btnNewButton = new JNumberedButton("placeholder");
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
@@ -589,81 +595,89 @@ public class AAMGui extends JFrame {
 		gbc_chckbxNewCheckBox_2.gridy = 2;
 		advanced_commands_panel.add(chckbxNewCheckBox_2, gbc_chckbxNewCheckBox_2);
 		
-		JPanel custom_commands_panel = new JPanel();
-		tabbedPane.addTab("custom commands", null, custom_commands_panel, null);
-		GridBagLayout gbl_custom_commands_panel = new GridBagLayout();
-		gbl_custom_commands_panel.columnWidths = new int[]{603, 24, 0};
-		gbl_custom_commands_panel.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_custom_commands_panel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_custom_commands_panel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		custom_commands_panel.setLayout(gbl_custom_commands_panel);
+		JPanel CustomCommandsPanel = new JPanel();
+		tabbedPane.addTab("custom commands", null, CustomCommandsPanel, null);
+		GridBagLayout gbl_CustomCommandsPanel = new GridBagLayout();
+		gbl_CustomCommandsPanel.columnWidths = new int[]{603, 24, 0};
+		gbl_CustomCommandsPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_CustomCommandsPanel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_CustomCommandsPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		CustomCommandsPanel.setLayout(gbl_CustomCommandsPanel);
 		
-		JLabel lblNewLabel = new JLabel("Custom Commands");
-		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 0;
-		gbc_lblNewLabel.gridy = 0;
-		custom_commands_panel.add(lblNewLabel, gbc_lblNewLabel);
+		JLabel CCDescLabel = new JLabel("Custom Commands");
+		CCDescLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		GridBagConstraints gbc_CCDescLabel = new GridBagConstraints();
+		gbc_CCDescLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_CCDescLabel.gridx = 0;
+		gbc_CCDescLabel.gridy = 0;
+		CustomCommandsPanel.add(CCDescLabel, gbc_CCDescLabel);
 		
-		JButton btnNewButton_5 = new JButton("\u2795");
-		GridBagConstraints gbc_btnNewButton_5 = new GridBagConstraints();
-		gbc_btnNewButton_5.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_5.gridx = 1;
-		gbc_btnNewButton_5.gridy = 0;
-		custom_commands_panel.add(btnNewButton_5, gbc_btnNewButton_5);
+		JButton CCNewButton = new JButton("\u2795");
+		GridBagConstraints gbc_CCNewButton = new GridBagConstraints();
+		gbc_CCNewButton.insets = new Insets(0, 0, 5, 0);
+		gbc_CCNewButton.gridx = 1;
+		gbc_CCNewButton.gridy = 0;
+		CustomCommandsPanel.add(CCNewButton, gbc_CCNewButton);
 		
-		JLabel lblNewLabel_1 = new JLabel("press the + to add more commands hover over ? for more help");
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_1.gridx = 0;
-		gbc_lblNewLabel_1.gridy = 1;
-		custom_commands_panel.add(lblNewLabel_1, gbc_lblNewLabel_1);
+		JLabel CCHelpLabel = new JLabel("press the + to add more commands hover over ? for more help");
+		GridBagConstraints gbc_CCHelpLabel = new GridBagConstraints();
+		gbc_CCHelpLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_CCHelpLabel.gridx = 0;
+		gbc_CCHelpLabel.gridy = 1;
+		CustomCommandsPanel.add(CCHelpLabel, gbc_CCHelpLabel);
 		
-		JButton btnNewButton_4 = new JButton("?");
-		btnNewButton_4.setToolTipText("<html>this tab allows you to register custom commands,<br>\r\n\nthese can consist of a series of commands that wil<br>\n\r\nbe executed at once by entering multiple commands<br>\r\n\nin one and separating them with a | (vertical line) or, if<br>\n\r\nmods that support them are installed, using the<br>\r\n\n\"ScriptCommand\" command for use with mods, more<br>\n\r\noptions may be added later depending on the server host API.<br>\r\n\nsee \"help\" under settings for a detailed explanation of the<br>\r\n\ncommand creation GUI.</html>");
-		btnNewButton_4.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		GridBagConstraints gbc_btnNewButton_4 = new GridBagConstraints();
-		gbc_btnNewButton_4.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_4.gridx = 1;
-		gbc_btnNewButton_4.gridy = 1;
-		custom_commands_panel.add(btnNewButton_4, gbc_btnNewButton_4);
+		JButton CCHelpButton = new JButton("?");
+		CCHelpButton.setToolTipText("<html>this tab allows you to register custom commands,<br>\r\n\nthese can consist of a series of commands that wil<br>\n\r\nbe executed at once by entering multiple commands<br>\r\n\nin one and separating them with a | (vertical line) or, if<br>\n\r\nmods that support them are installed, using the<br>\r\n\n\"ScriptCommand\" command for use with mods, more<br>\n\r\noptions may be added later depending on the server host API.<br>\r\n\nsee \"help\" under settings for a detailed explanation of the<br>\r\n\ncommand creation GUI.</html>");
+		CCHelpButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		GridBagConstraints gbc_CCHelpButton = new GridBagConstraints();
+		gbc_CCHelpButton.insets = new Insets(0, 0, 5, 0);
+		gbc_CCHelpButton.gridx = 1;
+		gbc_CCHelpButton.gridy = 1;
+		CustomCommandsPanel.add(CCHelpButton, gbc_CCHelpButton);
 		
-		JPanel impoted_items_panel = new JPanel();
-		tabbedPane.addTab("imported items", null, impoted_items_panel, null);
-		GridBagLayout gbl_impoted_items_panel = new GridBagLayout();
-		gbl_impoted_items_panel.columnWidths = new int[]{40, 564, 40, 0};
-		gbl_impoted_items_panel.rowHeights = new int[]{40, 310, 40, 0};
-		gbl_impoted_items_panel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_impoted_items_panel.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		impoted_items_panel.setLayout(gbl_impoted_items_panel);
+		JPanel ImpotedItemsPanel = new JPanel();
+		tabbedPane.addTab("imported items", null, ImpotedItemsPanel, null);
+		GridBagLayout gbl_ImpotedItemsPanel = new GridBagLayout();
+		gbl_ImpotedItemsPanel.columnWidths = new int[]{40, 564, 40, 0};
+		gbl_ImpotedItemsPanel.rowHeights = new int[]{40, 310, 40, 0};
+		gbl_ImpotedItemsPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_ImpotedItemsPanel.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		ImpotedItemsPanel.setLayout(gbl_ImpotedItemsPanel);
 		
-		JButton btnNewButton_7 = new JButton("?");
-		btnNewButton_7.setToolTipText("<html>this tab shows the imported items per group<br>\r\n\nand their blueprint paths, you can use this to see which<br>\r\n\nitems you have imported and to check if specific PB paths<br>\r\n\nare up to date, see the \"help\" option under settings for a <br>\n\r\nimage-guided explanation of importing item lists<html>");
-		btnNewButton_7.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		GridBagConstraints gbc_btnNewButton_7 = new GridBagConstraints();
-		gbc_btnNewButton_7.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_7.gridx = 2;
-		gbc_btnNewButton_7.gridy = 0;
-		impoted_items_panel.add(btnNewButton_7, gbc_btnNewButton_7);
+		JLabel IIDescLabel = new JLabel("Imported Items");
+		IIDescLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		GridBagConstraints gbc_IIDescLabel = new GridBagConstraints();
+		gbc_IIDescLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_IIDescLabel.gridx = 1;
+		gbc_IIDescLabel.gridy = 0;
+		ImpotedItemsPanel.add(IIDescLabel, gbc_IIDescLabel);
 		
-		scrollPane = new JScrollPane();
+		JButton IIHelpButton = new JButton("?");
+		IIHelpButton.setToolTipText("<html>this tab shows the imported items per group<br>\r\n\nand their blueprint paths, you can use this to see which<br>\r\n\nitems you have imported and to check if specific PB paths<br>\r\n\nare up to date, see the \"help\" option under settings for a <br>\n\r\nimage-guided explanation of importing item lists<html>");
+		IIHelpButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		GridBagConstraints gbc_IIHelpButton = new GridBagConstraints();
+		gbc_IIHelpButton.insets = new Insets(0, 0, 5, 0);
+		gbc_IIHelpButton.gridx = 2;
+		gbc_IIHelpButton.gridy = 0;
+		ImpotedItemsPanel.add(IIHelpButton, gbc_IIHelpButton);
+		
+		ScrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 1;
-		impoted_items_panel.add(scrollPane, gbc_scrollPane);
+		ImpotedItemsPanel.add(ScrollPane, gbc_scrollPane);
 		DefSPbounds = new Rectangle(564, 310);
 		
-		scrollPanel = new JPanel();
-		scrollPane.setViewportView(scrollPanel);
+		ScrollPanel = new JPanel();
+		ScrollPane.setViewportView(ScrollPanel);
 		GridBagLayout gbl_scrollPanel = new GridBagLayout();
 		gbl_scrollPanel.columnWidths = new int[]{0};
 		gbl_scrollPanel.rowHeights = new int[]{0};
 		gbl_scrollPanel.columnWeights = new double[]{Double.MIN_VALUE};
 		gbl_scrollPanel.rowWeights = new double[]{Double.MIN_VALUE};
-		scrollPanel.setLayout(gbl_scrollPanel);
+		ScrollPanel.setLayout(gbl_scrollPanel);
 		
 		GridBagConstraints gbc_ImItemLabel = new GridBagConstraints();
 		gbc_ImItemLabel.insets = new Insets(0, 0, 0, 5);
@@ -678,82 +692,91 @@ public class AAMGui extends JFrame {
 		
 		for(int i = 0; i < Reference.ImportedItemGroups.size(); i++) {
 			
-			scrollPanel.add(Utils.generateTitleLabel(Reference.ImportedItemGroups.get(i).getFirstValue()), gbc_ImItemLabel);
+			ScrollPanel.add(Utils.generateTitleLabel(Reference.ImportedItemGroups.get(i).getFirstValue()), gbc_ImItemLabel);
 			gbc_ImItemLabel.gridy++;
-			scrollPanel.add(Utils.generateTitleLabel("BP Path"), gbc_ImItemLabel2);
+			ScrollPanel.add(Utils.generateTitleLabel("BP Path"), gbc_ImItemLabel2);
 			gbc_ImItemLabel2.gridy++;
 			
 			for(int x = 0; x < Reference.ImportedItemGroups.get(i).getSecondValue().size(); x++) {
-				scrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(x).getSecondValue()), gbc_ImItemLabel);
+				ScrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(x).getSecondValue()), gbc_ImItemLabel);
 				gbc_ImItemLabel.gridy++;
 			}
 			
 			for(int y = 0; y < Reference.ImportedItemGroups.get(i).getSecondValue().size(); y++) {
-				scrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(y).getFirstValue()), gbc_ImItemLabel2);
+				ScrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(y).getFirstValue()), gbc_ImItemLabel2);
 				gbc_ImItemLabel2.gridy++;
 			}
 			
 		}
 		
-		tabbedPane.addTab("queue", null, queuePanel, null);
+		tabbedPane.addTab("queue", null, QueuePanel, null);
 		tabbedPane.setEnabledAt(5, true);
-		GridBagLayout gbl_queuePanel = new GridBagLayout();
-		gbl_queuePanel.columnWidths = new int[]{40, 293, 0, 40, 0};
-		gbl_queuePanel.rowHeights = new int[]{40, 0, 30, 30, 0};
-		gbl_queuePanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_queuePanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		queuePanel.setLayout(gbl_queuePanel);
+		GridBagLayout gbl_QueuePanel = new GridBagLayout();
+		gbl_QueuePanel.columnWidths = new int[]{40, 293, 0, 40, 0};
+		gbl_QueuePanel.rowHeights = new int[]{40, 0, 30, 30, 0};
+		gbl_QueuePanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_QueuePanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		QueuePanel.setLayout(gbl_QueuePanel);
 		
-		gbc_queueList.gridwidth = 2;
-		gbc_queueList.insets = new Insets(0, 0, 5, 5);
-		gbc_queueList.fill = GridBagConstraints.BOTH;
-		gbc_queueList.gridx = 1;
-		gbc_queueList.gridy = 1;
-		queuePanel.add(queueList, gbc_queueList);
-		GridBagLayout gbl_queueList = new GridBagLayout();
-		gbl_queueList.columnWidths = new int[]{514, 40, 0};
-		gbl_queueList.rowHeights = new int[]{30, 0};
-		gbl_queueList.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-		gbl_queueList.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-		queueList.setLayout(gbl_queueList);
+		JLabel QDescLabel = new JLabel("Queue");
+		QDescLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		GridBagConstraints gbc_QDescLabel = new GridBagConstraints();
+		gbc_QDescLabel.gridwidth = 2;
+		gbc_QDescLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_QDescLabel.gridx = 1;
+		gbc_QDescLabel.gridy = 0;
+		QueuePanel.add(QDescLabel, gbc_QDescLabel);
+		
+		gbc_QueueList.gridwidth = 2;
+		gbc_QueueList.insets = new Insets(0, 0, 5, 5);
+		gbc_QueueList.fill = GridBagConstraints.BOTH;
+		gbc_QueueList.gridx = 1;
+		gbc_QueueList.gridy = 1;
+		QueuePanel.add(QueueList, gbc_QueueList);
+		GridBagLayout gbl_QueueList = new GridBagLayout();
+		gbl_QueueList.columnWidths = new int[]{514, 40, 0};
+		gbl_QueueList.rowHeights = new int[]{30, 0};
+		gbl_QueueList.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_QueueList.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		QueueList.setLayout(gbl_QueueList);
 		
 		gbc_commandLable.insets = new Insets(0, 0, 0, 5);
 		gbc_commandLable.gridx = 0;
 		gbc_commandLable.gridy = 0;
-		queueList.add(commandLable, gbc_commandLable);
+		QueueList.add(CommandLable, gbc_commandLable);
 		
 		gbc_RemoveLabel.gridx = 1;
 		gbc_RemoveLabel.gridy = 0;
-		queueList.add(RemoveLabel, gbc_RemoveLabel);
+		QueueList.add(RemoveLabel, gbc_RemoveLabel);
 		
-		JButton btnNewButton_6 = new JButton("?");
-		btnNewButton_6.setToolTipText("<html>this is the command queue, commads<br>\r\nqueued up will appear here and can be run all in<br>\r\n\nquick succession by pressing \"Run\" or ran with<br>\r\n\na delay by setting the delay in seconds and then<br>\n\r\npressing the \"Run With Delay\" button</html>");
-		btnNewButton_6.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		GridBagConstraints gbc_btnNewButton_6 = new GridBagConstraints();
-		gbc_btnNewButton_6.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_6.gridx = 3;
-		gbc_btnNewButton_6.gridy = 1;
-		queuePanel.add(btnNewButton_6, gbc_btnNewButton_6);
+		JButton QHelpButton = new JButton("?");
+		QHelpButton.setToolTipText("<html>this is the command queue, commads<br>\r\nqueued up will appear here and can be run all in<br>\r\n\nquick succession by pressing \"Run\" or ran with<br>\r\n\na delay by setting the delay in seconds and then<br>\n\r\npressing the \"Run With Delay\" button</html>");
+		QHelpButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		GridBagConstraints gbc_QHelpButton = new GridBagConstraints();
+		gbc_QHelpButton.insets = new Insets(0, 0, 5, 0);
+		gbc_QHelpButton.gridx = 3;
+		gbc_QHelpButton.gridy = 1;
+		QueuePanel.add(QHelpButton, gbc_QHelpButton);
 		
 		GridBagConstraints gbc_DelaySpinner = new GridBagConstraints();
 		gbc_DelaySpinner.insets = new Insets(0, 0, 5, 5);
 		gbc_DelaySpinner.gridx = 1;
 		gbc_DelaySpinner.gridy = 2;
-		queuePanel.add(DelaySpinner, gbc_DelaySpinner);
+		QueuePanel.add(DelaySpinner, gbc_DelaySpinner);
 		
 		JButton RunDelayButton = new JButton("Run With Delay");
 		GridBagConstraints gbc_RunDelayButton = new GridBagConstraints();
 		gbc_RunDelayButton.insets = new Insets(0, 0, 0, 5);
 		gbc_RunDelayButton.gridx = 1;
 		gbc_RunDelayButton.gridy = 3;
-		queuePanel.add(RunDelayButton, gbc_RunDelayButton);
+		QueuePanel.add(RunDelayButton, gbc_RunDelayButton);
 		
 		JButton RunButton = new JButton("Run");
 		GridBagConstraints gbc_RunButton = new GridBagConstraints();
 		gbc_RunButton.insets = new Insets(0, 0, 0, 5);
 		gbc_RunButton.gridx = 2;
 		gbc_RunButton.gridy = 3;
-		queuePanel.add(RunButton, gbc_RunButton);
+		QueuePanel.add(RunButton, gbc_RunButton);
 		RunButton.addActionListener(ActionlistnerAAM.RunListner);
 		
 		gbc_commandList.gridx = 0;
@@ -763,8 +786,8 @@ public class AAMGui extends JFrame {
 		gbc_commandButtonList.gridy = 1;
 		gbc_commandButtonList.weighty = 1;
 		for(int i = 0; i < Reference.Queue.size(); i ++) {
-			queueList.add(new JLabel(Reference.Queue.get(i).generateCommand()), gbc_commandList);
-			queueList.add(new JNumberedButton("X", ActionlistnerAAM.QueueRemoveListner, i), gbc_commandButtonList);
+			QueueList.add(new JLabel(Reference.Queue.get(i).generateCommand()), gbc_commandList);
+			QueueList.add(new JNumberedButton("X", ActionlistnerAAM.QueueRemoveListner, i), gbc_commandButtonList);
 			gbc_commandList.gridy++;
 			gbc_commandButtonList.gridy++;
 		}
@@ -783,7 +806,7 @@ public class AAMGui extends JFrame {
 		
 		if(Reference.FavoriteButtonList != null) {
 			for(JNumberedButton button : Reference.FavoriteButtonList) {
-				if(button != null) favorites_panel.add(FavButtonPanelBuilder.buildPanel(button), gbc_FavButtons);
+				if(button != null) FavoritesPanel.add(FavButtonPanelBuilder.buildPanel(button), gbc_FavButtons);
 				if(gbc_FavButtons.gridx != 2) {
 					gbc_FavButtons.gridx++;
 				}
@@ -850,7 +873,8 @@ public class AAMGui extends JFrame {
 		});
 	    
 	    glass.setOpaque(true);
-	    glass.setBackground(Color.DARK_GRAY);
+	    if(cfg.Darkmode()) glass.setBackground(Color.DARK_GRAY);
+	    else glass.setBackground(Color.WHITE);
 	    
 	    if(cfg.ShowWelcome()) glass.setVisible(true);
 	    
@@ -864,10 +888,10 @@ public class AAMGui extends JFrame {
 				
 				if(tabbedPane.getSelectedIndex() == 0) {
 
-					SwingUtilities.updateComponentTreeUI(favorites_panel);
-					favorites_panel.removeAll();
-					favorites_panel.revalidate();
-					favorites_panel.repaint();
+					SwingUtilities.updateComponentTreeUI(FavoritesPanel);
+					FavoritesPanel.removeAll();
+					FavoritesPanel.revalidate();
+					FavoritesPanel.repaint();
 					gbc_FavButtons.insets = new Insets(0, 0, 0, 5);
 					gbc_FavButtons.gridx = 0;
 					gbc_FavButtons.gridy = 0;
@@ -875,7 +899,7 @@ public class AAMGui extends JFrame {
 					if(Reference.FavoriteButtonList != null) {
 						for(JNumberedButton button : Reference.FavoriteButtonList) {
 							//favorites_panel.add(button, gbc_FavButtons);
-							favorites_panel.add(FavButtonPanelBuilder.buildPanel(button), gbc_FavButtons);
+							FavoritesPanel.add(FavButtonPanelBuilder.buildPanel(button), gbc_FavButtons);
 							if(gbc_FavButtons.gridx != 2) {
 								gbc_FavButtons.gridx++;
 							}
@@ -888,13 +912,13 @@ public class AAMGui extends JFrame {
 
 					
 				}else if (tabbedPane.getSelectedIndex() == 1) {
-					SwingUtilities.updateComponentTreeUI(simple_commands_panel);
+					SwingUtilities.updateComponentTreeUI(SimpleCommandsPanel);
 				}else if (tabbedPane.getSelectedIndex() == 2) {
 					SwingUtilities.updateComponentTreeUI(advanced_commands_panel);
 				}else if (tabbedPane.getSelectedIndex() == 3) {
-					SwingUtilities.updateComponentTreeUI(custom_commands_panel);
+					SwingUtilities.updateComponentTreeUI(CustomCommandsPanel);
 				}else if(tabbedPane.getSelectedIndex() == 4) {
-					SwingUtilities.updateComponentTreeUI(impoted_items_panel);
+					SwingUtilities.updateComponentTreeUI(ImpotedItemsPanel);
 					GridBagConstraints gbc_ImItemLabel = new GridBagConstraints();
 					gbc_ImItemLabel.insets = new Insets(0, 0, 0, 5);
 					gbc_ImItemLabel.gridx = 0;
@@ -908,60 +932,48 @@ public class AAMGui extends JFrame {
 					
 					for(int i = 0; i < Reference.ImportedItemGroups.size(); i++) {
 						
-						scrollPanel.removeAll();
-						scrollPanel.revalidate();
-						scrollPanel.repaint();
+						ScrollPanel.removeAll();
+						ScrollPanel.revalidate();
+						ScrollPanel.repaint();
 						
-						scrollPanel.add(Utils.generateTitleLabel(Reference.ImportedItemGroups.get(i).getFirstValue()), gbc_ImItemLabel);
+						ScrollPanel.add(Utils.generateTitleLabel(Reference.ImportedItemGroups.get(i).getFirstValue()), gbc_ImItemLabel);
 						gbc_ImItemLabel.gridy++;
-						scrollPanel.add(Utils.generateTitleLabel("BP Path"), gbc_ImItemLabel2);
+						ScrollPanel.add(Utils.generateTitleLabel("BP Path"), gbc_ImItemLabel2);
 						gbc_ImItemLabel2.gridy++;
 						
 						for(int x =0; x < Reference.ImportedItemGroups.get(i).getSecondValue().size(); x++) {
-							scrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(x).getSecondValue()), gbc_ImItemLabel);
+							ScrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(x).getSecondValue()), gbc_ImItemLabel);
 							gbc_ImItemLabel.gridy++;
 						}
 						
 						for(int y = 0; y < Reference.ImportedItemGroups.get(i).getSecondValue().size(); y++) {
-							scrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(y).getFirstValue()), gbc_ImItemLabel2);
+							ScrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(y).getFirstValue()), gbc_ImItemLabel2);
 							gbc_ImItemLabel2.gridy++;
 						}
 						
 						
 					}
 				}else if(tabbedPane.getSelectedIndex() == 5) {
-					SwingUtilities.updateComponentTreeUI(queuePanel);
-					queuePanel.removeAll();
-					queuePanel.revalidate();
-					queuePanel.repaint();
-					queuePanel.add(queueList, gbc_queueList);
+					SwingUtilities.updateComponentTreeUI(QueuePanel);
+					QueuePanel.removeAll();
+					QueuePanel.revalidate();
+					QueuePanel.repaint();
+					QueuePanel.add(QDescLabel, gbc_QDescLabel);
+					QueuePanel.add(QueueList, gbc_QueueList);
 					
-					queueList.setLayout(gbl_queueList);
-					queueList.removeAll();
-					queueList.revalidate();
-					queueList.repaint();
+					QueueList.setLayout(gbl_QueueList);
+					QueueList.removeAll();
+					QueueList.revalidate();
+					QueueList.repaint();
 					
-					queueList.add(commandLable, gbc_commandLable);
-					queueList.add(RemoveLabel, gbc_RemoveLabel);
+					QueueList.add(CommandLable, gbc_commandLable);
+					QueueList.add(RemoveLabel, gbc_RemoveLabel);
 					
 					
-					queuePanel.add(DelaySpinner, gbc_DelaySpinner);
+					QueuePanel.add(DelaySpinner, gbc_DelaySpinner);
 					
-					JButton RunDelayButton = new JButton("Run With Delay");
-					GridBagConstraints gbc_RunDelayButton = new GridBagConstraints();
-					gbc_RunDelayButton.insets = new Insets(0, 0, 0, 5);
-					gbc_RunDelayButton.gridx = 1;
-					gbc_RunDelayButton.gridy = 3;
-					queuePanel.add(RunDelayButton, gbc_RunDelayButton);
-					RunDelayButton.addActionListener(ActionlistnerAAM.RunDelayListner);
-					
-					JButton RunButton = new JButton("Run");
-					GridBagConstraints gbc_RunButton = new GridBagConstraints();
-					gbc_RunButton.insets = new Insets(0, 0, 0, 5);
-					gbc_RunButton.gridx = 2;
-					gbc_RunButton.gridy = 3;
-					queuePanel.add(RunButton, gbc_RunButton);
-					RunButton.addActionListener(ActionlistnerAAM.RunListner);
+					QueuePanel.add(RunDelayButton, gbc_RunDelayButton);
+					QueuePanel.add(RunButton, gbc_RunButton);
 					
 					GridBagConstraints gbc_commandList = new GridBagConstraints();
 					gbc_commandList.gridx = 0;
@@ -971,14 +983,14 @@ public class AAMGui extends JFrame {
 					gbc_commandButtonList.gridy = 1;
 					gbc_commandButtonList.weighty = 1;
 					for(int i = 0; i < Reference.Queue.size(); i ++) {
-						queueList.add(new JLabel(Reference.Queue.get(i).generateCommand()), gbc_commandList);
-						queueList.add(new JNumberedButton("X", ActionlistnerAAM.QueueRemoveListner, i), gbc_commandButtonList);
+						QueueList.add(new JLabel(Reference.Queue.get(i).generateCommand()), gbc_commandList);
+						QueueList.add(new JNumberedButton("X", ActionlistnerAAM.QueueRemoveListner, i), gbc_commandButtonList);
 						gbc_commandList.gridy++;
 						gbc_commandButtonList.gridy++;
 					}
 					
 
-					queuePanel.add(btnNewButton_6, gbc_btnNewButton_6);
+					QueuePanel.add(QHelpButton, gbc_QHelpButton);
 				}else if (tabbedPane.getSelectedIndex() != 6 && tabbedPane.getComponent(6) != null) {
 					tabbedPane.remove(6);
 					
@@ -987,7 +999,7 @@ public class AAMGui extends JFrame {
 			}
 		});
 		
-		Component[] components = simple_commands_panel.getComponents();
+		Component[] components = SimpleCommandsPanel.getComponents();
 		
 		for(int i = 1; i < components.length; i++) {
 			
@@ -999,9 +1011,9 @@ public class AAMGui extends JFrame {
 	    ToolTipManager.sharedInstance().setDismissDelay(dismissDelay);
 	    ToolTipManager.sharedInstance().setInitialDelay(0);
 
-	    scrollPane.setBorder(BorderFactory.createEmptyBorder());
+	    ScrollPane.setBorder(BorderFactory.createEmptyBorder());
 	    
-	    scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+	    ScrollPane.getVerticalScrollBar().setUnitIncrement(16);
 	    
 	    addWindowListener(new WindowListener() {
 	    	
@@ -1052,7 +1064,11 @@ public class AAMGui extends JFrame {
 	}
 	
 	public static JPanel GetSCPanel() {
-		return simple_commands_panel;
+		return SimpleCommandsPanel;
+	}
+	
+	public static LookAndFeel getLookAndFeel() {
+		return UIManager.getLookAndFeel();
 	}
 	
 	

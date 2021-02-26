@@ -22,7 +22,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+
+import com.blackdragon2447.AAM.gui.AAMGui;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 
 public class HelpDialog extends JDialog {
 
@@ -30,7 +36,7 @@ public class HelpDialog extends JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = -3536957765367588913L;
-	private final JPanel contentPanel = new JPanel();
+	private final JPanel ContentPanel = new JPanel();
 
 	
 	public static void createDialog() {
@@ -47,15 +53,22 @@ public class HelpDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public HelpDialog() {
+
+		try {
+			UIManager.setLookAndFeel(AAMGui.getLookAndFeel());
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+		
 		setBounds(100, 100, 470, 538);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new GridLayout(1, 0, 0, 0));
+		ContentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(ContentPanel, BorderLayout.CENTER);
+		ContentPanel.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		contentPanel.add(scrollPane);
+		ContentPanel.add(scrollPane);
 		
 		JPanel panel = new JPanel();
 		scrollPane.setViewportView(panel);

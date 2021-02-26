@@ -40,7 +40,7 @@ public class ActionlistnerAAM {
 		}
 	};
 	
-	public static ActionListener simpleSCBListner = new ActionListener() {
+	public static ActionListener SimpleSCBListner = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {

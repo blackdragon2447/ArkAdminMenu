@@ -67,7 +67,7 @@ public class Utils {
 		}else if (AAMGui.PFacheatRadioItem.isSelected() == true) {
 			commandPrefix = "admincheat ";
 		}else {
-			commandPrefix = Reference.customPrefix + " ";
+			commandPrefix = Reference.CustomPrefix + " ";
 		}
 		String ListItem = Reference.SimpleCommandList.get(commandNumber).getFirstValue();
 		
@@ -81,7 +81,7 @@ public class Utils {
 		}else if (AAMGui.PFacheatRadioItem.isSelected() == true) {
 			commandPrefix = "admincheat ";
 		}else {
-			commandPrefix = Reference.customPrefix + " ";
+			commandPrefix = Reference.CustomPrefix + " ";
 		}
 		
 		return commandPrefix;

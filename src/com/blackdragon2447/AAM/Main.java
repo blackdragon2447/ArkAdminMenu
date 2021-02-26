@@ -34,7 +34,7 @@ public class Main {
 
 		AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
 		
-		CSVReader reader = new CSVReader();
+		CSVReader Reader = new CSVReader();
 		try {
 			Reference.SimpleCommandList = CSVReader.readCommandList("simpleCommands.csv");
 			Reference.SimpleCommandArgList = CSVReader.readArgList("simpleCommandsArgs.csv");
@@ -49,11 +49,8 @@ public class Main {
 			Reference.ItemFileArray.add(ItemFileList[i]);
 		}
 		
-		Reference.customPrefix = cfg.customPrefix();
+		Reference.CustomPrefix = cfg.CustomPrefix();
 		
-		
-		
-		//open gui
 		try {
 			AAMGui.createGui();
 		} catch (IllegalArgumentException e) {

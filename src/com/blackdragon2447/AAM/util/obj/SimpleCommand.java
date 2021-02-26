@@ -19,7 +19,7 @@ public class SimpleCommand {
 		}else if (AAMGui.PFacheatRadioItem.isSelected() == true) {
 			this.Prefix = "admincheat ";
 		}else {
-			this.Prefix = Reference.customPrefix + " ";
+			this.Prefix = Reference.CustomPrefix + " ";
 		}
 		
 		if(this.Prefix == " ") this.Prefix = "";
