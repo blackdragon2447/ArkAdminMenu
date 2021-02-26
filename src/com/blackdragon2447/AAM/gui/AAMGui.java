@@ -811,7 +811,7 @@ public class AAMGui extends JFrame {
 	    gbc_welcomeLabel.gridy = 1;
 	    glass.add(welcomeLabel, gbc_welcomeLabel);
 	    
-	    JLabel WelcomeTextLabel = new JLabel("<html>Welcome to Ark Admin Manager aka AAM, this is a \"simple\" tool to help ark server admins manage their<br>\r\nservers, to get started choose one of the tabs on the top or read the help under setting.<html>");
+	    JLabel WelcomeTextLabel = new JLabel("<html>Welcome to Ark Admin Manager aka AAM, this is a \"simple\" tool to help ark server admins manage their<br>\r\nservers, to get started choose one of the tabs on the top or read the help under setting. all tabs also have a<br>\r\nhover over \"?\" in case you need a little reminder on how to use<html>");
 	    GridBagConstraints gbc_WelcomeTextLabel = new GridBagConstraints();
 	    gbc_WelcomeTextLabel.insets = new Insets(0, 0, 5, 5);
 	    gbc_WelcomeTextLabel.gridx = 1;
