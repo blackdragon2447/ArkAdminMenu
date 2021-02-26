@@ -11,13 +11,14 @@ import org.aeonbits.owner.ConfigFactory;
 import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.util.AAMConfig;
 import com.blackdragon2447.AAM.util.CSVReader;
+import com.blackdragon2447.AAM.util.ItemSetBuilder;
 
 /**
  * the main class of AAM
  * 
  * AAM is an acronym for ArkAdminMenu
  * AAM is a tool for ark server admins to execute advanced commands remotely and save custom commands
- * to make the process of entering/using commands faster and easyer
+ * to make the process of entering/using commands faster and easier
  * @author Blackdragon2447
  * @version 0.1
  *
@@ -38,6 +39,8 @@ public class Main {
 		try {
 			Reference.SimpleCommandList = CSVReader.readCommandList("simpleCommands.csv");
 			Reference.SimpleCommandArgList = CSVReader.readArgList("simpleCommandsArgs.csv");
+			Reference.AdvancedCommandList = CSVReader.readCommandAdvancedList("AdvancedCommands.csv");
+			Reference.AdvancedCommandArgList = CSVReader.readArgList("AdvancedCommandsArgs.csv");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -47,6 +50,14 @@ public class Main {
 		
 		for(int i = 0; i < ItemFileList.length; i++) {
 			Reference.ItemFileArray.add(ItemFileList[i]);
+		}
+		
+		for (String string : Reference.ItemFileArray) {
+			try {
+				Reference.ImportedItemGroups.add(ItemSetBuilder.generatePair(string.substring(0, string.length() - 4), "ItemLists\\" + (String) string));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		Reference.CustomPrefix = cfg.CustomPrefix();

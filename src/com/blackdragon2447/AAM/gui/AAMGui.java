@@ -153,8 +153,8 @@ public class AAMGui extends JFrame {
 			}
 		});
 		
-		JMenuItem IGSNewMenuItem_1 = new JMenuItem("in game settings");
-		settingsMenu.add(IGSNewMenuItem_1);
+		JMenuItem SettingMenuItem = new JMenuItem("settings");
+		settingsMenu.add(SettingMenuItem);
 		
 		JCheckBoxMenuItem DTCheckItem = new JCheckBoxMenuItem("dark theme");
 		settingsMenu.add(DTCheckItem);
@@ -529,9 +529,9 @@ public class AAMGui extends JFrame {
 		tabbedPane.addTab("advanced commands", null, advanced_commands_panel, null);
 		GridBagLayout gbl_advanced_commands_panel = new GridBagLayout();
 		gbl_advanced_commands_panel.columnWidths = new int[]{185, 0, 185, 0, 185, 0, 0};
-		gbl_advanced_commands_panel.rowHeights = new int[]{23, 0, 0, 0};
+		gbl_advanced_commands_panel.rowHeights = new int[]{23, 0, 0, 0, 0};
 		gbl_advanced_commands_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_advanced_commands_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_advanced_commands_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		advanced_commands_panel.setLayout(gbl_advanced_commands_panel);
 		
 		JLabel ACDescLabel = new JLabel("Advanced Commands\r\n");
@@ -551,49 +551,100 @@ public class AAMGui extends JFrame {
 		gbc_ACHelpButton.gridy = 1;
 		advanced_commands_panel.add(ACHelpButton, gbc_ACHelpButton);
 		
-		JButton btnNewButton = new JNumberedButton("placeholder");
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton.gridx = 0;
-		gbc_btnNewButton.gridy = 2;
-		advanced_commands_panel.add(btnNewButton, gbc_btnNewButton);
+		JNumberedButton GFIPlayerButton = new JNumberedButton("give item to player");
+		GFIPlayerButton.Number = 14;
+		GridBagConstraints gbc_GFIPlayerButton = new GridBagConstraints();
+		gbc_GFIPlayerButton.insets = new Insets(0, 0, 5, 5);
+		gbc_GFIPlayerButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_GFIPlayerButton.gridx = 0;
+		gbc_GFIPlayerButton.gridy = 2;
+		advanced_commands_panel.add(GFIPlayerButton, gbc_GFIPlayerButton);
 		
-		JCheckBox chckbxNewCheckBox = new JNumberedCheckbox("");
-		GridBagConstraints gbc_chckbxNewCheckBox = new GridBagConstraints();
-		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 0, 5);
-		gbc_chckbxNewCheckBox.gridx = 1;
-		gbc_chckbxNewCheckBox.gridy = 2;
-		advanced_commands_panel.add(chckbxNewCheckBox, gbc_chckbxNewCheckBox);
+		JCheckBox GFIPlayerCheckBox = new JNumberedCheckbox("", 14);
+		GridBagConstraints gbc_GFIPlayerCheckBox = new GridBagConstraints();
+		gbc_GFIPlayerCheckBox.insets = new Insets(0, 0, 5, 5);
+		gbc_GFIPlayerCheckBox.gridx = 1;
+		gbc_GFIPlayerCheckBox.gridy = 2;
+		advanced_commands_panel.add(GFIPlayerCheckBox, gbc_GFIPlayerCheckBox);
 		
-		JButton btnNewButton_1 = new JNumberedButton("placeholder");
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton_1.gridx = 2;
-		gbc_btnNewButton_1.gridy = 2;
-		advanced_commands_panel.add(btnNewButton_1, gbc_btnNewButton_1);
+		JButton RenamePlayerButton = new JNumberedButton("rename rlayer", 15);
+		GridBagConstraints gbc_RenamePlayerButton = new GridBagConstraints();
+		gbc_RenamePlayerButton.insets = new Insets(0, 0, 5, 5);
+		gbc_RenamePlayerButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_RenamePlayerButton.gridx = 2;
+		gbc_RenamePlayerButton.gridy = 2;
+		advanced_commands_panel.add(RenamePlayerButton, gbc_RenamePlayerButton);
 		
-		JCheckBox chckbxNewCheckBox_1 = new JNumberedCheckbox("");
-		GridBagConstraints gbc_chckbxNewCheckBox_1 = new GridBagConstraints();
-		gbc_chckbxNewCheckBox_1.insets = new Insets(0, 0, 0, 5);
-		gbc_chckbxNewCheckBox_1.gridx = 3;
-		gbc_chckbxNewCheckBox_1.gridy = 2;
-		advanced_commands_panel.add(chckbxNewCheckBox_1, gbc_chckbxNewCheckBox_1);
+		JCheckBox RenamePlayerCheckBox = new JNumberedCheckbox("", 15);
+		GridBagConstraints gbc_RenamePlayerCheckBox = new GridBagConstraints();
+		gbc_RenamePlayerCheckBox.insets = new Insets(0, 0, 5, 5);
+		gbc_RenamePlayerButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_RenamePlayerCheckBox.gridx = 3;
+		gbc_RenamePlayerCheckBox.gridy = 2;
+		advanced_commands_panel.add(RenamePlayerCheckBox, gbc_RenamePlayerCheckBox);
 		
-		JButton btnNewButton_2 = new JNumberedButton("placeholder");
-		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
-		gbc_btnNewButton_2.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton_2.gridx = 4;
-		gbc_btnNewButton_2.gridy = 2;
-		advanced_commands_panel.add(btnNewButton_2, gbc_btnNewButton_2);
+		JNumberedButton RenameTribeButton = new JNumberedButton("rename tribe", 16);
+		GridBagConstraints gbc_RenameTribeButton = new GridBagConstraints();
+		gbc_RenameTribeButton.insets = new Insets(0, 0, 5, 5);
+		gbc_RenameTribeButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_RenameTribeButton.gridx = 4;
+		gbc_RenameTribeButton.gridy = 2;
+		advanced_commands_panel.add(RenameTribeButton, gbc_RenameTribeButton);
 		
-		JCheckBox chckbxNewCheckBox_2 = new JNumberedCheckbox("");
-		GridBagConstraints gbc_chckbxNewCheckBox_2 = new GridBagConstraints();
-		gbc_chckbxNewCheckBox_2.gridx = 5;
-		gbc_chckbxNewCheckBox_2.gridy = 2;
-		advanced_commands_panel.add(chckbxNewCheckBox_2, gbc_chckbxNewCheckBox_2);
+		JCheckBox RenameTribeCheckBox = new JNumberedCheckbox("", 16);
+		GridBagConstraints gbc_RenameTribeCheckBox = new GridBagConstraints();
+		gbc_RenameTribeCheckBox.insets = new Insets(0, 0, 5, 0);
+		gbc_RenameTribeCheckBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_RenameTribeCheckBox.gridx = 5;
+		gbc_RenameTribeCheckBox.gridy = 2;
+		advanced_commands_panel.add(RenameTribeCheckBox, gbc_RenameTribeCheckBox);
+		
+		JNumberedButton ForcePlayerToTribeButton = new JNumberedButton("force player into tribe", 17);
+		GridBagConstraints gbc_ForcePlayerToTribeButton = new GridBagConstraints();
+		gbc_ForcePlayerToTribeButton.insets = new Insets(0, 0, 0, 5);
+		gbc_ForcePlayerToTribeButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_ForcePlayerToTribeButton.gridx = 0;
+		gbc_ForcePlayerToTribeButton.gridy = 3;
+		advanced_commands_panel.add(ForcePlayerToTribeButton, gbc_ForcePlayerToTribeButton);
+		
+		JNumberedCheckbox ForcePlayerToTribeCheckbox = new JNumberedCheckbox("", 17);
+		GridBagConstraints gbc_ForcePlayerToTribeCheckbox = new GridBagConstraints();
+		gbc_ForcePlayerToTribeCheckbox.insets = new Insets(0, 0, 0, 5);
+		gbc_ForcePlayerToTribeCheckbox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_ForcePlayerToTribeCheckbox.gridx = 1;
+		gbc_ForcePlayerToTribeCheckbox.gridy = 3;
+		advanced_commands_panel.add(ForcePlayerToTribeCheckbox, gbc_ForcePlayerToTribeCheckbox);
+		
+		JNumberedButton GivePlayerXPButton = new JNumberedButton("give xp to player", 18);
+		GridBagConstraints gbc_GivePlayerXPButton = new GridBagConstraints();
+		gbc_GivePlayerXPButton.insets = new Insets(0, 0, 0, 5);
+		gbc_GivePlayerXPButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_GivePlayerXPButton.gridx = 2;
+		gbc_GivePlayerXPButton.gridy = 3;
+		advanced_commands_panel.add(GivePlayerXPButton, gbc_GivePlayerXPButton);
+		
+		JNumberedCheckbox GivePlayerXPCheckbox = new JNumberedCheckbox("", 18);
+		GridBagConstraints gbc_GivePlayerXPCheckbox = new GridBagConstraints();
+		gbc_GivePlayerXPCheckbox.insets = new Insets(0, 0, 0, 5);
+		gbc_GivePlayerXPCheckbox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_GivePlayerXPCheckbox.gridx = 3;
+		gbc_GivePlayerXPCheckbox.gridy = 3;
+		advanced_commands_panel.add(GivePlayerXPCheckbox, gbc_GivePlayerXPCheckbox);
+		
+		JNumberedButton GetUE4IDButton = new JNumberedButton("get player ingame id", 19);
+		GridBagConstraints gbc_GetUE4IDButton = new GridBagConstraints();
+		gbc_GetUE4IDButton.insets = new Insets(0, 0, 0, 5);
+		gbc_GetUE4IDButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_GetUE4IDButton.gridx = 4;
+		gbc_GetUE4IDButton.gridy = 3;
+		advanced_commands_panel.add(GetUE4IDButton, gbc_GetUE4IDButton);
+		
+		JNumberedCheckbox GetUE4IDCheckbox = new JNumberedCheckbox("", 19);
+		GridBagConstraints gbc_GetUE4IDCheckbox = new GridBagConstraints();
+		gbc_RenamePlayerButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_GetUE4IDCheckbox.gridx = 5;
+		gbc_GetUE4IDCheckbox.gridy = 3;
+		advanced_commands_panel.add(GetUE4IDCheckbox, gbc_GetUE4IDCheckbox);
 		
 		JPanel CustomCommandsPanel = new JPanel();
 		tabbedPane.addTab("custom commands", null, CustomCommandsPanel, null);
@@ -919,6 +970,9 @@ public class AAMGui extends JFrame {
 					SwingUtilities.updateComponentTreeUI(CustomCommandsPanel);
 				}else if(tabbedPane.getSelectedIndex() == 4) {
 					SwingUtilities.updateComponentTreeUI(ImpotedItemsPanel);
+					
+					
+					
 					GridBagConstraints gbc_ImItemLabel = new GridBagConstraints();
 					gbc_ImItemLabel.insets = new Insets(0, 0, 0, 5);
 					gbc_ImItemLabel.gridx = 0;
@@ -930,25 +984,21 @@ public class AAMGui extends JFrame {
 					gbc_ImItemLabel2.gridy = 0;
 					gbc_ImItemLabel2.weighty = 1;
 					
+					System.out.println(Reference.ImportedItemGroups.size());
+					ScrollPanel.removeAll();
+					ScrollPanel.revalidate();
+					ScrollPanel.repaint();
+						
 					for(int i = 0; i < Reference.ImportedItemGroups.size(); i++) {
 						
-						ScrollPanel.removeAll();
-						ScrollPanel.revalidate();
-						ScrollPanel.repaint();
-						
-						ScrollPanel.add(Utils.generateTitleLabel(Reference.ImportedItemGroups.get(i).getFirstValue()), gbc_ImItemLabel);
-						gbc_ImItemLabel.gridy++;
-						ScrollPanel.add(Utils.generateTitleLabel("BP Path"), gbc_ImItemLabel2);
-						gbc_ImItemLabel2.gridy++;
+						System.out.println(i);
 						
 						for(int x =0; x < Reference.ImportedItemGroups.get(i).getSecondValue().size(); x++) {
 							ScrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(x).getSecondValue()), gbc_ImItemLabel);
 							gbc_ImItemLabel.gridy++;
-						}
-						
-						for(int y = 0; y < Reference.ImportedItemGroups.get(i).getSecondValue().size(); y++) {
-							ScrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(y).getFirstValue()), gbc_ImItemLabel2);
+							ScrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(x).getFirstValue()), gbc_ImItemLabel2);
 							gbc_ImItemLabel2.gridy++;
+							System.out.println(String.valueOf(i) + ", " + String.valueOf(x));
 						}
 						
 						

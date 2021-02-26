@@ -11,6 +11,7 @@ public class CSVReader {
 	static Pair DataPair;
 	static String Line;
 	static ArrayList<Pair<String, Boolean>> PairList;
+	static ArrayList<Pair<String, Integer>> PairListAdvanced;
 	static ArrayList<Pair<Integer, String>> ArgPairList;
 	static ArrayList<Pair<String, String>> ItemBPList;
 	
@@ -20,6 +21,7 @@ public class CSVReader {
 		
 		Line = "";
 		PairList = new ArrayList<Pair<String, Boolean>>();
+		PairListAdvanced = new ArrayList<Pair<String, Integer>>();
 		ArgPairList = new ArrayList<Pair<Integer, String>>();
 		ItemBPList = new ArrayList<Pair<String, String>>();
 	}
@@ -37,6 +39,22 @@ public class CSVReader {
 		br.close();
 		
 		return PairList;
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<Pair<String, Integer>> readCommandAdvancedList(String path) throws IOException {
+		
+		BufferedReader br = new BufferedReader(new FileReader(path));
+		while((Line = br.readLine()) != null) {
+			String[] values = Line.split(",");
+			DataPair = new Pair<String, Integer>(values[0].replace("﻿", ""), Integer.valueOf(values[1]));
+			PairListAdvanced.add(DataPair);
+		}
+		
+		br.close();
+		
+		return PairListAdvanced;
 		
 	}
 	
