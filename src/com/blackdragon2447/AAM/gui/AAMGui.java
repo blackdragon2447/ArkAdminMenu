@@ -991,16 +991,21 @@ public class AAMGui extends JFrame {
 						
 					for(int i = 0; i < Reference.ImportedItemGroups.size(); i++) {
 						
-						System.out.println(i);
 						
-						for(int x =0; x < Reference.ImportedItemGroups.get(i).getSecondValue().size(); x++) {
+						ScrollPanel.add(Utils.generateTitleLabel(Reference.ImportedItemGroups.get(i).getFirstValue()), gbc_ImItemLabel);
+						gbc_ImItemLabel.gridy++;
+						ScrollPanel.add(Utils.generateTitleLabel("BP Path"), gbc_ImItemLabel2);
+						gbc_ImItemLabel2.gridy++;
+						
+						for(int x = 0; x < Reference.ImportedItemGroups.get(i).getSecondValue().size(); x++) {
 							ScrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(x).getSecondValue()), gbc_ImItemLabel);
 							gbc_ImItemLabel.gridy++;
-							ScrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(x).getFirstValue()), gbc_ImItemLabel2);
-							gbc_ImItemLabel2.gridy++;
-							System.out.println(String.valueOf(i) + ", " + String.valueOf(x));
 						}
 						
+						for(int y = 0; y < Reference.ImportedItemGroups.get(i).getSecondValue().size(); y++) {
+							ScrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(y).getFirstValue()), gbc_ImItemLabel2);
+							gbc_ImItemLabel2.gridy++;
+						}
 						
 					}
 				}else if(tabbedPane.getSelectedIndex() == 5) {
