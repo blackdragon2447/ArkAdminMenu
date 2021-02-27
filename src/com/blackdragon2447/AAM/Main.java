@@ -48,11 +48,7 @@ public class Main {
 		File dir = new File("ItemLists");
 		String[] ItemFileList = dir.list();
 		
-		for(int i = 0; i < ItemFileList.length; i++) {
-			Reference.ItemFileArray.add(ItemFileList[i]);
-		}
-		
-		for (String string : Reference.ItemFileArray) {
+		for (String string : ItemFileList) {
 			try {
 				Reference.ImportedItemGroups.add(ItemSetBuilder.generatePair(string.substring(0, string.length() - 4), "ItemLists\\" + (String) string));
 			} catch (IOException e) {
