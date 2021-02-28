@@ -14,6 +14,7 @@ import org.aeonbits.owner.ConfigFactory;
 
 import com.blackdragon2447.AAM.gui.actionlistners.ActionlistnerAAM;
 import com.blackdragon2447.AAM.gui.components.JNumberedPanel;
+import com.blackdragon2447.AAM.util.iface.AAMConfig;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 public class FavButtonPanelBuilder {

@@ -52,9 +52,15 @@ import com.blackdragon2447.AAM.gui.components.JNumberedCheckbox;
 import com.blackdragon2447.AAM.gui.dialog.CustomPFDialog;
 import com.blackdragon2447.AAM.gui.dialog.HelpDialog;
 import com.blackdragon2447.AAM.gui.dialog.ImportItemsDialog;
-import com.blackdragon2447.AAM.util.AAMConfig;
+import com.blackdragon2447.AAM.gui.dialog.advCom.ForceIntoTribeDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.GFICommandDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.GiveExpToPlayerDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.RenamePlayerDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.RenameTribeDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.SteamToUE4Dialog;
 import com.blackdragon2447.AAM.util.FavButtonPanelBuilder;
 import com.blackdragon2447.AAM.util.Utils;
+import com.blackdragon2447.AAM.util.iface.AAMConfig;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
@@ -62,6 +68,7 @@ public class AAMGui extends JFrame {
 	private static final long serialVersionUID = -735583961255908606L;
 	private JPanel ContentPane;
 	static JPanel SimpleCommandsPanel = new JPanel();
+	static JPanel AdvancedCommandsPanel = new JPanel();
 	public static JRadioButtonMenuItem PFcheatRadioItem = new JRadioButtonMenuItem("cheat");
 	public static JRadioButtonMenuItem PFacheatRadioItem = new JRadioButtonMenuItem("admin cheat");
 	public static JRadioButtonMenuItem PFcustomRadioItem = new JRadioButtonMenuItem("custom prefix");
@@ -112,6 +119,19 @@ public class AAMGui extends JFrame {
 	JNumberedCheckbox UnbanCheckBox = new JNumberedCheckbox("", 12);
 	JNumberedButton KickButton = new JNumberedButton("kick player", 13);
 	JNumberedCheckbox KickCheckBox = new JNumberedCheckbox("", 13);
+	JNumberedButton GFIPlayerButton = new JNumberedButton("give item to player", 14);
+	JNumberedCheckbox GFIPlayerCheckBox = new JNumberedCheckbox("", 14);
+	JNumberedButton RenamePlayerButton = new JNumberedButton("rename rlayer", 15);
+	JNumberedCheckbox RenamePlayerCheckBox = new JNumberedCheckbox("", 15);
+	JNumberedButton RenameTribeButton = new JNumberedButton("rename tribe", 16);
+	JNumberedCheckbox RenameTribeCheckBox = new JNumberedCheckbox("", 16);
+	JNumberedButton ForcePlayerToTribeButton = new JNumberedButton("force player into tribe", 17);
+	JNumberedCheckbox ForcePlayerToTribeCheckbox = new JNumberedCheckbox("", 17);
+	JNumberedButton GivePlayerXPButton = new JNumberedButton("give xp to player", 18);
+	JNumberedCheckbox GivePlayerXPCheckbox = new JNumberedCheckbox("", 18);
+	JNumberedButton GetUE4IDButton = new JNumberedButton("get player ingame id", 19);
+	JNumberedCheckbox GetUE4IDCheckbox = new JNumberedCheckbox("", 19);
+	
 
 	
 	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
@@ -525,14 +545,13 @@ public class AAMGui extends JFrame {
 		SimpleCommandsPanel.add(KickCheckBox, gbc_KickCheckBox);
 		KickCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
-		JPanel advanced_commands_panel = new JPanel();
-		tabbedPane.addTab("advanced commands", null, advanced_commands_panel, null);
-		GridBagLayout gbl_advanced_commands_panel = new GridBagLayout();
-		gbl_advanced_commands_panel.columnWidths = new int[]{185, 0, 185, 0, 185, 0, 0};
-		gbl_advanced_commands_panel.rowHeights = new int[]{23, 0, 0, 0, 0};
-		gbl_advanced_commands_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_advanced_commands_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		advanced_commands_panel.setLayout(gbl_advanced_commands_panel);
+		tabbedPane.addTab("advanced commands", null, AdvancedCommandsPanel, null);
+		GridBagLayout gbl_AdvancedCommandsPanel = new GridBagLayout();
+		gbl_AdvancedCommandsPanel.columnWidths = new int[]{185, 0, 185, 0, 185, 0, 0};
+		gbl_AdvancedCommandsPanel.rowHeights = new int[]{23, 0, 0, 0, 0};
+		gbl_AdvancedCommandsPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_AdvancedCommandsPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		AdvancedCommandsPanel.setLayout(gbl_AdvancedCommandsPanel);
 		
 		JLabel ACDescLabel = new JLabel("Advanced Commands\r\n");
 		ACDescLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -540,7 +559,7 @@ public class AAMGui extends JFrame {
 		gbc_ACDescLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_ACDescLabel.gridx = 2;
 		gbc_ACDescLabel.gridy = 0;
-		advanced_commands_panel.add(ACDescLabel, gbc_ACDescLabel);
+		AdvancedCommandsPanel.add(ACDescLabel, gbc_ACDescLabel);
 		
 		JButton ACHelpButton = new JButton("?");
 		ACHelpButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -549,102 +568,166 @@ public class AAMGui extends JFrame {
 		gbc_ACHelpButton.insets = new Insets(0, 0, 5, 0);
 		gbc_ACHelpButton.gridx = 5;
 		gbc_ACHelpButton.gridy = 1;
-		advanced_commands_panel.add(ACHelpButton, gbc_ACHelpButton);
+		AdvancedCommandsPanel.add(ACHelpButton, gbc_ACHelpButton);
 		
-		JNumberedButton GFIPlayerButton = new JNumberedButton("give item to player");
-		GFIPlayerButton.Number = 14;
 		GridBagConstraints gbc_GFIPlayerButton = new GridBagConstraints();
 		gbc_GFIPlayerButton.insets = new Insets(0, 0, 5, 5);
 		gbc_GFIPlayerButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_GFIPlayerButton.gridx = 0;
 		gbc_GFIPlayerButton.gridy = 2;
-		advanced_commands_panel.add(GFIPlayerButton, gbc_GFIPlayerButton);
+		AdvancedCommandsPanel.add(GFIPlayerButton, gbc_GFIPlayerButton);
+		GFIPlayerButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					GFICommandDialog.createGui();
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
+						| UnsupportedLookAndFeelException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		
-		JCheckBox GFIPlayerCheckBox = new JNumberedCheckbox("", 14);
 		GridBagConstraints gbc_GFIPlayerCheckBox = new GridBagConstraints();
 		gbc_GFIPlayerCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_GFIPlayerCheckBox.gridx = 1;
 		gbc_GFIPlayerCheckBox.gridy = 2;
-		advanced_commands_panel.add(GFIPlayerCheckBox, gbc_GFIPlayerCheckBox);
+		AdvancedCommandsPanel.add(GFIPlayerCheckBox, gbc_GFIPlayerCheckBox);
+		GFIPlayerCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
-		JButton RenamePlayerButton = new JNumberedButton("rename rlayer", 15);
 		GridBagConstraints gbc_RenamePlayerButton = new GridBagConstraints();
 		gbc_RenamePlayerButton.insets = new Insets(0, 0, 5, 5);
 		gbc_RenamePlayerButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_RenamePlayerButton.gridx = 2;
 		gbc_RenamePlayerButton.gridy = 2;
-		advanced_commands_panel.add(RenamePlayerButton, gbc_RenamePlayerButton);
+		AdvancedCommandsPanel.add(RenamePlayerButton, gbc_RenamePlayerButton);
+		RenamePlayerButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					RenamePlayerDialog.createGui();
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
+						| UnsupportedLookAndFeelException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		
-		JCheckBox RenamePlayerCheckBox = new JNumberedCheckbox("", 15);
 		GridBagConstraints gbc_RenamePlayerCheckBox = new GridBagConstraints();
 		gbc_RenamePlayerCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_RenamePlayerButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_RenamePlayerCheckBox.gridx = 3;
 		gbc_RenamePlayerCheckBox.gridy = 2;
-		advanced_commands_panel.add(RenamePlayerCheckBox, gbc_RenamePlayerCheckBox);
+		AdvancedCommandsPanel.add(RenamePlayerCheckBox, gbc_RenamePlayerCheckBox);
+		RenamePlayerCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
-		JNumberedButton RenameTribeButton = new JNumberedButton("rename tribe", 16);
 		GridBagConstraints gbc_RenameTribeButton = new GridBagConstraints();
 		gbc_RenameTribeButton.insets = new Insets(0, 0, 5, 5);
 		gbc_RenameTribeButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_RenameTribeButton.gridx = 4;
 		gbc_RenameTribeButton.gridy = 2;
-		advanced_commands_panel.add(RenameTribeButton, gbc_RenameTribeButton);
+		AdvancedCommandsPanel.add(RenameTribeButton, gbc_RenameTribeButton);
+		RenameTribeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					RenameTribeDialog.createGui();
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
+						| UnsupportedLookAndFeelException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		
-		JCheckBox RenameTribeCheckBox = new JNumberedCheckbox("", 16);
 		GridBagConstraints gbc_RenameTribeCheckBox = new GridBagConstraints();
 		gbc_RenameTribeCheckBox.insets = new Insets(0, 0, 5, 0);
 		gbc_RenameTribeCheckBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_RenameTribeCheckBox.gridx = 5;
 		gbc_RenameTribeCheckBox.gridy = 2;
-		advanced_commands_panel.add(RenameTribeCheckBox, gbc_RenameTribeCheckBox);
+		AdvancedCommandsPanel.add(RenameTribeCheckBox, gbc_RenameTribeCheckBox);
+		RenamePlayerCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
-		JNumberedButton ForcePlayerToTribeButton = new JNumberedButton("force player into tribe", 17);
 		GridBagConstraints gbc_ForcePlayerToTribeButton = new GridBagConstraints();
 		gbc_ForcePlayerToTribeButton.insets = new Insets(0, 0, 0, 5);
 		gbc_ForcePlayerToTribeButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_ForcePlayerToTribeButton.gridx = 0;
 		gbc_ForcePlayerToTribeButton.gridy = 3;
-		advanced_commands_panel.add(ForcePlayerToTribeButton, gbc_ForcePlayerToTribeButton);
+		AdvancedCommandsPanel.add(ForcePlayerToTribeButton, gbc_ForcePlayerToTribeButton);
+		ForcePlayerToTribeButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ForceIntoTribeDialog.createGui();
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
+						| UnsupportedLookAndFeelException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		
-		JNumberedCheckbox ForcePlayerToTribeCheckbox = new JNumberedCheckbox("", 17);
 		GridBagConstraints gbc_ForcePlayerToTribeCheckbox = new GridBagConstraints();
 		gbc_ForcePlayerToTribeCheckbox.insets = new Insets(0, 0, 0, 5);
 		gbc_ForcePlayerToTribeCheckbox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_ForcePlayerToTribeCheckbox.gridx = 1;
 		gbc_ForcePlayerToTribeCheckbox.gridy = 3;
-		advanced_commands_panel.add(ForcePlayerToTribeCheckbox, gbc_ForcePlayerToTribeCheckbox);
+		AdvancedCommandsPanel.add(ForcePlayerToTribeCheckbox, gbc_ForcePlayerToTribeCheckbox);
 		
-		JNumberedButton GivePlayerXPButton = new JNumberedButton("give xp to player", 18);
 		GridBagConstraints gbc_GivePlayerXPButton = new GridBagConstraints();
 		gbc_GivePlayerXPButton.insets = new Insets(0, 0, 0, 5);
 		gbc_GivePlayerXPButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_GivePlayerXPButton.gridx = 2;
 		gbc_GivePlayerXPButton.gridy = 3;
-		advanced_commands_panel.add(GivePlayerXPButton, gbc_GivePlayerXPButton);
+		AdvancedCommandsPanel.add(GivePlayerXPButton, gbc_GivePlayerXPButton);
+		GivePlayerXPButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					GiveExpToPlayerDialog.createGui();
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
+						| UnsupportedLookAndFeelException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		
-		JNumberedCheckbox GivePlayerXPCheckbox = new JNumberedCheckbox("", 18);
 		GridBagConstraints gbc_GivePlayerXPCheckbox = new GridBagConstraints();
 		gbc_GivePlayerXPCheckbox.insets = new Insets(0, 0, 0, 5);
 		gbc_GivePlayerXPCheckbox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_GivePlayerXPCheckbox.gridx = 3;
 		gbc_GivePlayerXPCheckbox.gridy = 3;
-		advanced_commands_panel.add(GivePlayerXPCheckbox, gbc_GivePlayerXPCheckbox);
+		AdvancedCommandsPanel.add(GivePlayerXPCheckbox, gbc_GivePlayerXPCheckbox);
+		GivePlayerXPCheckbox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
-		JNumberedButton GetUE4IDButton = new JNumberedButton("get player ingame id", 19);
 		GridBagConstraints gbc_GetUE4IDButton = new GridBagConstraints();
 		gbc_GetUE4IDButton.insets = new Insets(0, 0, 0, 5);
 		gbc_GetUE4IDButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_GetUE4IDButton.gridx = 4;
 		gbc_GetUE4IDButton.gridy = 3;
-		advanced_commands_panel.add(GetUE4IDButton, gbc_GetUE4IDButton);
+		AdvancedCommandsPanel.add(GetUE4IDButton, gbc_GetUE4IDButton);
+		GetUE4IDButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					SteamToUE4Dialog.createGui();
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
+						| UnsupportedLookAndFeelException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		
-		JNumberedCheckbox GetUE4IDCheckbox = new JNumberedCheckbox("", 19);
 		GridBagConstraints gbc_GetUE4IDCheckbox = new GridBagConstraints();
 		gbc_RenamePlayerButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_GetUE4IDCheckbox.gridx = 5;
 		gbc_GetUE4IDCheckbox.gridy = 3;
-		advanced_commands_panel.add(GetUE4IDCheckbox, gbc_GetUE4IDCheckbox);
+		AdvancedCommandsPanel.add(GetUE4IDCheckbox, gbc_GetUE4IDCheckbox);
+		GetUE4IDCheckbox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		JPanel CustomCommandsPanel = new JPanel();
 		tabbedPane.addTab("custom commands", null, CustomCommandsPanel, null);
@@ -892,13 +975,13 @@ public class AAMGui extends JFrame {
 	    gbc_WelcomeTextLabel.gridy = 2;
 	    glass.add(WelcomeTextLabel, gbc_WelcomeTextLabel);
 	    
-	    JButton btnNewButton_8 = new JButton("OK");
-	    GridBagConstraints gbc_btnNewButton_8 = new GridBagConstraints();
-	    gbc_btnNewButton_8.insets = new Insets(0, 0, 5, 5);
-	    gbc_btnNewButton_8.gridx = 1;
-	    gbc_btnNewButton_8.gridy = 3;
-	    glass.add(btnNewButton_8, gbc_btnNewButton_8);
-	    btnNewButton_8.addActionListener(new ActionListener() {
+	    JButton WelcomeOkButton = new JButton("OK");
+	    GridBagConstraints gbc_WelcomeOkButton = new GridBagConstraints();
+	    gbc_WelcomeOkButton.insets = new Insets(0, 0, 5, 5);
+	    gbc_WelcomeOkButton.gridx = 1;
+	    gbc_WelcomeOkButton.gridy = 3;
+	    glass.add(WelcomeOkButton, gbc_WelcomeOkButton);
+	    WelcomeOkButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -965,7 +1048,7 @@ public class AAMGui extends JFrame {
 				}else if (tabbedPane.getSelectedIndex() == 1) {
 					SwingUtilities.updateComponentTreeUI(SimpleCommandsPanel);
 				}else if (tabbedPane.getSelectedIndex() == 2) {
-					SwingUtilities.updateComponentTreeUI(advanced_commands_panel);
+					SwingUtilities.updateComponentTreeUI(AdvancedCommandsPanel);
 				}else if (tabbedPane.getSelectedIndex() == 3) {
 					SwingUtilities.updateComponentTreeUI(CustomCommandsPanel);
 				}else if(tabbedPane.getSelectedIndex() == 4) {
@@ -1120,6 +1203,10 @@ public class AAMGui extends JFrame {
 	
 	public static JPanel GetSCPanel() {
 		return SimpleCommandsPanel;
+	}
+	
+	public static JPanel GetACPanel() {
+		return AdvancedCommandsPanel;
 	}
 	
 	public static LookAndFeel getLookAndFeel() {

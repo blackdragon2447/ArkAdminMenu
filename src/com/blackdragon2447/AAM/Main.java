@@ -1,6 +1,7 @@
 package com.blackdragon2447.AAM;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
@@ -9,9 +10,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.aeonbits.owner.ConfigFactory;
 
 import com.blackdragon2447.AAM.gui.AAMGui;
-import com.blackdragon2447.AAM.util.AAMConfig;
 import com.blackdragon2447.AAM.util.CSVReader;
 import com.blackdragon2447.AAM.util.ItemSetBuilder;
+import com.blackdragon2447.AAM.util.iface.AAMConfig;
 
 /**
  * the main class of AAM
@@ -48,11 +49,14 @@ public class Main {
 		File dir = new File("ItemLists");
 		String[] ItemFileList = dir.list();
 		
+		System.out.println(ItemFileList.length);
+		
 		for (String string : ItemFileList) {
 			try {
 				Reference.ImportedItemGroups.add(ItemSetBuilder.generatePair(string.substring(0, string.length() - 4), "ItemLists\\" + (String) string));
 			} catch (IOException e) {
-				e.printStackTrace();
+				if(!(e instanceof FileNotFoundException))
+					e.printStackTrace();
 			}
 		}
 		

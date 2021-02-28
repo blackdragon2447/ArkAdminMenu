@@ -27,6 +27,24 @@ public class GenericCommand {
 		this.Arguments = Arguments;
 	}
 	
+	public GenericCommand(String prefix, String command, String[] Arguments) {
+		
+		if (AAMGui.PFcheatRadioItem.isSelected() == true) {
+			this.Prefix = "cheat ";
+		}else if (AAMGui.PFacheatRadioItem.isSelected() == true) {
+			this.Prefix = "admincheat ";
+		}else {
+			this.Prefix = Reference.CustomPrefix + " ";
+		}
+		
+		if(this.Prefix == " ") this.Prefix = "";
+		
+		this.Command = command;
+		
+		this.Command = Command + "";
+		this.Arguments = Arguments;
+	}
+	
 	public String getPrefix() {
 		return Prefix;
 	}
@@ -57,11 +75,13 @@ public class GenericCommand {
 		
 		result = Prefix + Command;
 		
-		if(Arguments.length != 0) {
-			for(int i = 0; i < Arguments.length; i++) {
-				result = result + Arguments[i];
+		if(Arguments != null) {
+			if(Arguments.length != 0) {
+				for(int i = 0; i < Arguments.length; i++) {
+					result = result + " " + Arguments[i];
+				}
+				
 			}
-			
 		}
 		
 		return result;

@@ -15,11 +15,17 @@ public class Utils {
 	
 	public static JNumberedButton findButtonByNumber(int Number){
 		Component[] components = AAMGui.GetSCPanel().getComponents();
+		Component[] components2 = AAMGui.GetACPanel().getComponents();
 		ArrayList<JNumberedButton> buttons = new ArrayList<JNumberedButton>();
 		
 		for(int i = 0; i < components.length; i++) {
 			if(components[i] instanceof JNumberedButton) {
 				buttons.add((JNumberedButton) components[i]);
+			}
+		}
+		for(int i = 0; i < components2.length; i++) {
+			if(components2[i] instanceof JNumberedButton) {
+				buttons.add((JNumberedButton) components2[i]);
 			}
 		}
 		
@@ -44,11 +50,18 @@ public class Utils {
 	
 	public static JNumberedCheckbox findCheckboxByNumber(int Number){
 		Component[] components = AAMGui.GetSCPanel().getComponents();
+		Component[] components2 = AAMGui.GetACPanel().getComponents();
 		ArrayList<JNumberedCheckbox> boxes = new ArrayList<JNumberedCheckbox>();
 		
 		for(int i = 0; i < components.length; i++) {
 			if(components[i] instanceof JNumberedCheckbox) {
 				boxes.add((JNumberedCheckbox) components[i]);
+			}
+		}
+		
+		for(int i = 0; i < components2.length; i ++) {
+			if(components2[i] instanceof JNumberedCheckbox) {
+				boxes.add((JNumberedCheckbox) components2[i]);
 			}
 		}
 		
@@ -73,6 +86,20 @@ public class Utils {
 		
 		return commandPrefix + ListItem;
 	}
+	
+	public static String GenerateStringCommand(String Command) {
+		String commandPrefix = "";
+		if (AAMGui.PFcheatRadioItem.isSelected() == true) {
+			commandPrefix = "cheat ";
+		}else if (AAMGui.PFacheatRadioItem.isSelected() == true) {
+			commandPrefix = "admincheat ";
+		}else {
+			commandPrefix = Reference.CustomPrefix + " ";
+		}
+		
+		return commandPrefix + Command;
+	}
+	
 	
 	public static String getPrefix() {
 		String commandPrefix = "";

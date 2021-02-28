@@ -1,4 +1,4 @@
-package com.blackdragon2447.AAM.util;
+package com.blackdragon2447.AAM.util.iface;
 
 import org.aeonbits.owner.Accessible;
 import org.aeonbits.owner.Config.Sources;
