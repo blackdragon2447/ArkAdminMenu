@@ -12,7 +12,7 @@ import org.aeonbits.owner.ConfigFactory;
 
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
-import com.blackdragon2447.AAM.util.AAMConfig;
+import com.blackdragon2447.AAM.util.iface.AAMConfig;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;

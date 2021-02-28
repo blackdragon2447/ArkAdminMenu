@@ -1,4 +1,4 @@
-package com.blackdragon2447.AAM.gui.dialog;
+package com.blackdragon2447.AAM.gui.dialog.advCom;
 
 import java.awt.Component;
 import java.awt.EventQueue;
@@ -10,7 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,31 +30,40 @@ import org.aeonbits.owner.ConfigFactory;
 
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
+import com.blackdragon2447.AAM.util.Pair;
 import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
-import com.blackdragon2447.AAM.util.obj.SimpleCommand;
+import com.blackdragon2447.AAM.util.obj.GenericCommand;
 
-public class SimpleCommandDialog extends JFrame {
+public class RenamePlayerDialog extends JFrame {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 3122563720977107636L;
 	private JPanel contentPane;
-	private JTextField ArgumentField;
+	private JTextField PlayerNameField;
 	private JButton RunButton;
 	private JButton QueueButton;
 	private JLabel OutPutLabel;
 	private JLabel ArgumentLabel;
-	private JLabel ArgDescLabel;
 	private JSeparator Separator;
 	AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
+	private JLabel PlayerNameLabel;
+	private JLabel NewPlayerNameLabel;
+	ArrayList<Pair<String, String>> FullItemPairList;
+	RefreshThread refreshThread = new RefreshThread();
+	Thread thread = new Thread(refreshThread);
+	private JTextField newPlayerNameField;
 
 	
-	public static void createGui(int CommandNumber) throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
+	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 		
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SimpleCommandDialog frame = new SimpleCommandDialog(CommandNumber);
+					RenamePlayerDialog frame = new RenamePlayerDialog();
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -65,7 +78,7 @@ public class SimpleCommandDialog extends JFrame {
 	 * Create the frame.
 	 * @throws UnsupportedLookAndFeelException 
 	 */
-	public SimpleCommandDialog(int command) throws UnsupportedLookAndFeelException {
+	public RenamePlayerDialog() throws UnsupportedLookAndFeelException {
 		
 
 		try {
@@ -75,15 +88,15 @@ public class SimpleCommandDialog extends JFrame {
 		}
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 250);
+		setBounds(100, 100, 530, 413);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{40, 180, 180, 40, 0};
-		gbl_contentPane.rowHeights = new int[]{30, 20, 0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowHeights = new int[]{30, 20, 0, 0, 0, 0, 0, 0};
+		gbl_contentPane.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
 		Separator = new JSeparator();
@@ -103,7 +116,7 @@ public class SimpleCommandDialog extends JFrame {
 		gbc_CommandLabel.gridy = 1;
 		contentPane.add(CommandLabel, gbc_CommandLabel);
 		
-		OutPutLabel = new JLabel(Utils.GenerateCommand(command));
+		OutPutLabel = new JLabel(Utils.GenerateStringCommand("renameplayer"));
 		GridBagConstraints gbc_outPutLabel = new GridBagConstraints();
 		gbc_outPutLabel.gridwidth = 2;
 		gbc_outPutLabel.insets = new Insets(0, 0, 5, 5);
@@ -111,7 +124,7 @@ public class SimpleCommandDialog extends JFrame {
 		gbc_outPutLabel.gridy = 2;
 		contentPane.add(OutPutLabel, gbc_outPutLabel);
 		
-		ArgumentLabel = new JLabel("argument description");
+		ArgumentLabel = new JLabel("arguments");
 		ArgumentLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		GridBagConstraints gbc_argumentLabel = new GridBagConstraints();
 		gbc_argumentLabel.gridwidth = 2;
@@ -120,24 +133,26 @@ public class SimpleCommandDialog extends JFrame {
 		gbc_argumentLabel.gridy = 3;
 		contentPane.add(ArgumentLabel, gbc_argumentLabel);
 		
-		ArgDescLabel = new JLabel(String.valueOf(Reference.SimpleCommandArgList.get(command).getSecondValue()));
-		GridBagConstraints gbc_ArgDescLabel = new GridBagConstraints();
-		gbc_ArgDescLabel.gridwidth = 2;
-		gbc_ArgDescLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_ArgDescLabel.gridx = 1;
-		gbc_ArgDescLabel.gridy = 4;
-		contentPane.add(ArgDescLabel, gbc_ArgDescLabel);
+		for (Pair<Integer, String> pair: Reference.AdvancedCommandArgList) {
+			System.out.println(pair.GetcsvValue());
+		}
 		
-		ArgumentField = new JTextField();
-		GridBagConstraints gbc_ArgumentField = new GridBagConstraints();
-		gbc_ArgumentField.gridwidth = 2;
-		gbc_ArgumentField.insets = new Insets(0, 0, 5, 5);
-		gbc_ArgumentField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_ArgumentField.gridx = 1;
-		gbc_ArgumentField.gridy = 5;
-		contentPane.add(ArgumentField, gbc_ArgumentField);
-		ArgumentField.setColumns(10);
-		ArgumentField.addKeyListener(new KeyListener() {
+		PlayerNameLabel = new JLabel("player name");
+		GridBagConstraints gbc_PlayerNameLabel = new GridBagConstraints();
+		gbc_PlayerNameLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_PlayerNameLabel.gridx = 1;
+		gbc_PlayerNameLabel.gridy = 4;
+		contentPane.add(PlayerNameLabel, gbc_PlayerNameLabel);
+		
+		PlayerNameField = new JTextField();
+		GridBagConstraints gbc_PlayerNameField = new GridBagConstraints();
+		gbc_PlayerNameField.insets = new Insets(0, 0, 5, 5);
+		gbc_PlayerNameField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_PlayerNameField.gridx = 2;
+		gbc_PlayerNameField.gridy = 4;
+		contentPane.add(PlayerNameField, gbc_PlayerNameField);
+		PlayerNameField.setColumns(10);
+		PlayerNameField.addKeyListener(new KeyListener() {
 			
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -146,7 +161,6 @@ public class SimpleCommandDialog extends JFrame {
 			
 			@Override
 			public void keyReleased(KeyEvent e) {
-				OutPutLabel.setText(Utils.GenerateCommand(command) + " " + ArgumentField.getText());
 				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) dispose();
 			}
 			
@@ -156,11 +170,27 @@ public class SimpleCommandDialog extends JFrame {
 			}
 		});
 		
+		NewPlayerNameLabel = new JLabel("new player name");
+		GridBagConstraints gbc_NewPlayerNameLabel = new GridBagConstraints();
+		gbc_NewPlayerNameLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_NewPlayerNameLabel.gridx = 1;
+		gbc_NewPlayerNameLabel.gridy = 5;
+		contentPane.add(NewPlayerNameLabel, gbc_NewPlayerNameLabel);
+		
+		newPlayerNameField = new JTextField();
+		GridBagConstraints gbc_newPlayerNameField = new GridBagConstraints();
+		gbc_newPlayerNameField.insets = new Insets(0, 0, 5, 5);
+		gbc_newPlayerNameField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_newPlayerNameField.gridx = 2;
+		gbc_newPlayerNameField.gridy = 5;
+		contentPane.add(newPlayerNameField, gbc_newPlayerNameField);
+		newPlayerNameField.setColumns(10);
+		
 		RunButton = new JButton("Run");
 		GridBagConstraints gbc_RunButton = new GridBagConstraints();
 		gbc_RunButton.insets = new Insets(0, 0, 0, 5);
 		gbc_RunButton.gridx = 1;
-		gbc_RunButton.gridy = 7;
+		gbc_RunButton.gridy = 6;
 		contentPane.add(RunButton, gbc_RunButton);
 		RunButton.addActionListener(new ActionListener() {
 			
@@ -168,6 +198,7 @@ public class SimpleCommandDialog extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(OutPutLabel.getText());
 				dispose();
+				refreshThread.stop();
 			}
 		});
 		
@@ -175,18 +206,22 @@ public class SimpleCommandDialog extends JFrame {
 		GridBagConstraints gbc_QueueButton = new GridBagConstraints();
 		gbc_QueueButton.insets = new Insets(0, 0, 0, 5);
 		gbc_QueueButton.gridx = 2;
-		gbc_QueueButton.gridy = 7;
+		gbc_QueueButton.gridy = 6;
 		contentPane.add(QueueButton, gbc_QueueButton);
 		QueueButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Reference.Queue.add(new SimpleCommand(Utils.getPrefix(), command, ArgumentField.getText()).generateGenericCommand());
+				String[] arguments = {null, null};
+				
+				arguments[0] = "\"" + PlayerNameField.getText() + "\"";
+				arguments[1] = newPlayerNameField.getText();
+				
+				Reference.Queue.add(new GenericCommand(Utils.getPrefix(), "renameplayer", arguments));
+				refreshThread.stop();
 				dispose();
 			}
 		});
-		
-		if(Reference.SimpleCommandList.get(command).getSecondValue() == false) ArgumentField.setEnabled(false);
 		
 		addKeyListener(new KeyListener() {
 			
@@ -233,13 +268,78 @@ public class SimpleCommandDialog extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) dispose();
 				
-				}
+			}
 			});
 			
 			component.setFocusable(true);
 			
+			
 		}
+		
+		thread.start();
+		
+		addWindowListener(new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent e) {}
+			
+			@Override
+			public void windowIconified(WindowEvent e) {}
+			
+			@Override
+			public void windowDeiconified(WindowEvent e) {}
+			
+			@Override
+			public void windowDeactivated(WindowEvent e) {}
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				refreshThread.stop();
+			}
+			
+			@Override
+			public void windowClosed(WindowEvent e) {}
+			
+			@Override
+			public void windowActivated(WindowEvent e) {}
+		});
 
+	}
+	
+	class RefreshThread implements Runnable {
+
+		Thread RefreshThead;
+	    private volatile boolean exit = false;
+
+		
+		public RefreshThread() {}
+		
+		@Override
+		public void run() {
+			
+			while(!exit) {
+				try {
+					TimeUnit.SECONDS.sleep(1);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+				String[] arguments = {null, null};
+				
+				arguments[0] = "\"" + PlayerNameField.getText() + "\"";
+				arguments[1] = newPlayerNameField.getText();
+				
+				System.out.println("-----");
+				OutPutLabel.setText(new GenericCommand(Utils.getPrefix(), "renameplayer", arguments).generateCommand());
+				
+			}
+			
+		}
+		
+		public void stop() {
+			exit = true;
+		}
+		
 	}
 
 }
