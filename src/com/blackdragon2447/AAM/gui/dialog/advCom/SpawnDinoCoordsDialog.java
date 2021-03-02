@@ -17,12 +17,15 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -36,16 +39,12 @@ import com.blackdragon2447.AAM.util.Pair;
 import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 import com.blackdragon2447.AAM.util.obj.GenericCommand;
-import javax.swing.JTextField;
-import javax.swing.JCheckBox;
+import com.jidesoft.swing.ComboBoxSearchable;
 
-public class GiveExpToPlayerDialog extends JFrame {
+public class SpawnDinoCoordsDialog extends JFrame {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3122563720977107636L;
-	private JPanel contentPane;
+	private static final long serialVersionUID = -7611273233935193420L;
+	private JPanel X;
 	private JButton RunButton;
 	private JButton QueueButton;
 	private JLabel OutPutLabel;
@@ -53,14 +52,22 @@ public class GiveExpToPlayerDialog extends JFrame {
 	private JSeparator Separator;
 	AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
 	private JLabel PlayerSteamIDLabel;
-	private JLabel XpAmountLabel;
-	ArrayList<Pair<String, String>> FullItemPairList;
+	private JLabel LevelLabel;
+	ArrayList<Pair<String, String>> FullCreaturePairList;
 	RefreshThread refreshThread = new RefreshThread();
 	Thread thread = new Thread(refreshThread);
-	private JSpinner XpAmountSpinner;
+	private JSpinner LevelSpinner;
 	private JTextField PlayerIDField;
-	private JLabel ShareWithTribeLabel;
-	private JCheckBox ShareWithTribeCheckBox;
+	private JLabel TamedLabel;
+	private JCheckBox TamedCheckBox;
+	private JLabel BPPathLabel;
+	private JComboBox<String> DinoBPComboBox;
+	private JLabel XCoordLabel;
+	private JLabel YCoordLabel;
+	private JLabel ZCoordLabel;
+	private JTextField XField;
+	private JTextField YField;
+	private JTextField ZField;
 
 	
 	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
@@ -69,7 +76,7 @@ public class GiveExpToPlayerDialog extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GiveExpToPlayerDialog frame = new GiveExpToPlayerDialog();
+					SpawnDinoCoordsDialog frame = new SpawnDinoCoordsDialog();
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -84,7 +91,7 @@ public class GiveExpToPlayerDialog extends JFrame {
 	 * Create the frame.
 	 * @throws UnsupportedLookAndFeelException 
 	 */
-	public GiveExpToPlayerDialog() throws UnsupportedLookAndFeelException {
+	public SpawnDinoCoordsDialog() throws UnsupportedLookAndFeelException {
 		
 
 		try {
@@ -94,16 +101,16 @@ public class GiveExpToPlayerDialog extends JFrame {
 		}
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 530, 246);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{40, 180, 180, 40, 0};
-		gbl_contentPane.rowHeights = new int[]{30, 20, 0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		contentPane.setLayout(gbl_contentPane);
+		setBounds(100, 100, 530, 364);
+		X = new JPanel();
+		X.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(X);
+		GridBagLayout gbl_X = new GridBagLayout();
+		gbl_X.columnWidths = new int[]{40, 180, 180, 40, 0};
+		gbl_X.rowHeights = new int[]{30, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_X.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_X.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		X.setLayout(gbl_X);
 		
 		Separator = new JSeparator();
 		GridBagConstraints gbc_separator = new GridBagConstraints();
@@ -111,7 +118,7 @@ public class GiveExpToPlayerDialog extends JFrame {
 		gbc_separator.insets = new Insets(0, 0, 5, 5);
 		gbc_separator.gridx = 1;
 		gbc_separator.gridy = 0;
-		contentPane.add(Separator, gbc_separator);
+		X.add(Separator, gbc_separator);
 		
 		JLabel CommandLabel = new JLabel("command");
 		CommandLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -120,15 +127,15 @@ public class GiveExpToPlayerDialog extends JFrame {
 		gbc_CommandLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_CommandLabel.gridx = 1;
 		gbc_CommandLabel.gridy = 1;
-		contentPane.add(CommandLabel, gbc_CommandLabel);
+		X.add(CommandLabel, gbc_CommandLabel);
 		
-		OutPutLabel = new JLabel(Utils.GenerateStringCommand("giveexptoplayer"));
+		OutPutLabel = new JLabel(Utils.GenerateStringCommand("spawndino"));
 		GridBagConstraints gbc_outPutLabel = new GridBagConstraints();
 		gbc_outPutLabel.gridwidth = 2;
 		gbc_outPutLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_outPutLabel.gridx = 1;
 		gbc_outPutLabel.gridy = 2;
-		contentPane.add(OutPutLabel, gbc_outPutLabel);
+		X.add(OutPutLabel, gbc_outPutLabel);
 		
 		ArgumentLabel = new JLabel("arguments");
 		ArgumentLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -137,7 +144,7 @@ public class GiveExpToPlayerDialog extends JFrame {
 		gbc_argumentLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_argumentLabel.gridx = 1;
 		gbc_argumentLabel.gridy = 3;
-		contentPane.add(ArgumentLabel, gbc_argumentLabel);
+		X.add(ArgumentLabel, gbc_argumentLabel);
 		
 		for (Pair<Integer, String> pair: Reference.AdvancedCommandArgList) {
 			System.out.println(pair.GetcsvValue());
@@ -148,7 +155,7 @@ public class GiveExpToPlayerDialog extends JFrame {
 		gbc_PlayerSteamIDLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_PlayerSteamIDLabel.gridx = 1;
 		gbc_PlayerSteamIDLabel.gridy = 4;
-		contentPane.add(PlayerSteamIDLabel, gbc_PlayerSteamIDLabel);
+		X.add(PlayerSteamIDLabel, gbc_PlayerSteamIDLabel);
 		
 		PlayerIDField = new JTextField();
 		GridBagConstraints gbc_PlayerIDField = new GridBagConstraints();
@@ -156,48 +163,132 @@ public class GiveExpToPlayerDialog extends JFrame {
 		gbc_PlayerIDField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_PlayerIDField.gridx = 2;
 		gbc_PlayerIDField.gridy = 4;
-		contentPane.add(PlayerIDField, gbc_PlayerIDField);
+		X.add(PlayerIDField, gbc_PlayerIDField);
 		PlayerIDField.setColumns(10);
 		
-
-		XpAmountLabel = new JLabel("Xp anmount");
-		GridBagConstraints gbc_XpAmountLabel = new GridBagConstraints();
-		gbc_XpAmountLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_XpAmountLabel.gridx = 1;
-		gbc_XpAmountLabel.gridy = 5;
-		contentPane.add(XpAmountLabel, gbc_XpAmountLabel);
+		BPPathLabel = new JLabel("Dino");
+		GridBagConstraints gbc_BPPathLabel = new GridBagConstraints();
+		gbc_BPPathLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_BPPathLabel.gridx = 1;
+		gbc_BPPathLabel.gridy = 5;
+		X.add(BPPathLabel, gbc_BPPathLabel);
 		
-		XpAmountSpinner = new JSpinner();
-		XpAmountSpinner.setModel(new SpinnerNumberModel(new Integer(1000), new Integer(0), null, new Integer(1000)));
-		GridBagConstraints gbc_XpAmountSpinner = new GridBagConstraints();
-		gbc_XpAmountSpinner.insets = new Insets(0, 0, 5, 5);
-		gbc_XpAmountSpinner.gridx = 2;
-		gbc_XpAmountSpinner.gridy = 5;
-		contentPane.add(XpAmountSpinner, gbc_XpAmountSpinner);
-		Component spinnerEditor = XpAmountSpinner.getEditor();
+		DinoBPComboBox = new JComboBox<String>();
+		GridBagConstraints gbc_DinoBPComboBox = new GridBagConstraints();
+		gbc_DinoBPComboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_DinoBPComboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_DinoBPComboBox.gridx = 2;
+		gbc_DinoBPComboBox.gridy = 5;
+		X.add(DinoBPComboBox, gbc_DinoBPComboBox);
+		
+		DinoBPComboBox.removeAllItems();
+		
+		ArrayList<String> FullCreatureList = new ArrayList<String>();
+		FullCreaturePairList = new ArrayList<Pair<String, String>>();
+		for(int i = 0; i < Reference.ImportedCreatureGroups.size(); i++) {
+			System.out.println(Reference.ImportedCreatureGroups.get(i).getSecondValue().size());
+			for(int x = 0; x < Reference.ImportedCreatureGroups.get(i).getSecondValue().size(); x++) {
+				FullCreatureList.add(Reference.ImportedCreatureGroups.get(i).getSecondValue().get(x).getSecondValue());
+				FullCreaturePairList.add(Reference.ImportedCreatureGroups.get(i).getSecondValue().get(x));
+				System.out.println(Reference.ImportedCreatureGroups.get(i).getSecondValue().get(x).getSecondValue());
+			}
+			
+		}
+		for (String string : FullCreatureList) {
+			DinoBPComboBox.addItem(string);
+		}
+		DinoBPComboBox.setSelectedIndex(-1);
+		
+		@SuppressWarnings("unused")
+		ComboBoxSearchable searchable = new ComboBoxSearchable(DinoBPComboBox);
+		
+
+		LevelLabel = new JLabel("Level");
+		GridBagConstraints gbc_LevelLabel = new GridBagConstraints();
+		gbc_LevelLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_LevelLabel.gridx = 1;
+		gbc_LevelLabel.gridy = 6;
+		X.add(LevelLabel, gbc_LevelLabel);
+		
+		LevelSpinner = new JSpinner();
+		LevelSpinner.setModel(new SpinnerNumberModel(600, 0, 900, 20));
+		GridBagConstraints gbc_LevelSpinner = new GridBagConstraints();
+		gbc_LevelSpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_LevelSpinner.gridx = 2;
+		gbc_LevelSpinner.gridy = 6;
+		X.add(LevelSpinner, gbc_LevelSpinner);
+		Component spinnerEditor = LevelSpinner.getEditor();
 		JFormattedTextField SpinnerTF = ((JSpinner.DefaultEditor) spinnerEditor).getTextField();
 		SpinnerTF.setColumns(5);
 		
-		ShareWithTribeLabel = new JLabel("Share With Tribe");
-		GridBagConstraints gbc_ShareWithTribeLabel = new GridBagConstraints();
-		gbc_ShareWithTribeLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_ShareWithTribeLabel.gridx = 1;
-		gbc_ShareWithTribeLabel.gridy = 6;
-		contentPane.add(ShareWithTribeLabel, gbc_ShareWithTribeLabel);
+		TamedLabel = new JLabel("Tamed");
+		GridBagConstraints gbc_TamedLabel = new GridBagConstraints();
+		gbc_TamedLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_TamedLabel.gridx = 1;
+		gbc_TamedLabel.gridy = 7;
+		X.add(TamedLabel, gbc_TamedLabel);
 		
-		ShareWithTribeCheckBox = new JCheckBox("");
-		GridBagConstraints gbc_ShareWithTribeCheckBox = new GridBagConstraints();
-		gbc_ShareWithTribeCheckBox.insets = new Insets(0, 0, 5, 5);
-		gbc_ShareWithTribeCheckBox.gridx = 2;
-		gbc_ShareWithTribeCheckBox.gridy = 6;
-		contentPane.add(ShareWithTribeCheckBox, gbc_ShareWithTribeCheckBox);
+		TamedCheckBox = new JCheckBox("");
+		GridBagConstraints gbc_TamedCheckBox = new GridBagConstraints();
+		gbc_TamedCheckBox.insets = new Insets(0, 0, 5, 5);
+		gbc_TamedCheckBox.gridx = 2;
+		gbc_TamedCheckBox.gridy = 7;
+		X.add(TamedCheckBox, gbc_TamedCheckBox);
+		
+		XCoordLabel = new JLabel("X");
+		GridBagConstraints gbc_XCoordLabel = new GridBagConstraints();
+		gbc_XCoordLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_XCoordLabel.gridx = 1;
+		gbc_XCoordLabel.gridy = 8;
+		X.add(XCoordLabel, gbc_XCoordLabel);
+		
+		XField = new JTextField();
+		GridBagConstraints gbc_XField = new GridBagConstraints();
+		gbc_XField.insets = new Insets(0, 0, 5, 5);
+		gbc_XField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_XField.gridx = 2;
+		gbc_XField.gridy = 8;
+		X.add(XField, gbc_XField);
+		XField.setColumns(10);
+		
+		YCoordLabel = new JLabel("Y");
+		GridBagConstraints gbc_YCoordLabel = new GridBagConstraints();
+		gbc_YCoordLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_YCoordLabel.gridx = 1;
+		gbc_YCoordLabel.gridy = 9;
+		X.add(YCoordLabel, gbc_YCoordLabel);
+		
+		YField = new JTextField();
+		GridBagConstraints gbc_YField = new GridBagConstraints();
+		gbc_YField.insets = new Insets(0, 0, 5, 5);
+		gbc_YField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_YField.gridx = 2;
+		gbc_YField.gridy = 9;
+		X.add(YField, gbc_YField);
+		YField.setColumns(10);
+		
+		ZCoordLabel = new JLabel("Z");
+		GridBagConstraints gbc_ZCoordLabel = new GridBagConstraints();
+		gbc_ZCoordLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_ZCoordLabel.gridx = 1;
+		gbc_ZCoordLabel.gridy = 10;
+		X.add(ZCoordLabel, gbc_ZCoordLabel);
+		
+		ZField = new JTextField();
+		GridBagConstraints gbc_ZField = new GridBagConstraints();
+		gbc_ZField.insets = new Insets(0, 0, 5, 5);
+		gbc_ZField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_ZField.gridx = 2;
+		gbc_ZField.gridy = 10;
+		X.add(ZField, gbc_ZField);
+		ZField.setColumns(10);
 		
 		RunButton = new JButton("Run");
 		GridBagConstraints gbc_RunButton = new GridBagConstraints();
 		gbc_RunButton.insets = new Insets(0, 0, 0, 5);
 		gbc_RunButton.gridx = 1;
-		gbc_RunButton.gridy = 7;
-		contentPane.add(RunButton, gbc_RunButton);
+		gbc_RunButton.gridy = 11;
+		X.add(RunButton, gbc_RunButton);
 		RunButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -212,19 +303,22 @@ public class GiveExpToPlayerDialog extends JFrame {
 		GridBagConstraints gbc_QueueButton = new GridBagConstraints();
 		gbc_QueueButton.insets = new Insets(0, 0, 0, 5);
 		gbc_QueueButton.gridx = 2;
-		gbc_QueueButton.gridy = 7;
-		contentPane.add(QueueButton, gbc_QueueButton);
+		gbc_QueueButton.gridy = 11;
+		X.add(QueueButton, gbc_QueueButton);
 		QueueButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String[] arguments = {null, null, null, null};
+				String[] arguments = {null, null, null, null, null, null, null};
 				
 				arguments[0] = PlayerIDField.getText();
-				arguments[1] = String.valueOf(((Integer) XpAmountSpinner.getValue()));
-				arguments[2] = "0";
-				arguments[3] = ShareWithTribeCheckBox.isSelected() ? "0" : "1";
-				
+				arguments[1] = "\""+FullCreaturePairList.get(DinoBPComboBox.getSelectedIndex()).getFirstValue()+"\"";
+				arguments[2] = String.valueOf(((Integer) LevelSpinner.getValue()));
+				arguments[3] = TamedCheckBox.isSelected() ? "1" : "0";
+				arguments[4] = "0";
+				arguments[5] = "0";
+				arguments[6] = "0";
+						
 				Reference.Queue.add(new GenericCommand(Utils.getPrefix(), "addexperience", arguments));
 				refreshThread.stop();
 				dispose();
@@ -332,15 +426,22 @@ public class GiveExpToPlayerDialog extends JFrame {
 					e.printStackTrace();
 				}
 				
-				String[] arguments = {null, null, null, null};
-				
+				String[] arguments = {null, null, null, null, null, null, null};
+
 				arguments[0] = PlayerIDField.getText();
-				arguments[1] = String.valueOf(((Integer) XpAmountSpinner.getValue()));
-				arguments[2] = "0";
-				arguments[3] = ShareWithTribeCheckBox.isSelected() ? "0" : "1";
+				try {
+					arguments[1] = "\""+FullCreaturePairList.get(DinoBPComboBox.getSelectedIndex()).getFirstValue()+"\"";
+				} catch (ArrayIndexOutOfBoundsException e) {
+					arguments[1] = "";
+				}
+				arguments[2] = String.valueOf(((Integer) LevelSpinner.getValue()));
+				arguments[3] = TamedCheckBox.isSelected() ? "1" : "0";
+				arguments[4] = "0";
+				arguments[5] = "0";
+				arguments[6] = "0";
 				
 				System.out.println("-----");
-				OutPutLabel.setText(new GenericCommand(Utils.getPrefix(), "addexperience", arguments).generateCommand());
+				OutPutLabel.setText(new GenericCommand(Utils.getPrefix(), "spawndino", arguments).generateCommand());
 				
 			}
 			

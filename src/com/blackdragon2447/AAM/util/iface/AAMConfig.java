@@ -15,6 +15,10 @@ public interface AAMConfig extends Accessible, Mutable{
 	
 	int[] Favorites();
 	
+	String[] ScriptCommands();
+	
+	String[] ScriptCommandsNames();
+	
 	@DefaultValue("true")
 	Boolean ShowWelcome();
 	

@@ -18,7 +18,10 @@ public class Reference {
 	public static ArrayList<GenericCommand> Queue = new ArrayList<GenericCommand>();
 	public static ArrayList<Pair<String, 	 ArrayList<Pair<String, String>>>> ImportedItemGroups = new ArrayList<Pair<String, ArrayList<Pair<String, String>>>>();
 	//			  groups:		 group name	 items:	   item:name	bp_path
+	public static ArrayList<Pair<String, 	 ArrayList<Pair<String, String>>>> ImportedCreatureGroups = new ArrayList<Pair<String, ArrayList<Pair<String, String>>>>();
+	//			  groups:		 group name	 dinos:	   dino:name	bp_path
 	public static ArrayList<String> ImportedItemGroupFiles = new ArrayList<String>();
+	public static ArrayList<String> ImportedCreatureGroupFiles = new ArrayList<String>();
 	public static ArrayList<String> ItemFileArray = new ArrayList<String>();
 
 

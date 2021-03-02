@@ -11,6 +11,7 @@ import org.aeonbits.owner.ConfigFactory;
 
 import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.util.CSVReader;
+import com.blackdragon2447.AAM.util.CreatureSetBuilder;
 import com.blackdragon2447.AAM.util.ItemSetBuilder;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 
@@ -40,8 +41,6 @@ public class Main {
 		try {
 			Reference.SimpleCommandList = CSVReader.readCommandList("simpleCommands.csv");
 			Reference.SimpleCommandArgList = CSVReader.readArgList("simpleCommandsArgs.csv");
-			Reference.AdvancedCommandList = CSVReader.readCommandAdvancedList("AdvancedCommands.csv");
-			Reference.AdvancedCommandArgList = CSVReader.readArgList("AdvancedCommandsArgs.csv");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -49,16 +48,28 @@ public class Main {
 		File dir = new File("ItemLists");
 		String[] ItemFileList = dir.list();
 		
-		System.out.println(ItemFileList.length);
-		
 		for (String string : ItemFileList) {
 			try {
-				Reference.ImportedItemGroups.add(ItemSetBuilder.generatePair(string.substring(0, string.length() - 4), "ItemLists\\" + (String) string));
+				Reference.ImportedItemGroups.add(ItemSetBuilder.generatePair(string.substring(0, string.length() - 4), "ItemLists\\" + string));
 			} catch (IOException e) {
 				if(!(e instanceof FileNotFoundException))
 					e.printStackTrace();
 			}
 		}
+		
+		File dir2 = new File("CreatureLists");
+		String[] DinoFileList = dir2.list();
+		
+		System.out.println(DinoFileList.length);
+		
+		for (String string2 : DinoFileList) {
+			try {
+				Reference.ImportedCreatureGroups.add(CreatureSetBuilder.generatePair(string2.substring(0, string2.length() - 4), "CreatureLists\\" + string2));
+			} catch (IOException e) {
+					e.printStackTrace();
+			}
+		}
+		
 		
 		Reference.CustomPrefix = cfg.CustomPrefix();
 		

@@ -126,7 +126,7 @@ public class GFICommandDialog extends JFrame {
 		gbc_CommandLabel.gridy = 1;
 		contentPane.add(CommandLabel, gbc_CommandLabel);
 		
-		OutPutLabel = new JLabel(Utils.GenerateStringCommand("giveitemtoplayer"));
+		OutPutLabel = new JLabel(Utils.GenerateStringCommand("giveitem"));
 		GridBagConstraints gbc_outPutLabel = new GridBagConstraints();
 		gbc_outPutLabel.gridwidth = 2;
 		gbc_outPutLabel.insets = new Insets(0, 0, 5, 5);
@@ -147,7 +147,7 @@ public class GFICommandDialog extends JFrame {
 			System.out.println(pair.GetcsvValue());
 		}
 		
-		PlayerIdLabel = new JLabel("player id");
+		PlayerIdLabel = new JLabel("player steam id");
 		GridBagConstraints gbc_PlayerIdLabel = new GridBagConstraints();
 		gbc_PlayerIdLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_PlayerIdLabel.gridx = 1;
@@ -187,7 +187,6 @@ public class GFICommandDialog extends JFrame {
 		gbc_ItemLabel.gridy = 5;
 		contentPane.add(ItemLabel, gbc_ItemLabel);
 		
-		//SortedComboBoxModel<String> model = new SortedComboBoxModel<String>();
 		comboBox = new JComboBox<String>();
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
@@ -199,7 +198,6 @@ public class GFICommandDialog extends JFrame {
 		FullItemPairList = new ArrayList<Pair<String, String>>();
 		for(int i = 0; i < Reference.ImportedItemGroups.size(); i++) {
 			
-			
 			for(int x = 0; x < Reference.ImportedItemGroups.get(i).getSecondValue().size(); x++) {
 				FullItemList.add(Reference.ImportedItemGroups.get(i).getSecondValue().get(x).getSecondValue());
 				FullItemPairList.add(Reference.ImportedItemGroups.get(i).getSecondValue().get(x));
@@ -210,7 +208,6 @@ public class GFICommandDialog extends JFrame {
 			comboBox.addItem(string);
 		}
 		comboBox.setSelectedIndex(-1);
-		//comboBox.setEditable(true);
 		
 		@SuppressWarnings("unused")
 		ComboBoxSearchable searchable = new ComboBoxSearchable(comboBox);
@@ -290,12 +287,12 @@ public class GFICommandDialog extends JFrame {
 				String[] arguments = {null, null, null, null, null};
 				
 				arguments[1] = PlayerIDField.getText();
-				arguments[2] = FullItemPairList.get(comboBox.getSelectedIndex()).getSecondValue();
+				arguments[2] = "\"bluepint\'" + FullItemPairList.get(comboBox.getSelectedIndex()).getFirstValue() + "\'\"";
 				arguments[2] = String.valueOf(QuantitySpinner.getValue());
 				arguments[3] = String.valueOf(QualityComboBox.getSelectedIndex());
 				arguments[4] = BlueprintCheckBox.isSelected() ? "1" : "0";
 				
-				Reference.Queue.add(new GenericCommand(Utils.getPrefix(), "giveitemtoplayer", arguments));
+				Reference.Queue.add(new GenericCommand(Utils.getPrefix(), "giveitem", arguments));
 				refreshThread.stop();
 				dispose();
 			}
@@ -405,13 +402,13 @@ public class GFICommandDialog extends JFrame {
 				String[] arguments = {null, null, null, null, null};
 				
 				arguments[0] = PlayerIDField.getText();
-				arguments[1] = comboBox.getSelectedIndex() != -1 ?  FullItemPairList.get(comboBox.getSelectedIndex()).getSecondValue() : "";
+				arguments[1] = comboBox.getSelectedIndex() != -1 ?  arguments[2] = "\"bluepint\'" + FullItemPairList.get(comboBox.getSelectedIndex()).getFirstValue() + "\'\"" : "";
 				arguments[2] = String.valueOf(QuantitySpinner.getValue());
 				arguments[3] = String.valueOf(QualityComboBox.getSelectedIndex());
 				arguments[4] = BlueprintCheckBox.isSelected() ? "1" : "0";
 				
 				System.out.println("-\\|/-");
-				OutPutLabel.setText(new GenericCommand(Utils.getPrefix(), "giveitemtoplayer", arguments).generateCommand());
+				OutPutLabel.setText(new GenericCommand(Utils.getPrefix(), "giveitem", arguments).generateCommand());
 				
 			}
 			
