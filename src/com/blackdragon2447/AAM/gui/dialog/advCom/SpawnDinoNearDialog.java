@@ -17,11 +17,16 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
@@ -34,24 +39,29 @@ import com.blackdragon2447.AAM.util.Pair;
 import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 import com.blackdragon2447.AAM.util.obj.GenericCommand;
+import com.jidesoft.swing.ComboBoxSearchable;
 
-public class SteamToUE4Dialog extends JFrame {
+public class SpawnDinoNearDialog extends JFrame {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3122563720977107636L;
+	private static final long serialVersionUID = -3379509028862039726L;
 	private JPanel contentPane;
-	private JTextField SteamIDField;
 	private JButton RunButton;
+	private JButton QueueButton;
 	private JLabel OutPutLabel;
 	private JLabel ArgumentLabel;
 	private JSeparator Separator;
 	AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
-	private JLabel SteamIdLabel;
-	ArrayList<Pair<String, String>> FullItemPairList;
+	private JLabel PlayerSteamIDLabel;
+	private JLabel LevelLabel;
+	ArrayList<Pair<String, String>> FullCreaturePairList;
 	RefreshThread refreshThread = new RefreshThread();
 	Thread thread = new Thread(refreshThread);
+	private JSpinner LevelSpinner;
+	private JTextField PlayerIDField;
+	private JLabel TamedLabel;
+	private JCheckBox TamedCheckBox;
+	private JLabel BPPathLabel;
+	private JComboBox<String> DinoBPComboBox;
 
 	
 	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
@@ -60,7 +70,7 @@ public class SteamToUE4Dialog extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SteamToUE4Dialog frame = new SteamToUE4Dialog();
+					SpawnDinoNearDialog frame = new SpawnDinoNearDialog();
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -75,7 +85,7 @@ public class SteamToUE4Dialog extends JFrame {
 	 * Create the frame.
 	 * @throws UnsupportedLookAndFeelException 
 	 */
-	public SteamToUE4Dialog() throws UnsupportedLookAndFeelException {
+	public SpawnDinoNearDialog() throws UnsupportedLookAndFeelException {
 		
 
 		try {
@@ -85,15 +95,15 @@ public class SteamToUE4Dialog extends JFrame {
 		}
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 530, 207);
+		setBounds(100, 100, 530, 275);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{40, 180, 180, 40, 0};
-		gbl_contentPane.rowHeights = new int[]{30, 20, 0, 0, 0, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{30, 20, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPane.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
 		Separator = new JSeparator();
@@ -113,7 +123,7 @@ public class SteamToUE4Dialog extends JFrame {
 		gbc_CommandLabel.gridy = 1;
 		contentPane.add(CommandLabel, gbc_CommandLabel);
 		
-		OutPutLabel = new JLabel(Utils.GenerateStringCommand("getplayeridforSteamid "));
+		OutPutLabel = new JLabel(Utils.GenerateStringCommand("spawndino"));
 		GridBagConstraints gbc_outPutLabel = new GridBagConstraints();
 		gbc_outPutLabel.gridwidth = 2;
 		gbc_outPutLabel.insets = new Insets(0, 0, 5, 5);
@@ -134,56 +144,130 @@ public class SteamToUE4Dialog extends JFrame {
 			System.out.println(pair.GetcsvValue());
 		}
 		
-		SteamIdLabel = new JLabel("player steam ID");
-		GridBagConstraints gbc_SteamIdLabel = new GridBagConstraints();
-		gbc_SteamIdLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_SteamIdLabel.gridx = 1;
-		gbc_SteamIdLabel.gridy = 4;
-		contentPane.add(SteamIdLabel, gbc_SteamIdLabel);
+		PlayerSteamIDLabel = new JLabel("Player steam Id");
+		GridBagConstraints gbc_PlayerSteamIDLabel = new GridBagConstraints();
+		gbc_PlayerSteamIDLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_PlayerSteamIDLabel.gridx = 1;
+		gbc_PlayerSteamIDLabel.gridy = 4;
+		contentPane.add(PlayerSteamIDLabel, gbc_PlayerSteamIDLabel);
 		
-		SteamIDField = new JTextField();
-		GridBagConstraints gbc_SteamIDField = new GridBagConstraints();
-		gbc_SteamIDField.insets = new Insets(0, 0, 5, 5);
-		gbc_SteamIDField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_SteamIDField.gridx = 2;
-		gbc_SteamIDField.gridy = 4;
-		contentPane.add(SteamIDField, gbc_SteamIDField);
-		SteamIDField.setColumns(10);
-		SteamIDField.addKeyListener(new KeyListener() {
-			
-			@Override
-			public void keyTyped(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) dispose();
+		PlayerIDField = new JTextField();
+		GridBagConstraints gbc_PlayerIDField = new GridBagConstraints();
+		gbc_PlayerIDField.insets = new Insets(0, 0, 5, 5);
+		gbc_PlayerIDField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_PlayerIDField.gridx = 2;
+		gbc_PlayerIDField.gridy = 4;
+		contentPane.add(PlayerIDField, gbc_PlayerIDField);
+		PlayerIDField.setColumns(10);
+		
+		BPPathLabel = new JLabel("Dino");
+		GridBagConstraints gbc_BPPathLabel = new GridBagConstraints();
+		gbc_BPPathLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_BPPathLabel.gridx = 1;
+		gbc_BPPathLabel.gridy = 5;
+		contentPane.add(BPPathLabel, gbc_BPPathLabel);
+		
+		DinoBPComboBox = new JComboBox<String>();
+		GridBagConstraints gbc_DinoBPComboBox = new GridBagConstraints();
+		gbc_DinoBPComboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_DinoBPComboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_DinoBPComboBox.gridx = 2;
+		gbc_DinoBPComboBox.gridy = 5;
+		contentPane.add(DinoBPComboBox, gbc_DinoBPComboBox);
+		
+		DinoBPComboBox.removeAllItems();
+		
+		ArrayList<String> FullCreatureList = new ArrayList<String>();
+		FullCreaturePairList = new ArrayList<Pair<String, String>>();
+		for(int i = 0; i < Reference.ImportedCreatureGroups.size(); i++) {
+			System.out.println(Reference.ImportedCreatureGroups.get(i).getSecondValue().size());
+			for(int x = 0; x < Reference.ImportedCreatureGroups.get(i).getSecondValue().size(); x++) {
+				FullCreatureList.add(Reference.ImportedCreatureGroups.get(i).getSecondValue().get(x).getSecondValue());
+				FullCreaturePairList.add(Reference.ImportedCreatureGroups.get(i).getSecondValue().get(x));
+				System.out.println(Reference.ImportedCreatureGroups.get(i).getSecondValue().get(x).getSecondValue());
 			}
 			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) dispose();
-			}
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) dispose();
-			}
-		});
+		}
+		for (String string : FullCreatureList) {
+			DinoBPComboBox.addItem(string);
+		}
+		DinoBPComboBox.setSelectedIndex(-1);
+		
+		@SuppressWarnings("unused")
+		ComboBoxSearchable searchable = new ComboBoxSearchable(DinoBPComboBox);
+		
+
+		LevelLabel = new JLabel("Level");
+		GridBagConstraints gbc_LevelLabel = new GridBagConstraints();
+		gbc_LevelLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_LevelLabel.gridx = 1;
+		gbc_LevelLabel.gridy = 6;
+		contentPane.add(LevelLabel, gbc_LevelLabel);
+		
+		LevelSpinner = new JSpinner();
+		LevelSpinner.setModel(new SpinnerNumberModel(600, 0, 900, 20));
+		GridBagConstraints gbc_LevelSpinner = new GridBagConstraints();
+		gbc_LevelSpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_LevelSpinner.gridx = 2;
+		gbc_LevelSpinner.gridy = 6;
+		contentPane.add(LevelSpinner, gbc_LevelSpinner);
+		Component spinnerEditor = LevelSpinner.getEditor();
+		JFormattedTextField SpinnerTF = ((JSpinner.DefaultEditor) spinnerEditor).getTextField();
+		SpinnerTF.setColumns(5);
+		
+		TamedLabel = new JLabel("Tamed");
+		GridBagConstraints gbc_TamedLabel = new GridBagConstraints();
+		gbc_TamedLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_TamedLabel.gridx = 1;
+		gbc_TamedLabel.gridy = 7;
+		contentPane.add(TamedLabel, gbc_TamedLabel);
+		
+		TamedCheckBox = new JCheckBox("");
+		GridBagConstraints gbc_TamedCheckBox = new GridBagConstraints();
+		gbc_TamedCheckBox.insets = new Insets(0, 0, 5, 5);
+		gbc_TamedCheckBox.gridx = 2;
+		gbc_TamedCheckBox.gridy = 7;
+		contentPane.add(TamedCheckBox, gbc_TamedCheckBox);
 		
 		RunButton = new JButton("Run");
 		GridBagConstraints gbc_RunButton = new GridBagConstraints();
-		gbc_RunButton.gridwidth = 2;
 		gbc_RunButton.insets = new Insets(0, 0, 0, 5);
 		gbc_RunButton.gridx = 1;
-		gbc_RunButton.gridy = 5;
+		gbc_RunButton.gridy = 8;
 		contentPane.add(RunButton, gbc_RunButton);
 		RunButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(OutPutLabel.getText());
-				
-				SteamToUE4ReturnDialog.createGui();
-				
 				dispose();
 				refreshThread.stop();
+			}
+		});
+		
+		QueueButton = new JButton("Queue");
+		GridBagConstraints gbc_QueueButton = new GridBagConstraints();
+		gbc_QueueButton.insets = new Insets(0, 0, 0, 5);
+		gbc_QueueButton.gridx = 2;
+		gbc_QueueButton.gridy = 8;
+		contentPane.add(QueueButton, gbc_QueueButton);
+		QueueButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String[] arguments = {null, null, null, null, null, null, null};
+				
+				arguments[0] = PlayerIDField.getText();
+				arguments[1] = "\""+FullCreaturePairList.get(DinoBPComboBox.getSelectedIndex()).getFirstValue()+"\"";
+				arguments[2] = String.valueOf(((Integer) LevelSpinner.getValue()));
+				arguments[3] = TamedCheckBox.isSelected() ? "1" : "0";
+				arguments[4] = "0";
+				arguments[5] = "0";
+				arguments[6] = "0";
+						
+				Reference.Queue.add(new GenericCommand(Utils.getPrefix(), "addexperience", arguments));
+				refreshThread.stop();
+				dispose();
 			}
 		});
 		
@@ -268,13 +352,6 @@ public class SteamToUE4Dialog extends JFrame {
 			public void windowActivated(WindowEvent e) {}
 		});
 
-		final JPanel glass = (JPanel) getGlassPane();
-		JLabel label = new JLabel("Depricated");
-		label.setFont(new Font(label.getFont().getName(), 1, 24));
-		glass.add(label);
-		glass.setVisible(true);
-		
-		
 	}
 	
 	class RefreshThread implements Runnable {
@@ -295,12 +372,22 @@ public class SteamToUE4Dialog extends JFrame {
 					e.printStackTrace();
 				}
 				
-				String[] arguments = {null};
-				
-				arguments[0] = SteamIDField.getText();
+				String[] arguments = {null, null, null, null, null, null, null};
+
+				arguments[0] = PlayerIDField.getText();
+				try {
+					arguments[1] = "\""+FullCreaturePairList.get(DinoBPComboBox.getSelectedIndex()).getFirstValue()+"\"";
+				} catch (ArrayIndexOutOfBoundsException e) {
+					arguments[1] = "";
+				}
+				arguments[2] = String.valueOf(((Integer) LevelSpinner.getValue()));
+				arguments[3] = TamedCheckBox.isSelected() ? "1" : "0";
+				arguments[4] = "0";
+				arguments[5] = "0";
+				arguments[6] = "0";
 				
 				System.out.println("-----");
-				OutPutLabel.setText(new GenericCommand(Utils.getPrefix(), "getplayeridforSteamid ", arguments).generateCommand());
+				OutPutLabel.setText(new GenericCommand(Utils.getPrefix(), "spawndino", arguments).generateCommand());
 				
 			}
 			

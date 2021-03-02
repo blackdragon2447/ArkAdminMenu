@@ -42,14 +42,14 @@ public class RenamePlayerDialog extends JFrame {
 	 */
 	private static final long serialVersionUID = 3122563720977107636L;
 	private JPanel contentPane;
-	private JTextField PlayerNameField;
+	private JTextField PlayerSteamIdField;
 	private JButton RunButton;
 	private JButton QueueButton;
 	private JLabel OutPutLabel;
 	private JLabel ArgumentLabel;
 	private JSeparator Separator;
 	AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
-	private JLabel PlayerNameLabel;
+	private JLabel PlayerSteamIDLabel;
 	private JLabel NewPlayerNameLabel;
 	ArrayList<Pair<String, String>> FullItemPairList;
 	RefreshThread refreshThread = new RefreshThread();
@@ -116,7 +116,7 @@ public class RenamePlayerDialog extends JFrame {
 		gbc_CommandLabel.gridy = 1;
 		contentPane.add(CommandLabel, gbc_CommandLabel);
 		
-		OutPutLabel = new JLabel(Utils.GenerateStringCommand("renameplayer"));
+		OutPutLabel = new JLabel(Utils.GenerateStringCommand("renamecharacter"));
 		GridBagConstraints gbc_outPutLabel = new GridBagConstraints();
 		gbc_outPutLabel.gridwidth = 2;
 		gbc_outPutLabel.insets = new Insets(0, 0, 5, 5);
@@ -137,22 +137,22 @@ public class RenamePlayerDialog extends JFrame {
 			System.out.println(pair.GetcsvValue());
 		}
 		
-		PlayerNameLabel = new JLabel("player name");
-		GridBagConstraints gbc_PlayerNameLabel = new GridBagConstraints();
-		gbc_PlayerNameLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_PlayerNameLabel.gridx = 1;
-		gbc_PlayerNameLabel.gridy = 4;
-		contentPane.add(PlayerNameLabel, gbc_PlayerNameLabel);
+		PlayerSteamIDLabel = new JLabel("player steam id");
+		GridBagConstraints gbc_PlayerSteamIDLabel = new GridBagConstraints();
+		gbc_PlayerSteamIDLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_PlayerSteamIDLabel.gridx = 1;
+		gbc_PlayerSteamIDLabel.gridy = 4;
+		contentPane.add(PlayerSteamIDLabel, gbc_PlayerSteamIDLabel);
 		
-		PlayerNameField = new JTextField();
-		GridBagConstraints gbc_PlayerNameField = new GridBagConstraints();
-		gbc_PlayerNameField.insets = new Insets(0, 0, 5, 5);
-		gbc_PlayerNameField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_PlayerNameField.gridx = 2;
-		gbc_PlayerNameField.gridy = 4;
-		contentPane.add(PlayerNameField, gbc_PlayerNameField);
-		PlayerNameField.setColumns(10);
-		PlayerNameField.addKeyListener(new KeyListener() {
+		PlayerSteamIdField = new JTextField();
+		GridBagConstraints gbc_PlayerSteamIdField = new GridBagConstraints();
+		gbc_PlayerSteamIdField.insets = new Insets(0, 0, 5, 5);
+		gbc_PlayerSteamIdField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_PlayerSteamIdField.gridx = 2;
+		gbc_PlayerSteamIdField.gridy = 4;
+		contentPane.add(PlayerSteamIdField, gbc_PlayerSteamIdField);
+		PlayerSteamIdField.setColumns(10);
+		PlayerSteamIdField.addKeyListener(new KeyListener() {
 			
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -214,10 +214,10 @@ public class RenamePlayerDialog extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String[] arguments = {null, null};
 				
-				arguments[0] = "\"" + PlayerNameField.getText() + "\"";
+				arguments[0] = PlayerSteamIdField.getText();
 				arguments[1] = newPlayerNameField.getText();
 				
-				Reference.Queue.add(new GenericCommand(Utils.getPrefix(), "renameplayer", arguments));
+				Reference.Queue.add(new GenericCommand(Utils.getPrefix(), "renamecharacter", arguments));
 				refreshThread.stop();
 				dispose();
 			}
@@ -326,11 +326,11 @@ public class RenamePlayerDialog extends JFrame {
 				
 				String[] arguments = {null, null};
 				
-				arguments[0] = "\"" + PlayerNameField.getText() + "\"";
+				arguments[0] = PlayerSteamIdField.getText();
 				arguments[1] = newPlayerNameField.getText();
 				
 				System.out.println("-----");
-				OutPutLabel.setText(new GenericCommand(Utils.getPrefix(), "renameplayer", arguments).generateCommand());
+				OutPutLabel.setText(new GenericCommand(Utils.getPrefix(), "renamecharacter", arguments).generateCommand());
 				
 			}
 			

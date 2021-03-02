@@ -79,6 +79,8 @@ public class CSVReader {
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Pair<String, String>> readItemFile(String path) throws IOException {
 		
+		ItemBPList.clear();
+		
 		BufferedReader br = new BufferedReader(new FileReader(path));
 		Line = "";
 		while((Line = br.readLine()) != null) {

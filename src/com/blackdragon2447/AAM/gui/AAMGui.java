@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -28,7 +29,9 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -52,11 +55,15 @@ import com.blackdragon2447.AAM.gui.components.JNumberedCheckbox;
 import com.blackdragon2447.AAM.gui.dialog.CustomPFDialog;
 import com.blackdragon2447.AAM.gui.dialog.HelpDialog;
 import com.blackdragon2447.AAM.gui.dialog.ImportItemsDialog;
+import com.blackdragon2447.AAM.gui.dialog.CC.AddNewScriptGui;
 import com.blackdragon2447.AAM.gui.dialog.advCom.ForceIntoTribeDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.GFICommandDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.GiveExpToPlayerDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.RenamePlayerDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.RenameTribeDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.SpawnDinoCoordsDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.SpawnDinoNearDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.SteamIDReturnDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.SteamToUE4Dialog;
 import com.blackdragon2447.AAM.util.FavButtonPanelBuilder;
 import com.blackdragon2447.AAM.util.Utils;
@@ -131,6 +138,12 @@ public class AAMGui extends JFrame {
 	JNumberedCheckbox GivePlayerXPCheckbox = new JNumberedCheckbox("", 18);
 	JNumberedButton GetUE4IDButton = new JNumberedButton("get player ingame id", 19);
 	JNumberedCheckbox GetUE4IDCheckbox = new JNumberedCheckbox("", 19);
+	JNumberedButton ListAllIDButton = new JNumberedButton("List All Online Steam ID", 20);
+	JNumberedCheckbox ListAllIDCheckBox = new JNumberedCheckbox("", 20);
+	JNumberedButton SpawnDinoNearButton = new JNumberedButton("Spawn Dino Near Player", 21);
+	JNumberedCheckbox SpawnDinoNearCheckBox = new JNumberedCheckbox("", 21);
+	JNumberedButton SpawnDinoCoordsButton = new JNumberedButton("Spawn Dino At Coords", 22);
+	JNumberedCheckbox SpawnDinoCoordsCheckBox = new JNumberedCheckbox("", 22);
 	
 
 	
@@ -150,6 +163,7 @@ public class AAMGui extends JFrame {
 	}
 
 	
+	@SuppressWarnings("serial")
 	public AAMGui() throws NumberFormatException, CloneNotSupportedException {
 		
 		
@@ -548,9 +562,9 @@ public class AAMGui extends JFrame {
 		tabbedPane.addTab("advanced commands", null, AdvancedCommandsPanel, null);
 		GridBagLayout gbl_AdvancedCommandsPanel = new GridBagLayout();
 		gbl_AdvancedCommandsPanel.columnWidths = new int[]{185, 0, 185, 0, 185, 0, 0};
-		gbl_AdvancedCommandsPanel.rowHeights = new int[]{23, 0, 0, 0, 0};
+		gbl_AdvancedCommandsPanel.rowHeights = new int[]{23, 0, 0, 0, 0, 0};
 		gbl_AdvancedCommandsPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_AdvancedCommandsPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_AdvancedCommandsPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		AdvancedCommandsPanel.setLayout(gbl_AdvancedCommandsPanel);
 		
 		JLabel ACDescLabel = new JLabel("Advanced Commands\r\n");
@@ -648,10 +662,10 @@ public class AAMGui extends JFrame {
 		gbc_RenameTribeCheckBox.gridx = 5;
 		gbc_RenameTribeCheckBox.gridy = 2;
 		AdvancedCommandsPanel.add(RenameTribeCheckBox, gbc_RenameTribeCheckBox);
-		RenamePlayerCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
+		RenameTribeCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		GridBagConstraints gbc_ForcePlayerToTribeButton = new GridBagConstraints();
-		gbc_ForcePlayerToTribeButton.insets = new Insets(0, 0, 0, 5);
+		gbc_ForcePlayerToTribeButton.insets = new Insets(0, 0, 5, 5);
 		gbc_ForcePlayerToTribeButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_ForcePlayerToTribeButton.gridx = 0;
 		gbc_ForcePlayerToTribeButton.gridy = 3;
@@ -670,14 +684,15 @@ public class AAMGui extends JFrame {
 		});
 		
 		GridBagConstraints gbc_ForcePlayerToTribeCheckbox = new GridBagConstraints();
-		gbc_ForcePlayerToTribeCheckbox.insets = new Insets(0, 0, 0, 5);
+		gbc_ForcePlayerToTribeCheckbox.insets = new Insets(0, 0, 5, 5);
 		gbc_ForcePlayerToTribeCheckbox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_ForcePlayerToTribeCheckbox.gridx = 1;
 		gbc_ForcePlayerToTribeCheckbox.gridy = 3;
 		AdvancedCommandsPanel.add(ForcePlayerToTribeCheckbox, gbc_ForcePlayerToTribeCheckbox);
+		ForcePlayerToTribeCheckbox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		GridBagConstraints gbc_GivePlayerXPButton = new GridBagConstraints();
-		gbc_GivePlayerXPButton.insets = new Insets(0, 0, 0, 5);
+		gbc_GivePlayerXPButton.insets = new Insets(0, 0, 5, 5);
 		gbc_GivePlayerXPButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_GivePlayerXPButton.gridx = 2;
 		gbc_GivePlayerXPButton.gridy = 3;
@@ -696,7 +711,7 @@ public class AAMGui extends JFrame {
 		});
 		
 		GridBagConstraints gbc_GivePlayerXPCheckbox = new GridBagConstraints();
-		gbc_GivePlayerXPCheckbox.insets = new Insets(0, 0, 0, 5);
+		gbc_GivePlayerXPCheckbox.insets = new Insets(0, 0, 5, 5);
 		gbc_GivePlayerXPCheckbox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_GivePlayerXPCheckbox.gridx = 3;
 		gbc_GivePlayerXPCheckbox.gridy = 3;
@@ -704,7 +719,7 @@ public class AAMGui extends JFrame {
 		GivePlayerXPCheckbox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		GridBagConstraints gbc_GetUE4IDButton = new GridBagConstraints();
-		gbc_GetUE4IDButton.insets = new Insets(0, 0, 0, 5);
+		gbc_GetUE4IDButton.insets = new Insets(0, 0, 5, 5);
 		gbc_GetUE4IDButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_GetUE4IDButton.gridx = 4;
 		gbc_GetUE4IDButton.gridy = 3;
@@ -723,17 +738,89 @@ public class AAMGui extends JFrame {
 		});
 		
 		GridBagConstraints gbc_GetUE4IDCheckbox = new GridBagConstraints();
+		gbc_GetUE4IDCheckbox.insets = new Insets(0, 0, 5, 0);
 		gbc_RenamePlayerButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_GetUE4IDCheckbox.gridx = 5;
 		gbc_GetUE4IDCheckbox.gridy = 3;
 		AdvancedCommandsPanel.add(GetUE4IDCheckbox, gbc_GetUE4IDCheckbox);
 		GetUE4IDCheckbox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
+		GridBagConstraints gbc_SpawnDinoNearButton = new GridBagConstraints();
+		gbc_SpawnDinoNearButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_SpawnDinoNearButton.insets = new Insets(0, 0, 0, 5);
+		gbc_SpawnDinoNearButton.gridx = 0;
+		gbc_SpawnDinoNearButton.gridy = 4;
+		AdvancedCommandsPanel.add(SpawnDinoNearButton, gbc_SpawnDinoNearButton);
+		SpawnDinoNearButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					SpawnDinoNearDialog.createGui();
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
+						| UnsupportedLookAndFeelException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		GridBagConstraints gbc_SpawnDinoNearCheckBox = new GridBagConstraints();
+		gbc_SpawnDinoNearCheckBox.insets = new Insets(0, 0, 0, 5);
+		gbc_SpawnDinoNearCheckBox.gridx = 1;
+		gbc_SpawnDinoNearCheckBox.gridy = 4;
+		AdvancedCommandsPanel.add(SpawnDinoNearCheckBox, gbc_SpawnDinoNearCheckBox);
+		SpawnDinoNearCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
+		
+		GridBagConstraints gbc_SpawnDinoCoordsButton = new GridBagConstraints();
+		gbc_SpawnDinoCoordsButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_SpawnDinoCoordsButton.insets = new Insets(0, 0, 0, 5);
+		gbc_SpawnDinoCoordsButton.gridx = 2;
+		gbc_SpawnDinoCoordsButton.gridy = 4;
+		AdvancedCommandsPanel.add(SpawnDinoCoordsButton, gbc_SpawnDinoCoordsButton);
+		SpawnDinoCoordsButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					SpawnDinoCoordsDialog.createGui();
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
+						| UnsupportedLookAndFeelException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		GridBagConstraints gbc_SpawnDinoCoordsCheckBox = new GridBagConstraints();
+		gbc_SpawnDinoCoordsCheckBox.insets = new Insets(0, 0, 0, 5);
+		gbc_SpawnDinoCoordsCheckBox.gridx = 3;
+		gbc_SpawnDinoCoordsCheckBox.gridy = 4;
+		AdvancedCommandsPanel.add(SpawnDinoCoordsCheckBox, gbc_SpawnDinoCoordsCheckBox);
+		SpawnDinoCoordsCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
+		
+		GridBagConstraints gbc_ListAllIDButton = new GridBagConstraints();
+		gbc_ListAllIDButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_ListAllIDButton.insets = new Insets(0, 0, 0, 5);
+		gbc_ListAllIDButton.gridx = 4;
+		gbc_ListAllIDButton.gridy = 4;
+		AdvancedCommandsPanel.add(ListAllIDButton, gbc_ListAllIDButton);
+		ListAllIDButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(Utils.getPrefix() + "listallplayersteamid");
+				SteamIDReturnDialog.createGui();
+			}
+		});
+		
+		GridBagConstraints gbc_ListAllIDCheckBox = new GridBagConstraints();
+		gbc_ListAllIDCheckBox.gridx = 5;
+		gbc_ListAllIDCheckBox.gridy = 4;
+		AdvancedCommandsPanel.add(ListAllIDCheckBox, gbc_ListAllIDCheckBox);
+		ListAllIDCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
+		
 		JPanel CustomCommandsPanel = new JPanel();
 		tabbedPane.addTab("custom commands", null, CustomCommandsPanel, null);
 		GridBagLayout gbl_CustomCommandsPanel = new GridBagLayout();
 		gbl_CustomCommandsPanel.columnWidths = new int[]{603, 24, 0};
-		gbl_CustomCommandsPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_CustomCommandsPanel.rowHeights = new int[]{30, 0, 0, 0, 0};
 		gbl_CustomCommandsPanel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		gbl_CustomCommandsPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		CustomCommandsPanel.setLayout(gbl_CustomCommandsPanel);
@@ -752,6 +839,37 @@ public class AAMGui extends JFrame {
 		gbc_CCNewButton.gridx = 1;
 		gbc_CCNewButton.gridy = 0;
 		CustomCommandsPanel.add(CCNewButton, gbc_CCNewButton);
+		
+		JPopupMenu AddCommandPopup = new JPopupMenu();
+		AddCommandPopup.add(new JMenuItem(new AbstractAction("Add Script Command") {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AddNewScriptGui.createGui();
+			}
+		}));
+		AddCommandPopup.add(new JMenuItem(new AbstractAction("Add Plugin Command") {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(ContentPane, "not yet implemented");
+			}
+		}));
+		AddCommandPopup.add(new JMenuItem(new AbstractAction("Add Command Series") {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(ContentPane, "not yet implemented");
+			}
+		}));
+		
+		CCNewButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AddCommandPopup.show(CCNewButton, 0, 22);
+			}
+		});
 		
 		JLabel CCHelpLabel = new JLabel("press the + to add more commands hover over ? for more help");
 		GridBagConstraints gbc_CCHelpLabel = new GridBagConstraints();
@@ -1168,6 +1286,7 @@ public class AAMGui extends JFrame {
 				  
 				  //if(ButtonNumbersString != "") ButtonNumbersString = ButtonNumbersString.substring(1);
 				  
+				  cfg = ConfigFactory.create(AAMConfig.class);
 				  
 				  cfg.setProperty("Favorites", ButtonNumbersString);
 				  try {

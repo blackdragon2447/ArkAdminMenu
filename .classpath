@@ -25,5 +25,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/thoma/Desktop/java workspace/LIB/swingx-all-1.6.4.jar"/>
 	<classpathentry kind="lib" path="C:/Users/thoma/Desktop/java workspace/LIB/jide-oss-3.7.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/thoma/Desktop/java workspace/LIB/rkon-core-1.1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
