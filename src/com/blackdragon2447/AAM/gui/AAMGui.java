@@ -17,7 +17,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -58,7 +57,6 @@ import com.blackdragon2447.AAM.gui.dialog.HelpDialog;
 import com.blackdragon2447.AAM.gui.dialog.ImportItemsDialog;
 import com.blackdragon2447.AAM.gui.dialog.CC.AddNewPluginCommand;
 import com.blackdragon2447.AAM.gui.dialog.CC.AddNewScriptGui;
-import com.blackdragon2447.AAM.gui.dialog.CC.AddNewSeriesGui;
 import com.blackdragon2447.AAM.gui.dialog.advCom.ForceIntoTribeDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.GFICommandDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.GiveExpToPlayerDialog;
@@ -913,10 +911,9 @@ public class AAMGui extends JFrame {
 		
 		try {
 			for (int i = 0; i < cfg.ScriptCommandsNames().length; i++) {
-				System.out.println("added");
 				ButtonPanel.add(CustomButtonBuilder.BuildScriptButton(cfg.ScriptCommandsNames()[i].replace("[", "").replace("]", ""), cfg.ScriptCommands()[i].replace("[", "").replace("]", "")), gbc_buttonPanel);
 				gbc_buttonPanel.gridx++;
-				if(gbc_buttonPanel.gridx == 2) {
+				if(gbc_buttonPanel.gridx == 5) {
 					gbc_buttonPanel.gridx = 0;
 					gbc_buttonPanel.gridy++;
 				}
@@ -927,10 +924,9 @@ public class AAMGui extends JFrame {
 		
 		try {
 			for (int i = 0; i < cfg.PluginCommandsNames().length; i++) {
-				System.out.println("added");
 				ButtonPanel.add(CustomButtonBuilder.BuildPluginButton(cfg.PluginCommandsNames()[i].replace("[", "").replace("]", ""), cfg.PluginCommands()[i].replace("[", "").replace("]", ""), Boolean.valueOf(cfg.PluginCommandsArgs()[i].replace("[", "").replace("]", ""))), gbc_buttonPanel);
 				gbc_buttonPanel.gridx++;
-				if(gbc_buttonPanel.gridx == 2) {
+				if(gbc_buttonPanel.gridx == 5) {
 					gbc_buttonPanel.gridx = 0;
 					gbc_buttonPanel.gridy++;
 				}
@@ -939,6 +935,7 @@ public class AAMGui extends JFrame {
 			e.printStackTrace();
 		}
 
+		/*
 		try {
 			for (int i = 0; i < cfg.CommandSeriesName().length; i++) {
 				System.out.println("added");
@@ -952,7 +949,7 @@ public class AAMGui extends JFrame {
 		} catch(NullPointerException e){
 			e.printStackTrace();
 		}
-		
+		*/
 		JPanel ImpotedItemsPanel = new JPanel();
 		tabbedPane.addTab("imported items", null, ImpotedItemsPanel, null);
 		GridBagLayout gbl_ImpotedItemsPanel = new GridBagLayout();
@@ -1235,6 +1232,45 @@ public class AAMGui extends JFrame {
 					SwingUtilities.updateComponentTreeUI(AdvancedCommandsPanel);
 				}else if (tabbedPane.getSelectedIndex() == 3) {
 					SwingUtilities.updateComponentTreeUI(CustomCommandsPanel);
+					
+					ButtonPanel.removeAll();
+					ButtonPanel.revalidate();
+					ButtonPanel.repaint();
+					
+					AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
+					
+
+					gbc_buttonPanel.insets = new Insets(0, 0, 5, 5);
+					gbc_buttonPanel.fill = GridBagConstraints.BOTH;
+					gbc_buttonPanel.gridx = 0;
+					gbc_buttonPanel.gridy = 0;
+					
+					
+					try {
+						for (int i = 0; i < cfg.ScriptCommandsNames().length; i++) {
+							ButtonPanel.add(CustomButtonBuilder.BuildScriptButton(cfg.ScriptCommandsNames()[i].replace("[", "").replace("]", ""), cfg.ScriptCommands()[i].replace("[", "").replace("]", "")), gbc_buttonPanel);
+							gbc_buttonPanel.gridx++;
+							if(gbc_buttonPanel.gridx == 5) {
+								gbc_buttonPanel.gridx = 0;
+								gbc_buttonPanel.gridy++;
+							}
+						}
+					} catch(NullPointerException e1){
+						e1.printStackTrace();
+					}
+					
+					try {
+						for (int i = 0; i < cfg.PluginCommandsNames().length; i++) {
+							ButtonPanel.add(CustomButtonBuilder.BuildPluginButton(cfg.PluginCommandsNames()[i].replace("[", "").replace("]", ""), cfg.PluginCommands()[i].replace("[", "").replace("]", ""), Boolean.valueOf(cfg.PluginCommandsArgs()[i].replace("[", "").replace("]", ""))), gbc_buttonPanel);
+							gbc_buttonPanel.gridx++;
+							if(gbc_buttonPanel.gridx == 5) {
+								gbc_buttonPanel.gridx = 0;
+								gbc_buttonPanel.gridy++;
+							}
+						}
+					} catch(NullPointerException e1){
+						e1.printStackTrace();
+					}
 				}else if(tabbedPane.getSelectedIndex() == 4) {
 					SwingUtilities.updateComponentTreeUI(ImpotedItemsPanel);
 					
@@ -1251,7 +1287,6 @@ public class AAMGui extends JFrame {
 					gbc_ImItemLabel2.gridy = 0;
 					gbc_ImItemLabel2.weighty = 1;
 					
-					System.out.println(Reference.ImportedItemGroups.size());
 					ScrollPanel.removeAll();
 					ScrollPanel.revalidate();
 					ScrollPanel.repaint();

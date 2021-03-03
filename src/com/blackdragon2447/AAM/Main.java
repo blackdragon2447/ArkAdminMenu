@@ -60,7 +60,6 @@ public class Main {
 		File dir2 = new File("CreatureLists");
 		String[] DinoFileList = dir2.list();
 		
-		System.out.println(DinoFileList.length);
 		
 		for (String string2 : DinoFileList) {
 			try {

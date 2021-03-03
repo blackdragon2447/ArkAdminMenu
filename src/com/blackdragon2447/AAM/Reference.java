@@ -1,14 +1,10 @@
 package com.blackdragon2447.AAM;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import com.blackdragon2447.AAM.gui.components.JNumberedButton;
 import com.blackdragon2447.AAM.util.Pair;
 import com.blackdragon2447.AAM.util.obj.GenericCommand;
-
-import net.kronos.rkon.core.Rcon;
-import net.kronos.rkon.core.ex.AuthenticationException;
 
 public class Reference {
 	
