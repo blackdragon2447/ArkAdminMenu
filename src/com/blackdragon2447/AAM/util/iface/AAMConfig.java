@@ -19,6 +19,16 @@ public interface AAMConfig extends Accessible, Mutable{
 	
 	String[] ScriptCommandsNames();
 	
+	String[] PluginCommands();
+	
+	String[] PluginCommandsNames();
+	
+	String[] PluginCommandsArgs();
+	
+	String[] CommandSeriesName();
+	
+	String[][] CommandSeries();
+	
 	@DefaultValue("true")
 	Boolean ShowWelcome();
 	

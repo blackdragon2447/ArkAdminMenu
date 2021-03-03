@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JButton;
@@ -30,6 +31,9 @@ import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 import com.blackdragon2447.AAM.util.obj.SimpleCommand;
 
+import net.kronos.rkon.core.Rcon;
+import net.kronos.rkon.core.ex.AuthenticationException;
+
 public class SimpleCommandDialog extends JFrame {
 
 	private static final long serialVersionUID = 3122563720977107636L;
@@ -42,6 +46,7 @@ public class SimpleCommandDialog extends JFrame {
 	private JLabel ArgDescLabel;
 	private JSeparator Separator;
 	AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
+	
 
 	
 	public static void createGui(int CommandNumber) throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
@@ -64,10 +69,14 @@ public class SimpleCommandDialog extends JFrame {
 	/**
 	 * Create the frame.
 	 * @throws UnsupportedLookAndFeelException 
+	 * @throws AuthenticationException 
+	 * @throws IOException 
 	 */
-	public SimpleCommandDialog(int command) throws UnsupportedLookAndFeelException {
+	public SimpleCommandDialog(int command) throws UnsupportedLookAndFeelException, IOException, AuthenticationException {
 		
 
+		final Rcon rcon = new Rcon("127.0.0.1", 27015, "mypassword".getBytes());
+		
 		try {
 			UIManager.setLookAndFeel(AAMGui.getLookAndFeel());
 		} catch (UnsupportedLookAndFeelException e) {
@@ -167,6 +176,12 @@ public class SimpleCommandDialog extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(OutPutLabel.getText());
+				try {
+					String result = rcon.command(OutPutLabel.getText());
+					System.out.println(result);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 				dispose();
 			}
 		});

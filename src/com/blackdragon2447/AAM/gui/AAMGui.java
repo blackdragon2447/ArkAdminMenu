@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -55,7 +56,9 @@ import com.blackdragon2447.AAM.gui.components.JNumberedCheckbox;
 import com.blackdragon2447.AAM.gui.dialog.CustomPFDialog;
 import com.blackdragon2447.AAM.gui.dialog.HelpDialog;
 import com.blackdragon2447.AAM.gui.dialog.ImportItemsDialog;
+import com.blackdragon2447.AAM.gui.dialog.CC.AddNewPluginCommand;
 import com.blackdragon2447.AAM.gui.dialog.CC.AddNewScriptGui;
+import com.blackdragon2447.AAM.gui.dialog.CC.AddNewSeriesGui;
 import com.blackdragon2447.AAM.gui.dialog.advCom.ForceIntoTribeDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.GFICommandDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.GiveExpToPlayerDialog;
@@ -65,6 +68,7 @@ import com.blackdragon2447.AAM.gui.dialog.advCom.SpawnDinoCoordsDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.SpawnDinoNearDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.SteamIDReturnDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.SteamToUE4Dialog;
+import com.blackdragon2447.AAM.util.CustomButtonBuilder;
 import com.blackdragon2447.AAM.util.FavButtonPanelBuilder;
 import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
@@ -144,6 +148,8 @@ public class AAMGui extends JFrame {
 	JNumberedCheckbox SpawnDinoNearCheckBox = new JNumberedCheckbox("", 21);
 	JNumberedButton SpawnDinoCoordsButton = new JNumberedButton("Spawn Dino At Coords", 22);
 	JNumberedCheckbox SpawnDinoCoordsCheckBox = new JNumberedCheckbox("", 22);
+	private final JScrollPane scrollPane = new JScrollPane();
+	private final JPanel ButtonPanel = new JPanel();
 	
 
 	
@@ -819,9 +825,9 @@ public class AAMGui extends JFrame {
 		JPanel CustomCommandsPanel = new JPanel();
 		tabbedPane.addTab("custom commands", null, CustomCommandsPanel, null);
 		GridBagLayout gbl_CustomCommandsPanel = new GridBagLayout();
-		gbl_CustomCommandsPanel.columnWidths = new int[]{603, 24, 0};
+		gbl_CustomCommandsPanel.columnWidths = new int[]{0, 592, 24, 0};
 		gbl_CustomCommandsPanel.rowHeights = new int[]{30, 0, 0, 0, 0};
-		gbl_CustomCommandsPanel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_CustomCommandsPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_CustomCommandsPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		CustomCommandsPanel.setLayout(gbl_CustomCommandsPanel);
 		
@@ -829,14 +835,14 @@ public class AAMGui extends JFrame {
 		CCDescLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		GridBagConstraints gbc_CCDescLabel = new GridBagConstraints();
 		gbc_CCDescLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_CCDescLabel.gridx = 0;
+		gbc_CCDescLabel.gridx = 1;
 		gbc_CCDescLabel.gridy = 0;
 		CustomCommandsPanel.add(CCDescLabel, gbc_CCDescLabel);
 		
 		JButton CCNewButton = new JButton("\u2795");
 		GridBagConstraints gbc_CCNewButton = new GridBagConstraints();
 		gbc_CCNewButton.insets = new Insets(0, 0, 5, 0);
-		gbc_CCNewButton.gridx = 1;
+		gbc_CCNewButton.gridx = 2;
 		gbc_CCNewButton.gridy = 0;
 		CustomCommandsPanel.add(CCNewButton, gbc_CCNewButton);
 		
@@ -852,14 +858,15 @@ public class AAMGui extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(ContentPane, "not yet implemented");
+				AddNewPluginCommand.createGui();
 			}
 		}));
 		AddCommandPopup.add(new JMenuItem(new AbstractAction("Add Command Series") {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(ContentPane, "not yet implemented");
+				JOptionPane.showMessageDialog(ContentPane, "doesnt work atm");
+				//AddNewSeriesGui.createGui();
 			}
 		}));
 		
@@ -874,7 +881,7 @@ public class AAMGui extends JFrame {
 		JLabel CCHelpLabel = new JLabel("press the + to add more commands hover over ? for more help");
 		GridBagConstraints gbc_CCHelpLabel = new GridBagConstraints();
 		gbc_CCHelpLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_CCHelpLabel.gridx = 0;
+		gbc_CCHelpLabel.gridx = 1;
 		gbc_CCHelpLabel.gridy = 1;
 		CustomCommandsPanel.add(CCHelpLabel, gbc_CCHelpLabel);
 		
@@ -883,9 +890,68 @@ public class AAMGui extends JFrame {
 		CCHelpButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		GridBagConstraints gbc_CCHelpButton = new GridBagConstraints();
 		gbc_CCHelpButton.insets = new Insets(0, 0, 5, 0);
-		gbc_CCHelpButton.gridx = 1;
+		gbc_CCHelpButton.gridx = 2;
 		gbc_CCHelpButton.gridy = 1;
 		CustomCommandsPanel.add(CCHelpButton, gbc_CCHelpButton);
+		
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 1;
+		gbc_scrollPane.gridy = 2;
+		CustomCommandsPanel.add(scrollPane, gbc_scrollPane);
+		
+		scrollPane.setViewportView(ButtonPanel);
+		scrollPane.setBorder(BorderFactory.createEmptyBorder());
+		
+		ButtonPanel.setLayout(new GridBagLayout());
+		GridBagConstraints gbc_buttonPanel = new GridBagConstraints();
+		gbc_buttonPanel.insets = new Insets(0, 0, 5, 5);
+		gbc_buttonPanel.fill = GridBagConstraints.BOTH;
+		gbc_buttonPanel.gridx = 0;
+		gbc_buttonPanel.gridy = 0;
+		
+		try {
+			for (int i = 0; i < cfg.ScriptCommandsNames().length; i++) {
+				System.out.println("added");
+				ButtonPanel.add(CustomButtonBuilder.BuildScriptButton(cfg.ScriptCommandsNames()[i].replace("[", "").replace("]", ""), cfg.ScriptCommands()[i].replace("[", "").replace("]", "")), gbc_buttonPanel);
+				gbc_buttonPanel.gridx++;
+				if(gbc_buttonPanel.gridx == 2) {
+					gbc_buttonPanel.gridx = 0;
+					gbc_buttonPanel.gridy++;
+				}
+			}
+		} catch(NullPointerException e){
+			e.printStackTrace();
+		}
+		
+		try {
+			for (int i = 0; i < cfg.PluginCommandsNames().length; i++) {
+				System.out.println("added");
+				ButtonPanel.add(CustomButtonBuilder.BuildPluginButton(cfg.PluginCommandsNames()[i].replace("[", "").replace("]", ""), cfg.PluginCommands()[i].replace("[", "").replace("]", ""), Boolean.valueOf(cfg.PluginCommandsArgs()[i].replace("[", "").replace("]", ""))), gbc_buttonPanel);
+				gbc_buttonPanel.gridx++;
+				if(gbc_buttonPanel.gridx == 2) {
+					gbc_buttonPanel.gridx = 0;
+					gbc_buttonPanel.gridy++;
+				}
+			}
+		} catch(NullPointerException e){
+			e.printStackTrace();
+		}
+
+		try {
+			for (int i = 0; i < cfg.CommandSeriesName().length; i++) {
+				System.out.println("added");
+				ButtonPanel.add(CustomButtonBuilder.BuildSeriesButton(cfg.CommandSeriesName()[i].replace("[", "").replace("]", ""), cfg.CommandSeries()[i]), gbc_buttonPanel);
+				gbc_buttonPanel.gridx++;
+				if(gbc_buttonPanel.gridx == 2) {
+					gbc_buttonPanel.gridx = 0;
+					gbc_buttonPanel.gridy++;
+				}
+			}
+		} catch(NullPointerException e){
+			e.printStackTrace();
+		}
 		
 		JPanel ImpotedItemsPanel = new JPanel();
 		tabbedPane.addTab("imported items", null, ImpotedItemsPanel, null);
@@ -914,12 +980,12 @@ public class AAMGui extends JFrame {
 		ImpotedItemsPanel.add(IIHelpButton, gbc_IIHelpButton);
 		
 		ScrollPane = new JScrollPane();
-		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
-		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridx = 1;
-		gbc_scrollPane.gridy = 1;
-		ImpotedItemsPanel.add(ScrollPane, gbc_scrollPane);
+		GridBagConstraints gbc_scrollPane1 = new GridBagConstraints();
+		gbc_scrollPane1.insets = new Insets(0, 0, 5, 5);
+		gbc_scrollPane1.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane1.gridx = 1;
+		gbc_scrollPane1.gridy = 1;
+		ImpotedItemsPanel.add(ScrollPane, gbc_scrollPane1);
 		DefSPbounds = new Rectangle(564, 310);
 		
 		ScrollPanel = new JPanel();
@@ -1247,9 +1313,6 @@ public class AAMGui extends JFrame {
 					
 
 					QueuePanel.add(QHelpButton, gbc_QHelpButton);
-				}else if (tabbedPane.getSelectedIndex() != 6 && tabbedPane.getComponent(6) != null) {
-					tabbedPane.remove(6);
-					
 				}
 				
 			}
