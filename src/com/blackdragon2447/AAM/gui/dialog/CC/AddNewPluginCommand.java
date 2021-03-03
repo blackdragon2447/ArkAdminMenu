@@ -21,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.aeonbits.owner.ConfigFactory;
 
+import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.gui.components.JTextFieldLimit;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 
@@ -79,7 +80,7 @@ public class AddNewPluginCommand extends JFrame {
 		gbc_CommandNameField.gridy = 1;
 		contentPane.add(CommandNameField, gbc_CommandNameField);
 		CommandNameField.setColumns(10);
-		CommandNameField.setDocument(new JTextFieldLimit(16));
+		CommandNameField.setDocument(new JTextFieldLimit(32));
 		
 		JLabel CommandLabel = new JLabel("Command");
 		GridBagConstraints gbc_CommandLabel = new GridBagConstraints();
@@ -154,6 +155,10 @@ public class AddNewPluginCommand extends JFrame {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
+				
+				AAMGui.tabbedPaneOut.setSelectedIndex(-1);
+				AAMGui.tabbedPaneOut.setSelectedIndex(3);
+
 				
 				dispose();
 			}

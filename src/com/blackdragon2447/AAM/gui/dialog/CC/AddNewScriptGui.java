@@ -105,7 +105,7 @@ public class AddNewScriptGui extends JFrame {
 		gbc_CommandNameField.gridy = 2;
 		contentPane.add(CommandNameField, gbc_CommandNameField);
 		CommandNameField.setColumns(10);
-		CommandNameField.setDocument(new JTextFieldLimit(16));
+		CommandNameField.setDocument(new JTextFieldLimit(32));
 		
 		CommandLabel = new JLabel("Command");
 		GridBagConstraints gbc_CommandLabel = new GridBagConstraints();
@@ -158,6 +158,10 @@ public class AddNewScriptGui extends JFrame {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
+				
+
+				AAMGui.tabbedPaneOut.setSelectedIndex(-1);
+				AAMGui.tabbedPaneOut.setSelectedIndex(3);
 				
 				dispose();
 			}
