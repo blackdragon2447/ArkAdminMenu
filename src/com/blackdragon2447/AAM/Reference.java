@@ -23,5 +23,8 @@ public class Reference {
 	public static ArrayList<String> ImportedItemGroupFiles = new ArrayList<String>();
 	public static ArrayList<String> ImportedCreatureGroupFiles = new ArrayList<String>();
 	public static ArrayList<String> ItemFileArray = new ArrayList<String>();
+	public static String Password;
+	public static String RConIp;
+	public static int RConPort;
 
 }

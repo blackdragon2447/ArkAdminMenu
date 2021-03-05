@@ -2,20 +2,17 @@ package com.blackdragon2447.AAM.gui.dialog.CC;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import com.blackdragon2447.AAM.util.Utils;
-
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 
 public class ScriptCommandDialog extends JDialog {
 
@@ -52,7 +49,7 @@ public class ScriptCommandDialog extends JDialog {
 			gbc_CommandLabel.gridx = 1;
 			gbc_CommandLabel.gridy = 1;
 			contentPanel.add(CommandLabel, gbc_CommandLabel);
-			CommandLabel.setText(Utils.getPrefix() + "scriptcommand " + Command);
+			CommandLabel.setText("scriptcommand " + Command);
 		}
 		{
 			JPanel buttonPane = new JPanel();

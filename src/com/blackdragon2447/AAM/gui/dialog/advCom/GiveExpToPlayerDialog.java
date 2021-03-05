@@ -17,12 +17,14 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -33,11 +35,8 @@ import org.aeonbits.owner.ConfigFactory;
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.util.Pair;
-import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 import com.blackdragon2447.AAM.util.obj.GenericCommand;
-import javax.swing.JTextField;
-import javax.swing.JCheckBox;
 
 public class GiveExpToPlayerDialog extends JFrame {
 
@@ -122,7 +121,7 @@ public class GiveExpToPlayerDialog extends JFrame {
 		gbc_CommandLabel.gridy = 1;
 		contentPane.add(CommandLabel, gbc_CommandLabel);
 		
-		OutPutLabel = new JLabel(Utils.GenerateStringCommand("giveexptoplayer"));
+		OutPutLabel = new JLabel("giveexptoplayer");
 		GridBagConstraints gbc_outPutLabel = new GridBagConstraints();
 		gbc_outPutLabel.gridwidth = 2;
 		gbc_outPutLabel.insets = new Insets(0, 0, 5, 5);
@@ -225,7 +224,7 @@ public class GiveExpToPlayerDialog extends JFrame {
 				arguments[2] = "0";
 				arguments[3] = ShareWithTribeCheckBox.isSelected() ? "0" : "1";
 				
-				Reference.Queue.add(new GenericCommand(Utils.getPrefix(), "addexperience", arguments));
+				Reference.Queue.add(new GenericCommand("addexperience", arguments));
 				refreshThread.stop();
 				dispose();
 			}
@@ -340,7 +339,7 @@ public class GiveExpToPlayerDialog extends JFrame {
 				arguments[3] = ShareWithTribeCheckBox.isSelected() ? "0" : "1";
 				
 				System.out.println("-----");
-				OutPutLabel.setText(new GenericCommand(Utils.getPrefix(), "addexperience", arguments).generateCommand());
+				OutPutLabel.setText(new GenericCommand("addexperience", arguments).generateCommand());
 				
 			}
 			

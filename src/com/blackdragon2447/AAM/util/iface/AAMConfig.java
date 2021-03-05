@@ -32,4 +32,10 @@ public interface AAMConfig extends Accessible, Mutable{
 	@DefaultValue("true")
 	Boolean ShowWelcome();
 	
+	String[] ServerNames();
+	
+	String[] IPs();
+	
+	int[] Ports();
+	
 }

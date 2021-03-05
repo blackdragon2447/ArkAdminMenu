@@ -31,7 +31,6 @@ import org.aeonbits.owner.ConfigFactory;
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.util.Pair;
-import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 import com.blackdragon2447.AAM.util.obj.GenericCommand;
 
@@ -116,7 +115,7 @@ public class ForceIntoTribeDialog extends JFrame {
 		gbc_CommandLabel.gridy = 1;
 		contentPane.add(CommandLabel, gbc_CommandLabel);
 		
-		OutPutLabel = new JLabel(Utils.GenerateStringCommand("forceplayertojointribe"));
+		OutPutLabel = new JLabel("forceplayertojointribe");
 		GridBagConstraints gbc_outPutLabel = new GridBagConstraints();
 		gbc_outPutLabel.gridwidth = 2;
 		gbc_outPutLabel.insets = new Insets(0, 0, 5, 5);
@@ -217,7 +216,7 @@ public class ForceIntoTribeDialog extends JFrame {
 				arguments[0] = PlayerIDField.getText();
 				arguments[1] = TribeNameField.getText();
 				
-				Reference.Queue.add(new GenericCommand(Utils.getPrefix(), "forceplayertojointribe", arguments));
+				Reference.Queue.add(new GenericCommand("forceplayertojointribe", arguments));
 				refreshThread.stop();
 				dispose();
 			}
@@ -330,7 +329,7 @@ public class ForceIntoTribeDialog extends JFrame {
 				arguments[1] = TribeNameField.getText();
 				
 				System.out.println("-----");
-				OutPutLabel.setText(new GenericCommand(Utils.getPrefix(), "forceplayertojointribe", arguments).generateCommand());
+				OutPutLabel.setText(new GenericCommand("forceplayertojointribe", arguments).generateCommand());
 				
 			}
 			

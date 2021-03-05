@@ -32,7 +32,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
@@ -52,7 +51,6 @@ import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.actionlistners.ActionlistnerAAM;
 import com.blackdragon2447.AAM.gui.components.JNumberedButton;
 import com.blackdragon2447.AAM.gui.components.JNumberedCheckbox;
-import com.blackdragon2447.AAM.gui.dialog.CustomPFDialog;
 import com.blackdragon2447.AAM.gui.dialog.HelpDialog;
 import com.blackdragon2447.AAM.gui.dialog.ImportItemsDialog;
 import com.blackdragon2447.AAM.gui.dialog.CC.AddNewPluginCommand;
@@ -78,9 +76,6 @@ public class AAMGui extends JFrame {
 	private JPanel ContentPane;
 	static JPanel SimpleCommandsPanel = new JPanel();
 	static JPanel AdvancedCommandsPanel = new JPanel();
-	public static JRadioButtonMenuItem PFcheatRadioItem = new JRadioButtonMenuItem("cheat");
-	public static JRadioButtonMenuItem PFacheatRadioItem = new JRadioButtonMenuItem("admin cheat");
-	public static JRadioButtonMenuItem PFcustomRadioItem = new JRadioButtonMenuItem("custom prefix");
 	ButtonGroup group = new ButtonGroup();
 	
 	public static JPanel QueuePanel = new JPanel();
@@ -192,31 +187,15 @@ public class AAMGui extends JFrame {
 		});
 		
 		JMenuItem SettingMenuItem = new JMenuItem("settings");
+		SettingMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SettingsGUI.createGui();
+			}
+		});
 		settingsMenu.add(SettingMenuItem);
 		
 		JCheckBoxMenuItem DTCheckItem = new JCheckBoxMenuItem("dark theme");
 		settingsMenu.add(DTCheckItem);
-		
-		JMenu prefixMenu = new JMenu("command prefix");
-		settingsMenu.add(prefixMenu);
-		group.add(PFacheatRadioItem);
-		group.add(PFcheatRadioItem);
-		group.add(PFcustomRadioItem);
-		
-		prefixMenu.add(PFcheatRadioItem);
-		PFcheatRadioItem.setSelected(true);
-		
-		prefixMenu.add(PFacheatRadioItem);
-		
-		prefixMenu.add(PFcustomRadioItem);
-		
-		JMenuItem SetPFcustomMenuItem = new JMenuItem("set custom prefix");
-		SetPFcustomMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				CustomPFDialog.createDialog();
-			}
-		});
-		prefixMenu.add(SetPFcustomMenuItem);
 		
 		JMenuItem helpMenuItem = new JMenuItem("help");
 		helpMenuItem.addActionListener(new ActionListener() {
@@ -809,7 +788,7 @@ public class AAMGui extends JFrame {
 		AdvancedCommandsPanel.add(ListAllIDButton, gbc_ListAllIDButton);
 		ListAllIDButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(Utils.getPrefix() + "listallplayersteamid");
+				System.out.println("listallplayersteamid");
 				SteamIDReturnDialog.createGui();
 			}
 		});
@@ -919,7 +898,7 @@ public class AAMGui extends JFrame {
 				}
 			}
 		} catch(NullPointerException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		try {
@@ -932,7 +911,7 @@ public class AAMGui extends JFrame {
 				}
 			}
 		} catch(NullPointerException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 		/*

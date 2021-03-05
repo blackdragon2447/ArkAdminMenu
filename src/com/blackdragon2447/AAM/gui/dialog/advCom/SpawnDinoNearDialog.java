@@ -36,7 +36,6 @@ import org.aeonbits.owner.ConfigFactory;
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.util.Pair;
-import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 import com.blackdragon2447.AAM.util.obj.GenericCommand;
 import com.jidesoft.swing.ComboBoxSearchable;
@@ -123,7 +122,7 @@ public class SpawnDinoNearDialog extends JFrame {
 		gbc_CommandLabel.gridy = 1;
 		contentPane.add(CommandLabel, gbc_CommandLabel);
 		
-		OutPutLabel = new JLabel(Utils.GenerateStringCommand("spawndino"));
+		OutPutLabel = new JLabel(("spawndino"));
 		GridBagConstraints gbc_outPutLabel = new GridBagConstraints();
 		gbc_outPutLabel.gridwidth = 2;
 		gbc_outPutLabel.insets = new Insets(0, 0, 5, 5);
@@ -265,7 +264,7 @@ public class SpawnDinoNearDialog extends JFrame {
 				arguments[5] = "0";
 				arguments[6] = "0";
 						
-				Reference.Queue.add(new GenericCommand(Utils.getPrefix(), "addexperience", arguments));
+				Reference.Queue.add(new GenericCommand("addexperience", arguments));
 				refreshThread.stop();
 				dispose();
 			}
@@ -387,7 +386,7 @@ public class SpawnDinoNearDialog extends JFrame {
 				arguments[6] = "0";
 				
 				System.out.println("-----");
-				OutPutLabel.setText(new GenericCommand(Utils.getPrefix(), "spawndino", arguments).generateCommand());
+				OutPutLabel.setText(new GenericCommand("spawndino", arguments).generateCommand());
 				
 			}
 			
