@@ -57,7 +57,6 @@ public class JNumberedPanel extends JPanel implements Accessible, Serializable{
 		this.Number = number;
 	}
 
-    
 	
 	
 }

@@ -16,6 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -27,11 +28,11 @@ import org.aeonbits.owner.ConfigFactory;
 
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
+import com.blackdragon2447.AAM.util.RconHandler;
 import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 import com.blackdragon2447.AAM.util.obj.SimpleCommand;
 
-import net.kronos.rkon.core.Rcon;
 import net.kronos.rkon.core.ex.AuthenticationException;
 
 public class SimpleCommandDialog extends JFrame {
@@ -74,8 +75,6 @@ public class SimpleCommandDialog extends JFrame {
 	 */
 	public SimpleCommandDialog(int command) throws UnsupportedLookAndFeelException, IOException, AuthenticationException {
 		
-
-		final Rcon rcon = new Rcon("127.0.0.1", 27015, "mypassword".getBytes());
 		
 		try {
 			UIManager.setLookAndFeel(AAMGui.getLookAndFeel());
@@ -177,8 +176,17 @@ public class SimpleCommandDialog extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(OutPutLabel.getText());
 				try {
-					String result = rcon.command(OutPutLabel.getText());
-					System.out.println(result);
+					String result = null;
+					try {
+						result = RconHandler.command(OutPutLabel.getText());
+					} catch (AuthenticationException e1) {
+						if(e1 instanceof AuthenticationException) result = "failed to outheticate";
+						else {
+							result = "an unkown error occured";
+							e1.printStackTrace();
+						}
+					}
+					JOptionPane.showInternalMessageDialog(contentPane, result);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -196,7 +204,7 @@ public class SimpleCommandDialog extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Reference.Queue.add(new SimpleCommand(Utils.getPrefix(), command, ArgumentField.getText()).generateGenericCommand());
+				Reference.Queue.add(new SimpleCommand(command, ArgumentField.getText()).generateGenericCommand());
 				dispose();
 			}
 		});

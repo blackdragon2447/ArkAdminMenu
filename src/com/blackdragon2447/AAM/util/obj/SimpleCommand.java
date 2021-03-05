@@ -1,7 +1,6 @@
 package com.blackdragon2447.AAM.util.obj;
 
 import com.blackdragon2447.AAM.Reference;
-import com.blackdragon2447.AAM.gui.AAMGui;
 
 public class SimpleCommand {
 	
@@ -12,18 +11,8 @@ public class SimpleCommand {
 	private String Arguments;
 	private String[] ArgumentsList = {""};
 	
-	public SimpleCommand(String prefix, int index, String Arguments) {
-		
-		if (AAMGui.PFcheatRadioItem.isSelected() == true) {
-			this.Prefix = "cheat ";
-		}else if (AAMGui.PFacheatRadioItem.isSelected() == true) {
-			this.Prefix = "admincheat ";
-		}else {
-			this.Prefix = Reference.CustomPrefix + " ";
-		}
-		
-		if(this.Prefix == " ") this.Prefix = "";
-		
+	public SimpleCommand(int index, String Arguments) {
+				
 		this.Command = Reference.SimpleCommandList.get(index).getFirstValue();
 		
 		if(Reference.SimpleCommandList.get(index).getSecondValue() == false) {
@@ -79,7 +68,7 @@ public class SimpleCommand {
 	}
 	
 	public GenericCommand generateGenericCommand() {
-		return new GenericCommand(Prefix, Index, ArgumentsList);
+		return new GenericCommand(Index, ArgumentsList);
 		
 	}
 

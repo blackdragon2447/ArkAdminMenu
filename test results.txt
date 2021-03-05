@@ -1,0 +1,11 @@
+set time - doesnt work
+playersonly - locks out rcon, works
+toggle damage numbers - no response, works
+broadcast - no response, works
+chat - no response, works, no name shown in chat (add prefix ?)
+stop server - not tested
+save server - works
+dino wipe - works
+ban - works
+unban - works
+kick - works

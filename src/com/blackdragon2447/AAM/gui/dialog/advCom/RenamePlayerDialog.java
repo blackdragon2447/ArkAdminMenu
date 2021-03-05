@@ -31,7 +31,6 @@ import org.aeonbits.owner.ConfigFactory;
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.util.Pair;
-import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 import com.blackdragon2447.AAM.util.obj.GenericCommand;
 
@@ -116,7 +115,7 @@ public class RenamePlayerDialog extends JFrame {
 		gbc_CommandLabel.gridy = 1;
 		contentPane.add(CommandLabel, gbc_CommandLabel);
 		
-		OutPutLabel = new JLabel(Utils.GenerateStringCommand("renamecharacter"));
+		OutPutLabel = new JLabel("renamecharacter");
 		GridBagConstraints gbc_outPutLabel = new GridBagConstraints();
 		gbc_outPutLabel.gridwidth = 2;
 		gbc_outPutLabel.insets = new Insets(0, 0, 5, 5);
@@ -217,7 +216,7 @@ public class RenamePlayerDialog extends JFrame {
 				arguments[0] = PlayerSteamIdField.getText();
 				arguments[1] = newPlayerNameField.getText();
 				
-				Reference.Queue.add(new GenericCommand(Utils.getPrefix(), "renamecharacter", arguments));
+				Reference.Queue.add(new GenericCommand("renamecharacter", arguments));
 				refreshThread.stop();
 				dispose();
 			}
@@ -330,7 +329,7 @@ public class RenamePlayerDialog extends JFrame {
 				arguments[1] = newPlayerNameField.getText();
 				
 				System.out.println("-----");
-				OutPutLabel.setText(new GenericCommand(Utils.getPrefix(), "renamecharacter", arguments).generateCommand());
+				OutPutLabel.setText(new GenericCommand("renamecharacter", arguments).generateCommand());
 				
 			}
 			

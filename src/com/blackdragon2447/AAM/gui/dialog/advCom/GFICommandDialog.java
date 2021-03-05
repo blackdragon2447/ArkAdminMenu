@@ -34,7 +34,6 @@ import org.aeonbits.owner.ConfigFactory;
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.util.Pair;
-import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 import com.blackdragon2447.AAM.util.obj.GenericCommand;
 import com.jidesoft.swing.ComboBoxSearchable;
@@ -126,7 +125,7 @@ public class GFICommandDialog extends JFrame {
 		gbc_CommandLabel.gridy = 1;
 		contentPane.add(CommandLabel, gbc_CommandLabel);
 		
-		OutPutLabel = new JLabel(Utils.GenerateStringCommand("giveitem"));
+		OutPutLabel = new JLabel("giveitem");
 		GridBagConstraints gbc_outPutLabel = new GridBagConstraints();
 		gbc_outPutLabel.gridwidth = 2;
 		gbc_outPutLabel.insets = new Insets(0, 0, 5, 5);
@@ -292,7 +291,7 @@ public class GFICommandDialog extends JFrame {
 				arguments[3] = String.valueOf(QualityComboBox.getSelectedIndex());
 				arguments[4] = BlueprintCheckBox.isSelected() ? "1" : "0";
 				
-				Reference.Queue.add(new GenericCommand(Utils.getPrefix(), "giveitem", arguments));
+				Reference.Queue.add(new GenericCommand("giveitem", arguments));
 				refreshThread.stop();
 				dispose();
 			}
@@ -408,7 +407,7 @@ public class GFICommandDialog extends JFrame {
 				arguments[4] = BlueprintCheckBox.isSelected() ? "1" : "0";
 				
 				System.out.println("-\\|/-");
-				OutPutLabel.setText(new GenericCommand(Utils.getPrefix(), "giveitem", arguments).generateCommand());
+				OutPutLabel.setText(new GenericCommand("giveitem", arguments).generateCommand());
 				
 			}
 			

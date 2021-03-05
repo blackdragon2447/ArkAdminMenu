@@ -2,6 +2,9 @@ package com.blackdragon2447.AAM.gui.dialog.CC;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -9,16 +12,10 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import com.blackdragon2447.AAM.util.Utils;
-
-import java.awt.GridBagLayout;
 import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class PluginCommandDialog extends JDialog {
 
@@ -58,7 +55,7 @@ public class PluginCommandDialog extends JDialog {
 			gbc_CommandLabel.gridx = 1;
 			gbc_CommandLabel.gridy = 1;
 			contentPanel.add(CommandLabel, gbc_CommandLabel);
-			CommandLabel.setText(Utils.getPrefix() + Command);
+			CommandLabel.setText(Command);
 		}
 		{
 			textField = new JTextField();
@@ -77,7 +74,7 @@ public class PluginCommandDialog extends JDialog {
 				
 				@Override
 				public void keyReleased(KeyEvent e) {
-					CommandLabel.setText(Utils.getPrefix() + Command + " " + textField.getText());
+					CommandLabel.setText(Command + " " + textField.getText());
 				}
 				
 				@Override

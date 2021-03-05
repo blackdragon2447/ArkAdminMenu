@@ -1,53 +1,27 @@
 package com.blackdragon2447.AAM.util.obj;
 
 import com.blackdragon2447.AAM.Reference;
-import com.blackdragon2447.AAM.gui.AAMGui;
 
 public class GenericCommand {
 	
-	private String Prefix;
 	private String Command;
 	private String[] Arguments;
 	
-	public GenericCommand(String prefix, int index, String[] Arguments) {
+	public GenericCommand(int index, String[] Arguments) {
 		
-		if (AAMGui.PFcheatRadioItem.isSelected() == true) {
-			this.Prefix = "cheat ";
-		}else if (AAMGui.PFacheatRadioItem.isSelected() == true) {
-			this.Prefix = "admincheat ";
-		}else {
-			this.Prefix = Reference.CustomPrefix + " ";
-		}
-		
-		if(this.Prefix == " ") this.Prefix = "";
 		
 		this.Command = Reference.SimpleCommandList.get(index).getFirstValue();
 		
-		this.Command = Command + " ";
 		this.Arguments = Arguments;
 	}
 	
-	public GenericCommand(String prefix, String command, String[] Arguments) {
-		
-		if (AAMGui.PFcheatRadioItem.isSelected() == true) {
-			this.Prefix = "cheat ";
-		}else if (AAMGui.PFacheatRadioItem.isSelected() == true) {
-			this.Prefix = "admincheat ";
-		}else {
-			this.Prefix = Reference.CustomPrefix + " ";
-		}
-		
-		if(this.Prefix == " ") this.Prefix = "";
+	public GenericCommand(String command, String[] Arguments) {
 		
 		this.Command = command;
 		
-		this.Command = Command + "";
 		this.Arguments = Arguments;
 	}
 	
-	public String getPrefix() {
-		return Prefix;
-	}
 	
 	public String getCommand() {
 		return Command;
@@ -57,9 +31,6 @@ public class GenericCommand {
 		return Arguments;
 	}
 	
-	public void setPrefix(String prefix) {
-		Prefix = prefix;
-	}
 	
 	public void setCommand(String command) {
 		Command = command;
@@ -73,7 +44,7 @@ public class GenericCommand {
 		
 		String result;
 		
-		result = Prefix + Command;
+		result = Command;
 		
 		if(Arguments != null) {
 			if(Arguments.length != 0) {

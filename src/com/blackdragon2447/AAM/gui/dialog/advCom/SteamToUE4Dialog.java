@@ -31,7 +31,6 @@ import org.aeonbits.owner.ConfigFactory;
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.util.Pair;
-import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 import com.blackdragon2447.AAM.util.obj.GenericCommand;
 
@@ -113,7 +112,7 @@ public class SteamToUE4Dialog extends JFrame {
 		gbc_CommandLabel.gridy = 1;
 		contentPane.add(CommandLabel, gbc_CommandLabel);
 		
-		OutPutLabel = new JLabel(Utils.GenerateStringCommand("getplayeridforSteamid "));
+		OutPutLabel = new JLabel(("getplayeridforSteamid "));
 		GridBagConstraints gbc_outPutLabel = new GridBagConstraints();
 		gbc_outPutLabel.gridwidth = 2;
 		gbc_outPutLabel.insets = new Insets(0, 0, 5, 5);
@@ -300,7 +299,7 @@ public class SteamToUE4Dialog extends JFrame {
 				arguments[0] = SteamIDField.getText();
 				
 				System.out.println("-----");
-				OutPutLabel.setText(new GenericCommand(Utils.getPrefix(), "getplayeridforSteamid ", arguments).generateCommand());
+				OutPutLabel.setText(new GenericCommand("getplayeridforSteamid ", arguments).generateCommand());
 				
 			}
 			
