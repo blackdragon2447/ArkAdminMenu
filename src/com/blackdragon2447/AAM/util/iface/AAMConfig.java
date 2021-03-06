@@ -38,4 +38,5 @@ public interface AAMConfig extends Accessible, Mutable{
 	
 	int[] Ports();
 	
+	int LastLogin();
 }

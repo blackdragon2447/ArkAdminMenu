@@ -66,10 +66,13 @@ import com.blackdragon2447.AAM.gui.dialog.advCom.SteamIDReturnDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.SteamToUE4Dialog;
 import com.blackdragon2447.AAM.util.CustomButtonBuilder;
 import com.blackdragon2447.AAM.util.FavButtonPanelBuilder;
+import com.blackdragon2447.AAM.util.RconHandler;
 import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+
+import net.kronos.rkon.core.ex.AuthenticationException;
 
 public class AAMGui extends JFrame {
 	private static final long serialVersionUID = -735583961255908606L;
@@ -152,8 +155,7 @@ public class AAMGui extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AAMGui frame = new AAMGui();
-					frame.setVisible(true);
+					new AAMGui();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -788,7 +790,11 @@ public class AAMGui extends JFrame {
 		AdvancedCommandsPanel.add(ListAllIDButton, gbc_ListAllIDButton);
 		ListAllIDButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("listallplayersteamid");
+				try {
+					RconHandler.command(("listallplayersteamid"));
+				} catch (IOException | AuthenticationException e1) {
+					e1.printStackTrace();
+				}
 				SteamIDReturnDialog.createGui();
 			}
 		});
@@ -1384,8 +1390,22 @@ public class AAMGui extends JFrame {
 			  public void windowDeactivated(WindowEvent arg0) {}
 		});
 	    
-	    
+	    setVisible(true);
 
+	    int logon = 1;
+	    if(cfg.LastLogin() != -1) {
+	    	logon = JOptionPane.showConfirmDialog(ContentPane, "Do you want to log on to the server form last session?", "relog", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	    }
+	    if (logon == 0) {
+			SettingsGUI.Authenticate(cfg.LastLogin());
+		} else {
+			cfg.setProperty("LastLogin", "-1");
+			try {
+				cfg.store(new FileOutputStream("AAMConfig.properties"), "no comments");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
 	    
 	}
 	

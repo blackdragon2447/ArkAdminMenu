@@ -37,7 +37,7 @@ import net.kronos.rkon.core.ex.AuthenticationException;
 public class SettingsGUI extends JFrame {
 
 	private static final long serialVersionUID = 422929525233814207L;
-	private JPanel contentPane;
+	private static JPanel contentPane;
 	private static JTextField IPField;
 	private static JTextField PortField;
 	private static JTextField NameField;
@@ -199,37 +199,10 @@ public class SettingsGUI extends JFrame {
 		gbc_AuthenticateButton.gridy = 5;
 		ServersPanel.add(AuthenticateButton, gbc_AuthenticateButton);
 		AuthenticateButton.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				
-				Boolean succeeded = true;
+				Authenticate(list.getSelectedIndex());
 				
-				Reference.RConIp = cfg.IPs()[list.getSelectedIndex()];
-				Reference.RConPort = cfg.Ports()[list.getSelectedIndex()];
-				JPasswordField pwd = new JPasswordField(10);
-			    JOptionPane.showConfirmDialog(null, pwd, "Enter Password",JOptionPane.OK_CANCEL_OPTION);
-			    Reference.Password = pwd.getText();
-			    pwd.setText("");
-			    
-			    try {
-					RconHandler.command("saveworld");
-				} catch (IOException e1) {
-					succeeded = false;
-					e1.printStackTrace();
-				} catch (AuthenticationException e1) {
-					succeeded = false;
-					JOptionPane.showMessageDialog(contentPane, "Password incorrect", "", JOptionPane.ERROR_MESSAGE);
-				}
-			    
-			    if(succeeded == true) {
-					JOptionPane.showMessageDialog(contentPane, "Logged On", "", JOptionPane.INFORMATION_MESSAGE);
-			    }else{
-			    	Reference.RConIp = cfg.IPs()[list.getSelectedIndex()];
-					Reference.RConPort = cfg.Ports()[list.getSelectedIndex()];
-					pwd = new JPasswordField(10);
-				    JOptionPane.showConfirmDialog(null, pwd, "Try Again" ,JOptionPane.OK_CANCEL_OPTION);
-				    Reference.Password = pwd.getText();
-			    }
 			}
 		});
 		
@@ -238,16 +211,10 @@ public class SettingsGUI extends JFrame {
 		addWindowListener(new WindowListener() {
 			
 			@Override
-			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowOpened(WindowEvent e) {}
 			
 			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void windowIconified(WindowEvent e) {}
 			
 			@Override
 			public void windowDeiconified(WindowEvent e) {}
@@ -321,4 +288,44 @@ public class SettingsGUI extends JFrame {
 		System.out.println("removed");
 	}
 
+	public static void Authenticate(int serverNum) {
+
+		Boolean succeeded = true;
+		
+		Reference.RConIp = cfg.IPs()[serverNum];
+		Reference.RConPort = cfg.Ports()[serverNum];
+		JPasswordField pwd = new JPasswordField(10);
+	    JOptionPane.showConfirmDialog(null, pwd, "Enter Password",JOptionPane.OK_CANCEL_OPTION);
+	    Reference.Password = String.valueOf(pwd.getPassword());
+	    pwd.setText("");
+	    
+	    try {
+			RconHandler.command("saveworld");
+		} catch (IOException e1) {
+			succeeded = false;
+			e1.printStackTrace();
+		} catch (AuthenticationException e1) {
+			succeeded = false;
+			JOptionPane.showMessageDialog(contentPane, "Password incorrect", "", JOptionPane.ERROR_MESSAGE);
+		}
+	    
+	    if(succeeded == true) {
+			JOptionPane.showMessageDialog(contentPane, "Logged On", "", JOptionPane.INFORMATION_MESSAGE);
+		    cfg.setProperty("LastLogin", String.valueOf(serverNum));
+			try {
+				cfg.store(new FileOutputStream("AAMConfig.properties"), "no comments");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+	    }else{
+	    	Reference.RConIp = cfg.IPs()[serverNum];
+			Reference.RConPort = cfg.Ports()[serverNum];
+			pwd = new JPasswordField(10);
+		    JOptionPane.showConfirmDialog(null, pwd, "Try Again" ,JOptionPane.OK_CANCEL_OPTION);
+		    Reference.Password = String.valueOf(pwd.getPassword());
+	    }
+	    
+	}
+	
+	
 }

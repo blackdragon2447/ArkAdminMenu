@@ -3,6 +3,7 @@ package com.blackdragon2447.AAM.gui.actionlistners;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
 
@@ -15,7 +16,10 @@ import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.gui.components.JNumberedButton;
 import com.blackdragon2447.AAM.gui.components.JNumberedCheckbox;
 import com.blackdragon2447.AAM.gui.dialog.SimpleCommandDialog;
+import com.blackdragon2447.AAM.util.RconHandler;
 import com.blackdragon2447.AAM.util.Utils;
+
+import net.kronos.rkon.core.ex.AuthenticationException;
 
 public class ActionlistnerAAM {
 	
@@ -74,7 +78,11 @@ public class ActionlistnerAAM {
 		public void actionPerformed(ActionEvent e) {
 			
 			for(int i = 0; i < Reference.Queue.size(); i++) {
-				System.out.println(Reference.Queue.get(i).generateCommand());
+				try {
+					RconHandler.command(Reference.Queue.get(i).generateCommand());
+				} catch (IOException | AuthenticationException e1) {
+					e1.printStackTrace();
+				}
 			}
 			Reference.Queue.clear();
 			
@@ -92,7 +100,11 @@ public class ActionlistnerAAM {
 			double delay = (double) AAMGui.DelaySpinner.getValue();
 			
 			for(int i = 0; i < Reference.Queue.size(); i++) {
-				System.out.println(Reference.Queue.get(i).generateCommand());
+				try {
+					RconHandler.command(Reference.Queue.get(i).generateCommand());
+				} catch (IOException | AuthenticationException e2) {
+					e2.printStackTrace();
+				}
 				AAMGui.tabbedPaneOut.setSelectedIndex(0);
 				AAMGui.tabbedPaneOut.setSelectedIndex(5);
 				try {

@@ -7,12 +7,17 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.blackdragon2447.AAM.util.RconHandler;
+
+import net.kronos.rkon.core.ex.AuthenticationException;
 
 public class ScriptCommandDialog extends JDialog {
 
@@ -64,7 +69,11 @@ public class ScriptCommandDialog extends JDialog {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						System.out.println(CommandLabel.getText());
+						try {
+							RconHandler.command(CommandLabel.getText());
+						} catch (IOException | AuthenticationException e1) {
+							e1.printStackTrace();
+						}
 						dispose();
 					}
 				});
