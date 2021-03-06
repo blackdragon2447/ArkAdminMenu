@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -36,9 +37,12 @@ import org.aeonbits.owner.ConfigFactory;
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.util.Pair;
+import com.blackdragon2447.AAM.util.RconHandler;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 import com.blackdragon2447.AAM.util.obj.GenericCommand;
 import com.jidesoft.swing.ComboBoxSearchable;
+
+import net.kronos.rkon.core.ex.AuthenticationException;
 
 public class SpawnDinoNearDialog extends JFrame {
 
@@ -238,7 +242,11 @@ public class SpawnDinoNearDialog extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(OutPutLabel.getText());
+				try {
+					RconHandler.command(OutPutLabel.getText());
+				} catch (IOException | AuthenticationException e1) {
+					e1.printStackTrace();
+				}
 				dispose();
 				refreshThread.stop();
 			}

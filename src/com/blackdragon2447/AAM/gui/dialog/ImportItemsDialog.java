@@ -126,8 +126,6 @@ public class ImportItemsDialog extends JDialog {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						
-						System.out.println(SelectedFile == null);
-						System.out.println(SelectedFile.getAbsolutePath());
 						try {
 							Files.copy(Paths.get(SelectedFile.getAbsolutePath()), Paths.get("ItemLists\\" + SelectedFile.getName()), StandardCopyOption.REPLACE_EXISTING);
 						} catch (IOException e1) {
