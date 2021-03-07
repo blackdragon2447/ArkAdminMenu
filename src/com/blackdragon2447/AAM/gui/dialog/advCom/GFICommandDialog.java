@@ -22,6 +22,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
@@ -199,13 +200,11 @@ public class GFICommandDialog extends JFrame {
 		contentPane.add(comboBox, gbc_comboBox);
 		ArrayList<String> FullItemList = new ArrayList<String>();
 		FullItemPairList = new ArrayList<Pair<String, String>>();
-		
-		for(int i = 0; i < Reference.ImportedItemGroups.size(); i++) {
-			System.out.println(Reference.ImportedCreatureGroups.get(i).getSecondValue().size());
-			for(int x = 0; x < Reference.ImportedItemGroups.get(i).getSecondValue().size(); x++) {
-				FullItemList.add(Reference.ImportedItemGroups.get(i).getSecondValue().get(x).getSecondValue());
-				FullItemPairList.add(Reference.ImportedItemGroups.get(i).getSecondValue().get(x));
-				System.out.println(Reference.ImportedCreatureGroups.get(i).getSecondValue().get(x).getSecondValue());
+		ArrayList<Pair<String, 	 ArrayList<Pair<String, String>>>> list = Reference.ImportedItemGroups;
+		for(int i = 0; i < list.size(); i++) {
+			for(int x = 0; x < list.get(i).getSecondValue().size(); x++) {
+				FullItemList.add(list.get(i).getSecondValue().get(x).getSecondValue());
+				FullItemPairList.add(list.get(i).getSecondValue().get(x));
 			}
 			
 		}
@@ -274,8 +273,18 @@ public class GFICommandDialog extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					RconHandler.command(OutPutLabel.getText());
-				} catch (IOException | AuthenticationException e1) {
+					String result = null;
+					try {
+						result = RconHandler.command(OutPutLabel.getText());
+					} catch (AuthenticationException e1) {
+						if(e1 instanceof AuthenticationException) result = "failed to outheticate";
+						else {
+							result = "an unkown error occured";
+							e1.printStackTrace();
+						}
+					}
+					JOptionPane.showInternalMessageDialog(contentPane, result);
+				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 				dispose();

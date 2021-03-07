@@ -23,6 +23,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
@@ -243,8 +244,18 @@ public class SpawnDinoNearDialog extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					RconHandler.command(OutPutLabel.getText());
-				} catch (IOException | AuthenticationException e1) {
+					String result = null;
+					try {
+						result = RconHandler.command(OutPutLabel.getText());
+					} catch (AuthenticationException e1) {
+						if(e1 instanceof AuthenticationException) result = "failed to outheticate";
+						else {
+							result = "an unkown error occured";
+							e1.printStackTrace();
+						}
+					}
+					JOptionPane.showInternalMessageDialog(contentPane, result);
+				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 				dispose();

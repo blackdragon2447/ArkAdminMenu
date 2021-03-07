@@ -4,16 +4,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import javax.swing.UnsupportedLookAndFeelException;
-
-import org.aeonbits.owner.ConfigFactory;
 
 import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.util.CSVReader;
 import com.blackdragon2447.AAM.util.CreatureSetBuilder;
 import com.blackdragon2447.AAM.util.ItemSetBuilder;
-import com.blackdragon2447.AAM.util.iface.AAMConfig;
+import com.blackdragon2447.AAM.util.Pair;
 
 /**
  * the main class of AAM
@@ -35,7 +34,6 @@ public class Main {
 	public static void main(String[] args){
 		
 
-		AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
 		
 		CSVReader Reader = new CSVReader();
 		try {
@@ -48,8 +46,11 @@ public class Main {
 		File dir = new File("ItemLists");
 		String[] ItemFileList = dir.list();
 		
+		Pair<String, ArrayList<Pair<String, String>>> pair ;
+		
 		for (String string : ItemFileList) {
 			try {
+				pair = ItemSetBuilder.generatePair(string.substring(0, string.length() - 4), "ItemLists\\" + string);
 				Reference.ImportedItemGroups.add(ItemSetBuilder.generatePair(string.substring(0, string.length() - 4), "ItemLists\\" + string));
 			} catch (IOException e) {
 				if(!(e instanceof FileNotFoundException))
@@ -70,7 +71,6 @@ public class Main {
 		}
 		
 		
-		Reference.CustomPrefix = cfg.CustomPrefix();
 		
 		try {
 			AAMGui.createGui();

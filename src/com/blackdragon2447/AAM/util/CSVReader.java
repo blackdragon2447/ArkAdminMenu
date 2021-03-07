@@ -13,7 +13,6 @@ public class CSVReader {
 	static ArrayList<Pair<String, Boolean>> PairList;
 	static ArrayList<Pair<String, Integer>> PairListAdvanced;
 	static ArrayList<Pair<Integer, String>> ArgPairList;
-	static ArrayList<Pair<String, String>> ItemBPList;
 	
 	@SuppressWarnings({ })
 	public CSVReader(){
@@ -23,7 +22,6 @@ public class CSVReader {
 		PairList = new ArrayList<Pair<String, Boolean>>();
 		PairListAdvanced = new ArrayList<Pair<String, Integer>>();
 		ArgPairList = new ArrayList<Pair<Integer, String>>();
-		ItemBPList = new ArrayList<Pair<String, String>>();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -79,8 +77,10 @@ public class CSVReader {
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Pair<String, String>> readItemFile(String path) throws IOException {
 		
+		ArrayList<Pair<String, String>> ItemBPList;
+		ItemBPList = new ArrayList<Pair<String, String>>();
 		ItemBPList.clear();
-		
+		DataPair = new Pair<String, String>(null, null);
 		BufferedReader br = new BufferedReader(new FileReader(path));
 		Line = "";
 		while((Line = br.readLine()) != null) {
@@ -90,7 +90,30 @@ public class CSVReader {
 		}
 		
 		br.close();
+		path = null;
 		return ItemBPList;
+		
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<Pair<String, String>> readCreatureFile(String path) throws IOException {
+		
+
+		ArrayList<Pair<String, String>> CreatureBPList;
+		CreatureBPList = new ArrayList<Pair<String, String>>();
+		CreatureBPList.clear();
+		DataPair = new Pair<String, String>(null, null);
+		BufferedReader br = new BufferedReader(new FileReader(path));
+		Line = "";
+		while((Line = br.readLine()) != null) {
+			String[] values = Line.split(",");
+			DataPair = new Pair<String, String>(values[0].replace("﻿", ""), values[0]);
+			CreatureBPList.add(DataPair);
+		}
+		
+		br.close();
+		return CreatureBPList;
 		
 	}
 }
