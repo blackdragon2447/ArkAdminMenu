@@ -23,6 +23,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
@@ -47,7 +48,7 @@ import net.kronos.rkon.core.ex.AuthenticationException;
 public class SpawnDinoCoordsDialog extends JFrame {
 
 	private static final long serialVersionUID = -7611273233935193420L;
-	private JPanel X;
+	private JPanel contentpane;
 	private JButton RunButton;
 	private JButton QueueButton;
 	private JLabel OutPutLabel;
@@ -105,15 +106,15 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 530, 364);
-		X = new JPanel();
-		X.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(X);
-		GridBagLayout gbl_X = new GridBagLayout();
-		gbl_X.columnWidths = new int[]{40, 180, 180, 40, 0};
-		gbl_X.rowHeights = new int[]{30, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_X.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_X.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		X.setLayout(gbl_X);
+		contentpane = new JPanel();
+		contentpane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentpane);
+		GridBagLayout gbl_contentpane = new GridBagLayout();
+		gbl_contentpane.columnWidths = new int[]{40, 180, 180, 40, 0};
+		gbl_contentpane.rowHeights = new int[]{30, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentpane.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_contentpane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		contentpane.setLayout(gbl_contentpane);
 		
 		Separator = new JSeparator();
 		GridBagConstraints gbc_separator = new GridBagConstraints();
@@ -121,7 +122,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_separator.insets = new Insets(0, 0, 5, 5);
 		gbc_separator.gridx = 1;
 		gbc_separator.gridy = 0;
-		X.add(Separator, gbc_separator);
+		contentpane.add(Separator, gbc_separator);
 		
 		JLabel CommandLabel = new JLabel("command");
 		CommandLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -130,7 +131,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_CommandLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_CommandLabel.gridx = 1;
 		gbc_CommandLabel.gridy = 1;
-		X.add(CommandLabel, gbc_CommandLabel);
+		contentpane.add(CommandLabel, gbc_CommandLabel);
 		
 		OutPutLabel = new JLabel(("spawndino"));
 		GridBagConstraints gbc_outPutLabel = new GridBagConstraints();
@@ -138,7 +139,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_outPutLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_outPutLabel.gridx = 1;
 		gbc_outPutLabel.gridy = 2;
-		X.add(OutPutLabel, gbc_outPutLabel);
+		contentpane.add(OutPutLabel, gbc_outPutLabel);
 		
 		ArgumentLabel = new JLabel("arguments");
 		ArgumentLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -147,7 +148,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_argumentLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_argumentLabel.gridx = 1;
 		gbc_argumentLabel.gridy = 3;
-		X.add(ArgumentLabel, gbc_argumentLabel);
+		contentpane.add(ArgumentLabel, gbc_argumentLabel);
 		
 		for (Pair<Integer, String> pair: Reference.AdvancedCommandArgList) {
 			System.out.println(pair.GetcsvValue());
@@ -158,7 +159,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_PlayerSteamIDLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_PlayerSteamIDLabel.gridx = 1;
 		gbc_PlayerSteamIDLabel.gridy = 4;
-		X.add(PlayerSteamIDLabel, gbc_PlayerSteamIDLabel);
+		contentpane.add(PlayerSteamIDLabel, gbc_PlayerSteamIDLabel);
 		
 		PlayerIDField = new JTextField();
 		GridBagConstraints gbc_PlayerIDField = new GridBagConstraints();
@@ -166,7 +167,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_PlayerIDField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_PlayerIDField.gridx = 2;
 		gbc_PlayerIDField.gridy = 4;
-		X.add(PlayerIDField, gbc_PlayerIDField);
+		contentpane.add(PlayerIDField, gbc_PlayerIDField);
 		PlayerIDField.setColumns(10);
 		
 		BPPathLabel = new JLabel("Dino");
@@ -174,7 +175,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_BPPathLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_BPPathLabel.gridx = 1;
 		gbc_BPPathLabel.gridy = 5;
-		X.add(BPPathLabel, gbc_BPPathLabel);
+		contentpane.add(BPPathLabel, gbc_BPPathLabel);
 		
 		DinoBPComboBox = new JComboBox<String>();
 		GridBagConstraints gbc_DinoBPComboBox = new GridBagConstraints();
@@ -182,7 +183,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_DinoBPComboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_DinoBPComboBox.gridx = 2;
 		gbc_DinoBPComboBox.gridy = 5;
-		X.add(DinoBPComboBox, gbc_DinoBPComboBox);
+		contentpane.add(DinoBPComboBox, gbc_DinoBPComboBox);
 		
 		DinoBPComboBox.removeAllItems();
 		
@@ -211,7 +212,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_LevelLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_LevelLabel.gridx = 1;
 		gbc_LevelLabel.gridy = 6;
-		X.add(LevelLabel, gbc_LevelLabel);
+		contentpane.add(LevelLabel, gbc_LevelLabel);
 		
 		LevelSpinner = new JSpinner();
 		LevelSpinner.setModel(new SpinnerNumberModel(600, 0, 900, 20));
@@ -219,7 +220,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_LevelSpinner.insets = new Insets(0, 0, 5, 5);
 		gbc_LevelSpinner.gridx = 2;
 		gbc_LevelSpinner.gridy = 6;
-		X.add(LevelSpinner, gbc_LevelSpinner);
+		contentpane.add(LevelSpinner, gbc_LevelSpinner);
 		Component spinnerEditor = LevelSpinner.getEditor();
 		JFormattedTextField SpinnerTF = ((JSpinner.DefaultEditor) spinnerEditor).getTextField();
 		SpinnerTF.setColumns(5);
@@ -229,21 +230,21 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_TamedLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_TamedLabel.gridx = 1;
 		gbc_TamedLabel.gridy = 7;
-		X.add(TamedLabel, gbc_TamedLabel);
+		contentpane.add(TamedLabel, gbc_TamedLabel);
 		
 		TamedCheckBox = new JCheckBox("");
 		GridBagConstraints gbc_TamedCheckBox = new GridBagConstraints();
 		gbc_TamedCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_TamedCheckBox.gridx = 2;
 		gbc_TamedCheckBox.gridy = 7;
-		X.add(TamedCheckBox, gbc_TamedCheckBox);
+		contentpane.add(TamedCheckBox, gbc_TamedCheckBox);
 		
 		XCoordLabel = new JLabel("X");
 		GridBagConstraints gbc_XCoordLabel = new GridBagConstraints();
 		gbc_XCoordLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_XCoordLabel.gridx = 1;
 		gbc_XCoordLabel.gridy = 8;
-		X.add(XCoordLabel, gbc_XCoordLabel);
+		contentpane.add(XCoordLabel, gbc_XCoordLabel);
 		
 		XField = new JTextField();
 		GridBagConstraints gbc_XField = new GridBagConstraints();
@@ -251,7 +252,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_XField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_XField.gridx = 2;
 		gbc_XField.gridy = 8;
-		X.add(XField, gbc_XField);
+		contentpane.add(XField, gbc_XField);
 		XField.setColumns(10);
 		
 		YCoordLabel = new JLabel("Y");
@@ -259,7 +260,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_YCoordLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_YCoordLabel.gridx = 1;
 		gbc_YCoordLabel.gridy = 9;
-		X.add(YCoordLabel, gbc_YCoordLabel);
+		contentpane.add(YCoordLabel, gbc_YCoordLabel);
 		
 		YField = new JTextField();
 		GridBagConstraints gbc_YField = new GridBagConstraints();
@@ -267,7 +268,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_YField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_YField.gridx = 2;
 		gbc_YField.gridy = 9;
-		X.add(YField, gbc_YField);
+		contentpane.add(YField, gbc_YField);
 		YField.setColumns(10);
 		
 		ZCoordLabel = new JLabel("Z");
@@ -275,7 +276,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_ZCoordLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_ZCoordLabel.gridx = 1;
 		gbc_ZCoordLabel.gridy = 10;
-		X.add(ZCoordLabel, gbc_ZCoordLabel);
+		contentpane.add(ZCoordLabel, gbc_ZCoordLabel);
 		
 		ZField = new JTextField();
 		GridBagConstraints gbc_ZField = new GridBagConstraints();
@@ -283,7 +284,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_ZField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_ZField.gridx = 2;
 		gbc_ZField.gridy = 10;
-		X.add(ZField, gbc_ZField);
+		contentpane.add(ZField, gbc_ZField);
 		ZField.setColumns(10);
 		
 		RunButton = new JButton("Run");
@@ -291,14 +292,24 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_RunButton.insets = new Insets(0, 0, 0, 5);
 		gbc_RunButton.gridx = 1;
 		gbc_RunButton.gridy = 11;
-		X.add(RunButton, gbc_RunButton);
+		contentpane.add(RunButton, gbc_RunButton);
 		RunButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					RconHandler.command(OutPutLabel.getText());
-				} catch (IOException | AuthenticationException e1) {
+					String result = null;
+					try {
+						result = RconHandler.command(OutPutLabel.getText());
+					} catch (AuthenticationException e1) {
+						if(e1 instanceof AuthenticationException) result = "failed to outheticate";
+						else {
+							result = "an unkown error occured";
+							e1.printStackTrace();
+						}
+					}
+					JOptionPane.showInternalMessageDialog(contentpane, result);
+				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 				dispose();
@@ -311,7 +322,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		gbc_QueueButton.insets = new Insets(0, 0, 0, 5);
 		gbc_QueueButton.gridx = 2;
 		gbc_QueueButton.gridy = 11;
-		X.add(QueueButton, gbc_QueueButton);
+		contentpane.add(QueueButton, gbc_QueueButton);
 		QueueButton.addActionListener(new ActionListener() {
 			
 			@Override

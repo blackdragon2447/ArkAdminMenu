@@ -175,11 +175,6 @@ public class SimpleCommandDialog extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					RconHandler.command(OutPutLabel.getText());
-				} catch (IOException | AuthenticationException e2) {
-					e2.printStackTrace();
-				}
-				try {
 					String result = null;
 					try {
 						result = RconHandler.command(OutPutLabel.getText());

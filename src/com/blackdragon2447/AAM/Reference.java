@@ -20,8 +20,6 @@ public class Reference {
 	//			  groups:		 group name	 items:	   item:name	bp_path
 	public static ArrayList<Pair<String, 	 ArrayList<Pair<String, String>>>> ImportedCreatureGroups = new ArrayList<Pair<String, ArrayList<Pair<String, String>>>>();
 	//			  groups:		 group name	 dinos:	   dino:name	bp_path
-	public static ArrayList<String> ImportedItemGroupFiles = new ArrayList<String>();
-	public static ArrayList<String> ImportedCreatureGroupFiles = new ArrayList<String>();
 	public static ArrayList<String> ItemFileArray = new ArrayList<String>();
 	public static String Password;
 	public static String RConIp;

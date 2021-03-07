@@ -1407,6 +1407,11 @@ public class AAMGui extends JFrame {
 			}
 		}
 	    
+	    SetTimeButton.setEnabled(false);
+	    SetTimeCheckBox.setEnabled(false);
+	    PlayerOnlyButton.setEnabled(false);
+	    PlayerOnlyCheckBox.setEnabled(false);
+	    
 	}
 	
 	public static void AddFavorite(JNumberedButton button) {
