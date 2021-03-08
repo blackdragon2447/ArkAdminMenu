@@ -30,9 +30,6 @@ import com.blackdragon2447.AAM.gui.AAMGui;
 
 public class HelpDialog extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3536957765367588913L;
 	private final JPanel ContentPanel = new JPanel();
 
@@ -46,10 +43,7 @@ public class HelpDialog extends JDialog {
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * Create the dialog.
-	 */
+	
 	public HelpDialog() {
 
 		try {
@@ -58,7 +52,7 @@ public class HelpDialog extends JDialog {
 			e.printStackTrace();
 		}
 		
-		setBounds(100, 100, 470, 538);
+		setBounds(100, 100, 520, 547);
 		getContentPane().setLayout(new BorderLayout());
 		ContentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(ContentPanel, BorderLayout.CENTER);
@@ -190,11 +184,47 @@ public class HelpDialog extends JDialog {
 		gbc_lblNewLabel_10.gridy = 10;
 		panel.add(lblNewLabel_10, gbc_lblNewLabel_10);
 		
-		JLabel lblNewLabel_11 = new JLabel("<html>custom commands arent implemented yet, when they are they will allow<br>\r\nyou to add commands in the for of multiple commands on one line with arks<br>\r\ndefault way of doing it: \"cheat playersonly | cheat doexit\", for example, this is<br>\r\njust seperating multiple commands with a | (vertical line), or make use of<br>\r\n\"scriptcommand\" to run mod spicific commands, and in case the hosts api would<br>\r\nadd more commands they will be implmented here</html>");
+		JLabel lblNewLabel_11 = new JLabel(
+				"<html>custom commands are implemented to enable compat with mods and the ark api<br>\r\n"
+				+ "service, the commands added for this service are called plugin commands and allow<br>\r\n"
+				+ "the use of arguments after a command, in the current versin these arguments have<br>\r\n"
+				+ "to be added  in one string, the other option for adding commands is a \"scriptcommand\"<br>\r\n"
+				+ "these are used to run mod spicific commands and will not allow arguments</html>"
+				);
 		GridBagConstraints gbc_lblNewLabel_11 = new GridBagConstraints();
 		gbc_lblNewLabel_11.gridx = 0;
 		gbc_lblNewLabel_11.gridy = 11;
 		panel.add(lblNewLabel_11, gbc_lblNewLabel_11);
+		
+		img = null;
+		try {
+			img = ImageIO.read(HelpDialog.class.getResource("/com/blackdragon2447/AAM/assets/PluginCommadDialog.png"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		dimg = img.getScaledInstance(362, 170, Image.SCALE_SMOOTH);
+		
+		JLabel lblNewLabel_12 = new JLabel("");
+		lblNewLabel_12.setIcon(new ImageIcon(dimg));
+		GridBagConstraints gbc_lblNewLabel_12 = new GridBagConstraints();
+		gbc_lblNewLabel_12.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel_12.gridx = 0;
+		gbc_lblNewLabel_12.gridy = 12;
+		panel.add(lblNewLabel_12, gbc_lblNewLabel_12);
+		
+		JLabel lblNewLabel_13 = new JLabel(
+				"<html>this gui will allow you to add plugin commands, it is semi self explainitory but just in <br>\r\n"
+				+ "case: the command name field will allow you to set a name for the commandthis name<br>\r\n"
+				+ "restricted to 32 characters, the command field will allow you to set the command, this is<br>\r\n"
+				+ "command has to only be the command and no argument placeholders the last one is the<br>\r\n"
+				+ "simplest, checking it will allow you to add arguments when running the command.<br>\r\n"
+				+ "the other add command dialog is essentialy the same but doenst allow you to enable args.</html>"
+				);
+		GridBagConstraints gbc_lblNewLabel_13 = new GridBagConstraints();
+		gbc_lblNewLabel_13.gridx = 0;
+		gbc_lblNewLabel_13.gridy = 13;
+		panel.add(lblNewLabel_13, gbc_lblNewLabel_13);
 		
 		
 		{

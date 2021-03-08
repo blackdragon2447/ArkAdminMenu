@@ -164,7 +164,6 @@ public class AAMGui extends JFrame {
 	}
 
 	
-	@SuppressWarnings("serial")
 	public AAMGui() throws NumberFormatException, CloneNotSupportedException {
 		
 		
@@ -188,13 +187,13 @@ public class AAMGui extends JFrame {
 			}
 		});
 		
-		JMenuItem SettingMenuItem = new JMenuItem("settings");
-		SettingMenuItem.addActionListener(new ActionListener() {
+		JMenuItem ServersMenuItem = new JMenuItem("Servers");
+		ServersMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SettingsGUI.createGui();
 			}
 		});
-		settingsMenu.add(SettingMenuItem);
+		settingsMenu.add(ServersMenuItem);
 		
 		JCheckBoxMenuItem DTCheckItem = new JCheckBoxMenuItem("dark theme");
 		settingsMenu.add(DTCheckItem);
@@ -215,6 +214,15 @@ public class AAMGui extends JFrame {
 		if(cfg.Darkmode() == true) {
 			try {
 				UIManager.setLookAndFeel(new FlatDarkLaf());
+				SwingUtilities.updateComponentTreeUI(ContentPane);
+				SwingUtilities.updateComponentTreeUI(menuBar);
+			} catch (UnsupportedLookAndFeelException e1) {
+				e1.printStackTrace();
+			}
+			DTCheckItem.setSelected(cfg.Darkmode());
+		} else {
+			try {
+				UIManager.setLookAndFeel(new FlatLightLaf());
 				SwingUtilities.updateComponentTreeUI(ContentPane);
 				SwingUtilities.updateComponentTreeUI(menuBar);
 			} catch (UnsupportedLookAndFeelException e1) {
@@ -562,7 +570,7 @@ public class AAMGui extends JFrame {
 		
 		JButton ACHelpButton = new JButton("?");
 		ACHelpButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		ACHelpButton.setToolTipText("<html>this tab is going to have more<br>\r\nadvanced commands like:<br>\r\nGFI<br>\r\nchanging a players name<br>\r\nand more but for now it is a nonfuctional<br>\r\nmess of placeholders</html>");
+		ACHelpButton.setToolTipText("<html>this tab has more advanced<br>\r\ncommands like giving items to players<br>\r\nand spawning dinos. all of these commands<br>\r\nhave their own gui and are compatible with<br>\r\nmods, this compatibility is achived by<br>\r\nallown the user to import the items from<br>\r\nmods. see the help for more info on importing.</html>");
 		GridBagConstraints gbc_ACHelpButton = new GridBagConstraints();
 		gbc_ACHelpButton.insets = new Insets(0, 0, 5, 0);
 		gbc_ACHelpButton.gridx = 5;
@@ -832,6 +840,9 @@ public class AAMGui extends JFrame {
 		JPopupMenu AddCommandPopup = new JPopupMenu();
 		AddCommandPopup.add(new JMenuItem(new AbstractAction("Add Script Command") {
 			
+			
+			private static final long serialVersionUID = 3544446822075232063L;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AddNewScriptGui.createGui();
@@ -839,6 +850,8 @@ public class AAMGui extends JFrame {
 		}));
 		AddCommandPopup.add(new JMenuItem(new AbstractAction("Add Plugin Command") {
 			
+			private static final long serialVersionUID = -5126190973173806036L;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AddNewPluginCommand.createGui();
@@ -846,6 +859,8 @@ public class AAMGui extends JFrame {
 		}));
 		AddCommandPopup.add(new JMenuItem(new AbstractAction("Add Command Series") {
 			
+			private static final long serialVersionUID = -2072104664682254395L;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(ContentPane, "doesnt work atm");
@@ -869,7 +884,7 @@ public class AAMGui extends JFrame {
 		CustomCommandsPanel.add(CCHelpLabel, gbc_CCHelpLabel);
 		
 		JButton CCHelpButton = new JButton("?");
-		CCHelpButton.setToolTipText("<html>this tab allows you to register custom commands,<br>\r\n\nthese can consist of a series of commands that wil<br>\n\r\nbe executed at once by entering multiple commands<br>\r\n\nin one and separating them with a | (vertical line) or, if<br>\n\r\nmods that support them are installed, using the<br>\r\n\n\"ScriptCommand\" command for use with mods, more<br>\n\r\noptions may be added later depending on the server host API.<br>\r\n\nsee \"help\" under settings for a detailed explanation of the<br>\r\n\ncommand creation GUI.</html>");
+		CCHelpButton.setToolTipText("<html>this tab allows you to register custom commands,<br>\r\n\nthese can consist of if mods that support them are installed,<br>\r\nusing the \n\"ScriptCommand\" command for use with mods.<br>\r\nanother possibility is to add commands added by the plugins<br>\r\nfor a service called ark api see \"help\" under settings for a<br>\r\ndetailed explanation of the command creation GUI.</html>");
 		CCHelpButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		GridBagConstraints gbc_CCHelpButton = new GridBagConstraints();
 		gbc_CCHelpButton.insets = new Insets(0, 0, 5, 0);
@@ -953,7 +968,7 @@ public class AAMGui extends JFrame {
 		ImpotedItemsPanel.add(IIDescLabel, gbc_IIDescLabel);
 		
 		JButton IIHelpButton = new JButton("?");
-		IIHelpButton.setToolTipText("<html>this tab shows the imported items per group<br>\r\n\nand their blueprint paths, you can use this to see which<br>\r\n\nitems you have imported and to check if specific PB paths<br>\r\n\nare up to date, see the \"help\" option under settings for a <br>\n\r\nimage-guided explanation of importing item lists<html>");
+		IIHelpButton.setToolTipText("<html>this tab shows the imported items per group<br>\r\n\nand their blueprint paths, you can use this to see which<br>\r\n\nitems you have imported and to check if specific PB paths<br>\r\n\nare up to date, see the \"help\" option under settings for an <br>\r\nexplanation of importing item lists<html>");
 		IIHelpButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		GridBagConstraints gbc_IIHelpButton = new GridBagConstraints();
 		gbc_IIHelpButton.insets = new Insets(0, 0, 5, 0);
@@ -1134,7 +1149,7 @@ public class AAMGui extends JFrame {
 	    gbc_welcomeLabel.gridy = 1;
 	    glass.add(welcomeLabel, gbc_welcomeLabel);
 	    
-	    JLabel WelcomeTextLabel = new JLabel("<html>Welcome to Ark Admin Manager aka AAM, this is a \"simple\" tool to help ark server admins manage their<br>\r\nservers, to get started choose one of the tabs on the top or read the help under setting. all tabs also have a<br>\r\nhover over \"?\" in case you need a little reminder on how to use<html>");
+	    JLabel WelcomeTextLabel = new JLabel("<html>Welcome to Ark Admin Manager aka AAM, this is a \"simple\" tool to help ark server admins manage their<br>\r\nservers, to get started choose one of the tabs on the top or read the help under settings. all tabs also have a<br>\r\nhover over \"?\" in case you need a little reminder on how to use, to setup servers to run commands on, click<br>settings in the menu bar and select servers from the popup.<html>");
 	    GridBagConstraints gbc_WelcomeTextLabel = new GridBagConstraints();
 	    gbc_WelcomeTextLabel.insets = new Insets(0, 0, 5, 5);
 	    gbc_WelcomeTextLabel.gridx = 1;
