@@ -13,14 +13,11 @@ import javax.swing.JLabel;
 
 public class SteamToUE4ReturnDialog extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7655199643705606934L;
 	private final JPanel contentPanel = new JPanel();
 
 	/**
-	 * Launch the application.
+	 * the method for opening the gui
 	 */
 	public static void createGui() {
 		try {
@@ -33,7 +30,7 @@ public class SteamToUE4ReturnDialog extends JDialog {
 	}
 
 	/**
-	 * Create the dialog.
+	 * the constructor: build the gui
 	 */
 	public SteamToUE4ReturnDialog() {
 		setBounds(100, 100, 450, 300);

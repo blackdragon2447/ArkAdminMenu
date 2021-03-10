@@ -5,6 +5,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * used to read in csv files
+ * @author Blackdragon2447
+ */
 public class CSVReader {
 	
 	@SuppressWarnings("rawtypes")
@@ -14,16 +18,22 @@ public class CSVReader {
 	static ArrayList<Pair<String, Integer>> PairListAdvanced;
 	static ArrayList<Pair<Integer, String>> ArgPairList;
 	
-	@SuppressWarnings({ })
+	/**
+	 * constuctor: sets the variables
+	 */
 	public CSVReader(){
-		
-		
 		Line = "";
 		PairList = new ArrayList<Pair<String, Boolean>>();
 		PairListAdvanced = new ArrayList<Pair<String, Integer>>();
 		ArgPairList = new ArrayList<Pair<Integer, String>>();
 	}
 	
+	/**
+	 * reads a list of commands
+	 * @param path the path of the file
+	 * @return the list of commands and if they need an arg.
+	 * @throws IOException
+	 */
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Pair<String, Boolean>> readCommandList(String path) throws IOException {
 		
@@ -41,6 +51,7 @@ public class CSVReader {
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Deprecated
 	public static ArrayList<Pair<String, Integer>> readCommandAdvancedList(String path) throws IOException {
 		
 		BufferedReader br = new BufferedReader(new FileReader(path));
@@ -56,6 +67,12 @@ public class CSVReader {
 		
 	}
 	
+	/**
+	 * reads a list of command arg desc.
+	 * @param path the path of the file
+	 * @return the list of command numbers and the desc.
+	 * @throws IOException
+	 */
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Pair<Integer, String>> readArgList(String path) throws IOException {
 		
@@ -74,6 +91,12 @@ public class CSVReader {
 		
 	}
 	
+	/**
+	 * reads in item files producing a ArrayList<Pair<String, String>> containing a bp path and name for each item
+	 * @param path the path of the file
+	 * @return an ArrayList<Pair<String, String>> of the items
+	 * @throws IOException
+	 */
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Pair<String, String>> readItemFile(String path) throws IOException {
 		
@@ -95,7 +118,12 @@ public class CSVReader {
 		
 	}
 	
-	
+	/**
+	 * reads in creature files producing a ArrayList<Pair<String, String>> containing a bp path and name for each creatures
+	 * @param path the path of the file
+	 * @return an ArrayList<Pair<String, String>> of the creatures
+	 * @throws IOException
+	 */
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Pair<String, String>> readCreatureFile(String path) throws IOException {
 		

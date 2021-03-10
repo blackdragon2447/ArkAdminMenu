@@ -25,12 +25,20 @@ import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.gui.components.JTextFieldLimit;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 
+/**
+ * the gui for adding a new plugin command
+ * @author Blackdragon2447
+ *
+ */
 public class AddNewPluginCommand extends JFrame {
 
 	private static final long serialVersionUID = -8571814547250385153L;
 	private JPanel contentPane;
 	AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
 
+	/**
+	 * the method for opening the gui
+	 */
 	public static void createGui() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -43,6 +51,10 @@ public class AddNewPluginCommand extends JFrame {
 			}
 		});
 	}
+	
+	/**
+	 * the constructor: build the gui
+	 */
 	public AddNewPluginCommand() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 207);
@@ -67,6 +79,7 @@ public class AddNewPluginCommand extends JFrame {
 
 		JLabel CommandNameLabel = new JLabel("Command Name (short)");
 		GridBagConstraints gbc_CommandNameLabel = new GridBagConstraints();
+		gbc_CommandNameLabel.anchor = GridBagConstraints.EAST;
 		gbc_CommandNameLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_CommandNameLabel.gridx = 1;
 		gbc_CommandNameLabel.gridy = 1;
@@ -84,6 +97,7 @@ public class AddNewPluginCommand extends JFrame {
 		
 		JLabel CommandLabel = new JLabel("Command");
 		GridBagConstraints gbc_CommandLabel = new GridBagConstraints();
+		gbc_CommandLabel.anchor = GridBagConstraints.EAST;
 		gbc_CommandLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_CommandLabel.gridx = 1;
 		gbc_CommandLabel.gridy = 2;
@@ -100,6 +114,7 @@ public class AddNewPluginCommand extends JFrame {
 		
 		JLabel ArgumentsLabel = new JLabel("Needs Arguments");
 		GridBagConstraints gbc_ArgumentsLabel = new GridBagConstraints();
+		gbc_ArgumentsLabel.anchor = GridBagConstraints.EAST;
 		gbc_ArgumentsLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_ArgumentsLabel.gridx = 1;
 		gbc_ArgumentsLabel.gridy = 3;
@@ -107,6 +122,7 @@ public class AddNewPluginCommand extends JFrame {
 		
 		JCheckBox ArgumentsCheckBox = new JCheckBox("");
 		GridBagConstraints gbc_ArgumentsCheckBox = new GridBagConstraints();
+		gbc_ArgumentsCheckBox.anchor = GridBagConstraints.WEST;
 		gbc_ArgumentsCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_ArgumentsCheckBox.gridx = 2;
 		gbc_ArgumentsCheckBox.gridy = 3;

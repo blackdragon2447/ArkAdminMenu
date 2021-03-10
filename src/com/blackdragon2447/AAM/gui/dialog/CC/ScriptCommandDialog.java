@@ -19,6 +19,10 @@ import com.blackdragon2447.AAM.util.RconHandler;
 
 import net.kronos.rkon.core.ex.AuthenticationException;
 
+/**
+ * the dialog for entering arg and running a script command
+ * @author Blackdragon2447
+ */
 public class ScriptCommandDialog extends JDialog {
 
 	private static final long serialVersionUID = -640493604537651948L;
@@ -26,6 +30,10 @@ public class ScriptCommandDialog extends JDialog {
 	private static String Command;
 	JLabel CommandLabel = new JLabel();
 
+	/**
+	 * the method for opening the gui
+	 * @param command
+	 */
 	public static void createGui(String command) {
 		Command = command;
 		try {
@@ -37,6 +45,9 @@ public class ScriptCommandDialog extends JDialog {
 		}
 	}
 
+	/**
+	 * the constructor: builds the gui
+	 */
 	public ScriptCommandDialog() {
 		setBounds(100, 100, 450, 149);
 		getContentPane().setLayout(new BorderLayout());

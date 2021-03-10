@@ -34,6 +34,11 @@ import com.blackdragon2447.AAM.util.iface.AAMConfig;
 
 import net.kronos.rkon.core.ex.AuthenticationException;
 
+/**
+ * the gui for the program settings atm only used for servers
+ * @author Blackdragon2447
+ *
+ */
 public class SettingsGUI extends JFrame {
 
 	private static final long serialVersionUID = 422929525233814207L;
@@ -45,6 +50,9 @@ public class SettingsGUI extends JFrame {
 	static JPanel ServersPanel = new JPanel();
 	static AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
 
+	/**
+	 * the method used to open the gui
+	 */
 	public static void createGui() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -57,6 +65,9 @@ public class SettingsGUI extends JFrame {
 		});
 	}
 
+	/**
+	 * the constructor, this builds the full gui
+	 */
 	public SettingsGUI() {
 		
 
@@ -236,6 +247,9 @@ public class SettingsGUI extends JFrame {
 		
 	}
 	
+	/**
+	 * the method for refreshing the list of server
+	 */
 	public static void refresh() {
 		
 
@@ -257,12 +271,19 @@ public class SettingsGUI extends JFrame {
 		list.setListData(serverList);
 	}
 	
+	/**
+	 * the method for clearing the server adding fields
+	 */
 	public static void clearFields() {
 		NameField.setText("");
 		IPField.setText("");
 		PortField.setText("");
 	}
 	
+	/**
+	 * the method for removing the server from the list and writing the change out to the config
+	 * @param index the index of the server that needs to be removed
+	 */
 	public static void removeServer(int index) {
 		
 		String[] NamesList = cfg.ServerNames();
@@ -288,6 +309,10 @@ public class SettingsGUI extends JFrame {
 		System.out.println("removed");
 	}
 
+	/**
+	 * method to check if a server password is correct and setting it to be used for further used
+	 * @param serverNum the number of the selected server
+	 */
 	public static void Authenticate(int serverNum) {
 
 		Boolean succeeded = true;
@@ -298,6 +323,7 @@ public class SettingsGUI extends JFrame {
 	    JOptionPane.showConfirmDialog(null, pwd, "Enter Password",JOptionPane.OK_CANCEL_OPTION);
 	    Reference.Password = String.valueOf(pwd.getPassword());
 	    pwd.setText("");
+	    int cancel = 1;
 	    
 	    try {
 			RconHandler.command("saveworld");
@@ -309,22 +335,35 @@ public class SettingsGUI extends JFrame {
 			JOptionPane.showMessageDialog(contentPane, "Password incorrect", "", JOptionPane.ERROR_MESSAGE);
 		}
 	    
-	    if(succeeded == true) {
-			JOptionPane.showMessageDialog(contentPane, "Logged On", "", JOptionPane.INFORMATION_MESSAGE);
-		    cfg.setProperty("LastLogin", String.valueOf(serverNum));
-			try {
-				cfg.store(new FileOutputStream("AAMConfig.properties"), "no comments");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-	    }else{
-	    	Reference.RConIp = cfg.IPs()[serverNum];
-			Reference.RConPort = cfg.Ports()[serverNum];
-			pwd = new JPasswordField(10);
-		    JOptionPane.showConfirmDialog(null, pwd, "Try Again" ,JOptionPane.OK_CANCEL_OPTION);
-		    Reference.Password = String.valueOf(pwd.getPassword());
+	    while(true) {
+	    	if(succeeded == true) {
+	    		JOptionPane.showMessageDialog(contentPane, "Logged On", "", JOptionPane.INFORMATION_MESSAGE);
+	    		cfg.setProperty("LastLogin", String.valueOf(serverNum));
+	    		try {
+	    			cfg.store(new FileOutputStream("AAMConfig.properties"), "no comments");
+	    		} catch (IOException e1) {
+	    			e1.printStackTrace();
+	    		}
+	    		break;
+	    	}else{
+	    		Reference.RConIp = cfg.IPs()[serverNum];
+	    		Reference.RConPort = cfg.Ports()[serverNum];
+	    		pwd = new JPasswordField(10);
+	    		cancel = JOptionPane.showConfirmDialog(null, pwd, "Try Again" ,JOptionPane.OK_CANCEL_OPTION);
+	    		if(cancel == 2) break;
+	    		Reference.Password = String.valueOf(pwd.getPassword());
+	    		try {
+	    			RconHandler.command("saveworld");
+	    			succeeded = true;
+	    		} catch (IOException e1) {
+	    			succeeded = false;
+	    			e1.printStackTrace();
+	    		} catch (AuthenticationException e1) {
+	    			succeeded = false;
+	    			JOptionPane.showMessageDialog(contentPane, "Password incorrect", "", JOptionPane.ERROR_MESSAGE);
+	    		}
+	    	}
 	    }
-	    
 	}
 	
 	

@@ -34,6 +34,10 @@ public class Main {
 	public static void main(String[] args){
 		
 
+		/**
+		 * this piece of the code will import any files needed to run before opening the actual GUI to prevent delay
+		 * because of loading in code
+		 */
 		
 		CSVReader Reader = new CSVReader();
 		try {
@@ -70,7 +74,9 @@ public class Main {
 			}
 		}
 		
-		
+		/**
+		 * this code opens the GUI and would react to any thrown errors.
+		 */
 		
 		try {
 			AAMGui.createGui();

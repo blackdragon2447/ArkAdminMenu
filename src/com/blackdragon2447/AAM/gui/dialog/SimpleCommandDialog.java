@@ -35,6 +35,10 @@ import com.blackdragon2447.AAM.util.obj.SimpleCommand;
 
 import net.kronos.rkon.core.ex.AuthenticationException;
 
+/**
+ * the dialog for setting the args for a simple command and running that command
+ * @author Blackdragon2447
+ */
 public class SimpleCommandDialog extends JFrame {
 
 	private static final long serialVersionUID = 3122563720977107636L;
@@ -49,7 +53,14 @@ public class SimpleCommandDialog extends JFrame {
 	AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
 	
 
-	
+	/**
+	 * starting the gui
+	 * @param CommandNumber the number of the command to be executed
+	 * @throws UnsupportedLookAndFeelException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
 	public static void createGui(int CommandNumber) throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 		
 		

@@ -55,26 +55,20 @@ import com.blackdragon2447.AAM.gui.dialog.HelpDialog;
 import com.blackdragon2447.AAM.gui.dialog.ImportItemsDialog;
 import com.blackdragon2447.AAM.gui.dialog.CC.AddNewPluginCommand;
 import com.blackdragon2447.AAM.gui.dialog.CC.AddNewScriptGui;
-import com.blackdragon2447.AAM.gui.dialog.advCom.ForceIntoTribeDialog;
-import com.blackdragon2447.AAM.gui.dialog.advCom.GFICommandDialog;
-import com.blackdragon2447.AAM.gui.dialog.advCom.GiveExpToPlayerDialog;
-import com.blackdragon2447.AAM.gui.dialog.advCom.RenamePlayerDialog;
-import com.blackdragon2447.AAM.gui.dialog.advCom.RenameTribeDialog;
-import com.blackdragon2447.AAM.gui.dialog.advCom.SpawnDinoCoordsDialog;
-import com.blackdragon2447.AAM.gui.dialog.advCom.SpawnDinoNearDialog;
-import com.blackdragon2447.AAM.gui.dialog.advCom.SteamIDReturnDialog;
-import com.blackdragon2447.AAM.gui.dialog.advCom.SteamToUE4Dialog;
 import com.blackdragon2447.AAM.util.CustomButtonBuilder;
 import com.blackdragon2447.AAM.util.FavButtonPanelBuilder;
-import com.blackdragon2447.AAM.util.RconHandler;
 import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-
-import net.kronos.rkon.core.ex.AuthenticationException;
+import javax.swing.JSeparator;
 
 public class AAMGui extends JFrame {
+	
+	/**
+	 * all the global variables for the main GUI window.
+	 * all the swing components in this part needed to be accesed outside the constructor.
+	 */
 	private static final long serialVersionUID = -735583961255908606L;
 	private JPanel ContentPane;
 	static JPanel SimpleCommandsPanel = new JPanel();
@@ -100,11 +94,6 @@ public class AAMGui extends JFrame {
 	JButton SCHelpButton;
 	AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
 	GridBagConstraints gbc_FavButtons = new GridBagConstraints();
-	
-	JNumberedButton SetTimeButton = new JNumberedButton("set time", 1);
-	JNumberedCheckbox SetTimeCheckBox = new JNumberedCheckbox("", 1);
-	JNumberedButton PlayerOnlyButton = new JNumberedButton("players only", 2);
-	JNumberedCheckbox PlayerOnlyCheckBox = new JNumberedCheckbox("", 2);
 	JNumberedButton ToggleDNButton = new JNumberedButton("toggle damage numbers", 3);		
 	JNumberedCheckbox ToggleDNCheckBox = new JNumberedCheckbox("", 3);
 	JNumberedButton BroadCastButton = new JNumberedButton("broadcast", 4);
@@ -146,9 +135,18 @@ public class AAMGui extends JFrame {
 	JNumberedCheckbox SpawnDinoCoordsCheckBox = new JNumberedCheckbox("", 22);
 	private final JScrollPane scrollPane = new JScrollPane();
 	private final JPanel ButtonPanel = new JPanel();
+	private final JSeparator separator = new JSeparator();
+	private final JSeparator separator_1 = new JSeparator();
 	
 
 	
+	/**
+	 * the method for opening the GUI.
+	 * @throws UnsupportedLookAndFeelException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
 	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 		
 		
@@ -164,13 +162,23 @@ public class AAMGui extends JFrame {
 	}
 
 	
+	/**
+	 * the constructor for the main GUI, contains practically all the code that controls the main GUI.
+	 * @throws NumberFormatException
+	 * @throws CloneNotSupportedException
+	 */
 	public AAMGui() throws NumberFormatException, CloneNotSupportedException {
 		
-		
+		/**
+		 * setting the default settings for the GUI
+		 */
 		setTitle("ArkAdminManager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 675, 500);
 		
+		/**
+		 * adding the menu bar the options are pretty self explanatory by name.
+		 */
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
@@ -188,50 +196,18 @@ public class AAMGui extends JFrame {
 		});
 		
 		JMenuItem ServersMenuItem = new JMenuItem("Servers");
+		settingsMenu.add(ServersMenuItem);
 		ServersMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SettingsGUI.createGui();
 			}
 		});
-		settingsMenu.add(ServersMenuItem);
 		
+		/**
+		 * this one is a bit more complicated, it set the dark or light mode for the program and writes to the config file
+		 */
 		JCheckBoxMenuItem DTCheckItem = new JCheckBoxMenuItem("dark theme");
 		settingsMenu.add(DTCheckItem);
-		
-		JMenuItem helpMenuItem = new JMenuItem("help");
-		helpMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				HelpDialog.createDialog();
-			}
-		});
-		settingsMenu.add(helpMenuItem);
-		ContentPane = new JPanel();
-		ContentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		ContentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(ContentPane);
-		
-		
-		if(cfg.Darkmode() == true) {
-			try {
-				UIManager.setLookAndFeel(new FlatDarkLaf());
-				SwingUtilities.updateComponentTreeUI(ContentPane);
-				SwingUtilities.updateComponentTreeUI(menuBar);
-			} catch (UnsupportedLookAndFeelException e1) {
-				e1.printStackTrace();
-			}
-			DTCheckItem.setSelected(cfg.Darkmode());
-		} else {
-			try {
-				UIManager.setLookAndFeel(new FlatLightLaf());
-				SwingUtilities.updateComponentTreeUI(ContentPane);
-				SwingUtilities.updateComponentTreeUI(menuBar);
-			} catch (UnsupportedLookAndFeelException e1) {
-				e1.printStackTrace();
-			}
-			DTCheckItem.setSelected(cfg.Darkmode());
-		}
-		
-		
 		DTCheckItem.addActionListener(new ActionListener() {
 			  public void actionPerformed(ActionEvent e) {
 					if(DTCheckItem.isSelected() == true) {
@@ -267,7 +243,48 @@ public class AAMGui extends JFrame {
 			  }
 		});
 		
-
+		JMenuItem helpMenuItem = new JMenuItem("help");
+		settingsMenu.add(helpMenuItem);
+		ContentPane = new JPanel();
+		ContentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		ContentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(ContentPane);
+		helpMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HelpDialog.createDialog();
+			}
+		});
+		
+		/**
+		 * this set the dark/light mode on starting the program, invoked after setting the menu bar to make it so the look of the bar can actually be set.
+		 */
+		if(cfg.Darkmode() == true) {
+			try {
+				UIManager.setLookAndFeel(new FlatDarkLaf());
+				SwingUtilities.updateComponentTreeUI(ContentPane);
+				SwingUtilities.updateComponentTreeUI(menuBar);
+			} catch (UnsupportedLookAndFeelException e1) {
+				e1.printStackTrace();
+			}
+			DTCheckItem.setSelected(cfg.Darkmode());
+		} else {
+			try {
+				UIManager.setLookAndFeel(new FlatLightLaf());
+				SwingUtilities.updateComponentTreeUI(ContentPane);
+				SwingUtilities.updateComponentTreeUI(menuBar);
+			} catch (UnsupportedLookAndFeelException e1) {
+				e1.printStackTrace();
+			}
+			DTCheckItem.setSelected(cfg.Darkmode());
+		}
+		
+		
+		
+		
+		/**
+		 * this part of the constructor builds the tabbed pane and the panels in it
+		 * most if not all of the buttons in this part have a name explaining their use
+		 */
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		ContentPane.add(tabbedPane, BorderLayout.CENTER);
 		tabbedPaneOut = tabbedPane;
@@ -280,17 +297,6 @@ public class AAMGui extends JFrame {
 		gbl_FavoritesPanel.columnWidths = new int[]{215, 215, 215, 0};
 		gbl_FavoritesPanel.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
 		FavoritesPanel.setLayout(gbl_FavoritesPanel);
-		
-		
-		
-		@SuppressWarnings("unused")
-		JButton FavHelp = new JButton("?");
-		GridBagConstraints gbc_FavHelp = new GridBagConstraints();
-		gbc_FavHelp.insets = new Insets(0, 0, 0, 5);
-		gbc_FavHelp.gridx = 0;
-		gbc_FavHelp.gridy = 0;
-		
-		
 		
 		SimpleCommandsPanel.setToolTipText("");
 		tabbedPane.addTab("simple commands", null, SimpleCommandsPanel, null);
@@ -327,50 +333,20 @@ public class AAMGui extends JFrame {
 		SimpleCommandsPanel.add(SCHelpButton, gbc_SCHelpButton);
 		SCHelpButton.setToolTipText("<html>these are simple commands, thier argument can<br>be set after clicking the button and will need to be<br>reset after every run. saving of full comands is comming, hopefully.</html>");
 		
-		GridBagConstraints gbc_SetTimeButton = new GridBagConstraints();
-		gbc_SetTimeButton.fill = GridBagConstraints.BOTH;
-		gbc_SetTimeButton.insets = new Insets(0, 0, 5, 5);
-		gbc_SetTimeButton.gridx = 0;
-		gbc_SetTimeButton.gridy = 2;
-		SimpleCommandsPanel.add(SetTimeButton, gbc_SetTimeButton);
-		SetTimeButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
-		
-		GridBagConstraints gbc_SetTimeCheckBox = new GridBagConstraints();
-		gbc_SetTimeCheckBox.insets = new Insets(0, 0, 5, 5);
-		gbc_SetTimeCheckBox.gridx = 1;
-		gbc_SetTimeCheckBox.gridy = 2;
-		SimpleCommandsPanel.add(SetTimeCheckBox, gbc_SetTimeCheckBox);
-		SetTimeCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
-		
-		GridBagConstraints gbc_PlayerOnlyButton = new GridBagConstraints();
-		gbc_PlayerOnlyButton.fill = GridBagConstraints.BOTH;
-		gbc_PlayerOnlyButton.insets = new Insets(0, 0, 5, 5);
-		gbc_PlayerOnlyButton.gridx = 2;
-		gbc_PlayerOnlyButton.gridy = 2;
-		SimpleCommandsPanel.add(PlayerOnlyButton, gbc_PlayerOnlyButton);
-		PlayerOnlyButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
-		
-		GridBagConstraints gbc_PlayerOnlyCheckBox = new GridBagConstraints();
-		gbc_PlayerOnlyCheckBox.insets = new Insets(0, 0, 5, 5);
-		gbc_PlayerOnlyCheckBox.gridx = 3;
-		gbc_PlayerOnlyCheckBox.gridy = 2;
-		SimpleCommandsPanel.add(PlayerOnlyCheckBox, gbc_PlayerOnlyCheckBox);
-		PlayerOnlyCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
-		
 		GridBagConstraints gbc_ToggleDNNewButton = new GridBagConstraints();
 		gbc_ToggleDNNewButton.insets = new Insets(0, 0, 5, 5);
 		gbc_ToggleDNNewButton.fill = GridBagConstraints.BOTH;
-		gbc_ToggleDNNewButton.gridx = 4;
+		gbc_ToggleDNNewButton.gridx = 0;
 		gbc_ToggleDNNewButton.gridy = 2;
 		SimpleCommandsPanel.add(ToggleDNButton, gbc_ToggleDNNewButton);
 		ToggleDNButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
-
-		GridBagConstraints gbc_ToggleDNCheckBox = new GridBagConstraints();
-		gbc_ToggleDNCheckBox.insets = new Insets(0, 0, 5, 0);
-		gbc_ToggleDNCheckBox.gridx = 5;
-		gbc_ToggleDNCheckBox.gridy = 2;
-		SimpleCommandsPanel.add(ToggleDNCheckBox, gbc_ToggleDNCheckBox);
-		ToggleDNCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
+		
+				GridBagConstraints gbc_ToggleDNCheckBox = new GridBagConstraints();
+				gbc_ToggleDNCheckBox.insets = new Insets(0, 0, 5, 5);
+				gbc_ToggleDNCheckBox.gridx = 1;
+				gbc_ToggleDNCheckBox.gridy = 2;
+				SimpleCommandsPanel.add(ToggleDNCheckBox, gbc_ToggleDNCheckBox);
+				ToggleDNCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		JLabel MessagingCLabel = new JLabel("messaging");
 		GridBagConstraints gbc_MessagingCLabel = new GridBagConstraints();
@@ -552,12 +528,16 @@ public class AAMGui extends JFrame {
 		SimpleCommandsPanel.add(KickCheckBox, gbc_KickCheckBox);
 		KickCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
+		/**
+		 * this tab is the one used for the more advanced commands
+		 * all the buttons in this tab have their own actionlistners because they all have their own dialog class
+		 */
 		tabbedPane.addTab("advanced commands", null, AdvancedCommandsPanel, null);
 		GridBagLayout gbl_AdvancedCommandsPanel = new GridBagLayout();
 		gbl_AdvancedCommandsPanel.columnWidths = new int[]{185, 0, 185, 0, 185, 0, 0};
-		gbl_AdvancedCommandsPanel.rowHeights = new int[]{23, 0, 0, 0, 0, 0};
+		gbl_AdvancedCommandsPanel.rowHeights = new int[]{23, 0, 0, 10, 0, 10, 0, 0};
 		gbl_AdvancedCommandsPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_AdvancedCommandsPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_AdvancedCommandsPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		AdvancedCommandsPanel.setLayout(gbl_AdvancedCommandsPanel);
 		
 		JLabel ACDescLabel = new JLabel("Advanced Commands\r\n");
@@ -578,25 +558,13 @@ public class AAMGui extends JFrame {
 		AdvancedCommandsPanel.add(ACHelpButton, gbc_ACHelpButton);
 		
 		GridBagConstraints gbc_GFIPlayerButton = new GridBagConstraints();
+		gbc_GFIPlayerButton.anchor = GridBagConstraints.SOUTH;
 		gbc_GFIPlayerButton.insets = new Insets(0, 0, 5, 5);
 		gbc_GFIPlayerButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_GFIPlayerButton.gridx = 0;
 		gbc_GFIPlayerButton.gridy = 2;
 		AdvancedCommandsPanel.add(GFIPlayerButton, gbc_GFIPlayerButton);
-		GFIPlayerButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					GFICommandDialog.createGui();
-				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
-						| UnsupportedLookAndFeelException e1) {
-					e1.printStackTrace();
-				}
-				
-			}
-		});
+		GFIPlayerButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
 		
 		GridBagConstraints gbc_GFIPlayerCheckBox = new GridBagConstraints();
 		gbc_GFIPlayerCheckBox.insets = new Insets(0, 0, 5, 5);
@@ -611,18 +579,7 @@ public class AAMGui extends JFrame {
 		gbc_RenamePlayerButton.gridx = 2;
 		gbc_RenamePlayerButton.gridy = 2;
 		AdvancedCommandsPanel.add(RenamePlayerButton, gbc_RenamePlayerButton);
-		RenamePlayerButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					RenamePlayerDialog.createGui();
-				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
-						| UnsupportedLookAndFeelException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
+		RenamePlayerButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
 		
 		GridBagConstraints gbc_RenamePlayerCheckBox = new GridBagConstraints();
 		gbc_RenamePlayerCheckBox.insets = new Insets(0, 0, 5, 5);
@@ -638,16 +595,7 @@ public class AAMGui extends JFrame {
 		gbc_RenameTribeButton.gridx = 4;
 		gbc_RenameTribeButton.gridy = 2;
 		AdvancedCommandsPanel.add(RenameTribeButton, gbc_RenameTribeButton);
-		RenameTribeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					RenameTribeDialog.createGui();
-				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
-						| UnsupportedLookAndFeelException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
+		RenameTribeButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
 		
 		GridBagConstraints gbc_RenameTribeCheckBox = new GridBagConstraints();
 		gbc_RenameTribeCheckBox.insets = new Insets(0, 0, 5, 0);
@@ -657,30 +605,26 @@ public class AAMGui extends JFrame {
 		AdvancedCommandsPanel.add(RenameTribeCheckBox, gbc_RenameTribeCheckBox);
 		RenameTribeCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
+		GridBagConstraints gbc_separator = new GridBagConstraints();
+		gbc_separator.gridwidth = 6;
+		gbc_separator.insets = new Insets(0, 0, 5, 0);
+		gbc_separator.gridx = 0;
+		gbc_separator.gridy = 3;
+		AdvancedCommandsPanel.add(separator, gbc_separator);
+		
 		GridBagConstraints gbc_ForcePlayerToTribeButton = new GridBagConstraints();
 		gbc_ForcePlayerToTribeButton.insets = new Insets(0, 0, 5, 5);
 		gbc_ForcePlayerToTribeButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_ForcePlayerToTribeButton.gridx = 0;
-		gbc_ForcePlayerToTribeButton.gridy = 3;
+		gbc_ForcePlayerToTribeButton.gridy = 4;
 		AdvancedCommandsPanel.add(ForcePlayerToTribeButton, gbc_ForcePlayerToTribeButton);
-		ForcePlayerToTribeButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					ForceIntoTribeDialog.createGui();
-				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
-						| UnsupportedLookAndFeelException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
+		ForcePlayerToTribeButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
 		
 		GridBagConstraints gbc_ForcePlayerToTribeCheckbox = new GridBagConstraints();
 		gbc_ForcePlayerToTribeCheckbox.insets = new Insets(0, 0, 5, 5);
 		gbc_ForcePlayerToTribeCheckbox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_ForcePlayerToTribeCheckbox.gridx = 1;
-		gbc_ForcePlayerToTribeCheckbox.gridy = 3;
+		gbc_ForcePlayerToTribeCheckbox.gridy = 4;
 		AdvancedCommandsPanel.add(ForcePlayerToTribeCheckbox, gbc_ForcePlayerToTribeCheckbox);
 		ForcePlayerToTribeCheckbox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
@@ -688,26 +632,15 @@ public class AAMGui extends JFrame {
 		gbc_GivePlayerXPButton.insets = new Insets(0, 0, 5, 5);
 		gbc_GivePlayerXPButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_GivePlayerXPButton.gridx = 2;
-		gbc_GivePlayerXPButton.gridy = 3;
+		gbc_GivePlayerXPButton.gridy = 4;
 		AdvancedCommandsPanel.add(GivePlayerXPButton, gbc_GivePlayerXPButton);
-		GivePlayerXPButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					GiveExpToPlayerDialog.createGui();
-				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
-						| UnsupportedLookAndFeelException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
+		GivePlayerXPButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
 		
 		GridBagConstraints gbc_GivePlayerXPCheckbox = new GridBagConstraints();
 		gbc_GivePlayerXPCheckbox.insets = new Insets(0, 0, 5, 5);
 		gbc_GivePlayerXPCheckbox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_GivePlayerXPCheckbox.gridx = 3;
-		gbc_GivePlayerXPCheckbox.gridy = 3;
+		gbc_GivePlayerXPCheckbox.gridy = 4;
 		AdvancedCommandsPanel.add(GivePlayerXPCheckbox, gbc_GivePlayerXPCheckbox);
 		GivePlayerXPCheckbox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
@@ -715,52 +648,37 @@ public class AAMGui extends JFrame {
 		gbc_GetUE4IDButton.insets = new Insets(0, 0, 5, 5);
 		gbc_GetUE4IDButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_GetUE4IDButton.gridx = 4;
-		gbc_GetUE4IDButton.gridy = 3;
+		gbc_GetUE4IDButton.gridy = 4;
 		AdvancedCommandsPanel.add(GetUE4IDButton, gbc_GetUE4IDButton);
-		GetUE4IDButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					SteamToUE4Dialog.createGui();
-				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
-						| UnsupportedLookAndFeelException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
+		GetUE4IDButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
 		
 		GridBagConstraints gbc_GetUE4IDCheckbox = new GridBagConstraints();
 		gbc_GetUE4IDCheckbox.insets = new Insets(0, 0, 5, 0);
 		gbc_RenamePlayerButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_GetUE4IDCheckbox.gridx = 5;
-		gbc_GetUE4IDCheckbox.gridy = 3;
+		gbc_GetUE4IDCheckbox.gridy = 4;
 		AdvancedCommandsPanel.add(GetUE4IDCheckbox, gbc_GetUE4IDCheckbox);
 		GetUE4IDCheckbox.addActionListener(ActionlistnerAAM.FavButtonListner);
+		
+		GridBagConstraints gbc_separator_1 = new GridBagConstraints();
+		gbc_separator_1.gridwidth = 6;
+		gbc_separator_1.insets = new Insets(0, 0, 5, 5);
+		gbc_separator_1.gridx = 0;
+		gbc_separator_1.gridy = 5;
+		AdvancedCommandsPanel.add(separator_1, gbc_separator_1);
 		
 		GridBagConstraints gbc_SpawnDinoNearButton = new GridBagConstraints();
 		gbc_SpawnDinoNearButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_SpawnDinoNearButton.insets = new Insets(0, 0, 0, 5);
 		gbc_SpawnDinoNearButton.gridx = 0;
-		gbc_SpawnDinoNearButton.gridy = 4;
+		gbc_SpawnDinoNearButton.gridy = 6;
 		AdvancedCommandsPanel.add(SpawnDinoNearButton, gbc_SpawnDinoNearButton);
-		SpawnDinoNearButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					SpawnDinoNearDialog.createGui();
-				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
-						| UnsupportedLookAndFeelException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
+		SpawnDinoNearButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
 		
 		GridBagConstraints gbc_SpawnDinoNearCheckBox = new GridBagConstraints();
 		gbc_SpawnDinoNearCheckBox.insets = new Insets(0, 0, 0, 5);
 		gbc_SpawnDinoNearCheckBox.gridx = 1;
-		gbc_SpawnDinoNearCheckBox.gridy = 4;
+		gbc_SpawnDinoNearCheckBox.gridy = 6;
 		AdvancedCommandsPanel.add(SpawnDinoNearCheckBox, gbc_SpawnDinoNearCheckBox);
 		SpawnDinoNearCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
@@ -768,51 +686,37 @@ public class AAMGui extends JFrame {
 		gbc_SpawnDinoCoordsButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_SpawnDinoCoordsButton.insets = new Insets(0, 0, 0, 5);
 		gbc_SpawnDinoCoordsButton.gridx = 2;
-		gbc_SpawnDinoCoordsButton.gridy = 4;
+		gbc_SpawnDinoCoordsButton.gridy = 6;
 		AdvancedCommandsPanel.add(SpawnDinoCoordsButton, gbc_SpawnDinoCoordsButton);
-		SpawnDinoCoordsButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					SpawnDinoCoordsDialog.createGui();
-				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
-						| UnsupportedLookAndFeelException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
+		SpawnDinoCoordsButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
 		
 		GridBagConstraints gbc_SpawnDinoCoordsCheckBox = new GridBagConstraints();
 		gbc_SpawnDinoCoordsCheckBox.insets = new Insets(0, 0, 0, 5);
 		gbc_SpawnDinoCoordsCheckBox.gridx = 3;
-		gbc_SpawnDinoCoordsCheckBox.gridy = 4;
+		gbc_SpawnDinoCoordsCheckBox.gridy = 6;
 		AdvancedCommandsPanel.add(SpawnDinoCoordsCheckBox, gbc_SpawnDinoCoordsCheckBox);
 		SpawnDinoCoordsCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
+		/**
+		 * this command is special cause it doesnt have a gui like the others but will rather run a command and only show the response.
+		 */
 		GridBagConstraints gbc_ListAllIDButton = new GridBagConstraints();
 		gbc_ListAllIDButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_ListAllIDButton.insets = new Insets(0, 0, 0, 5);
 		gbc_ListAllIDButton.gridx = 4;
-		gbc_ListAllIDButton.gridy = 4;
+		gbc_ListAllIDButton.gridy = 6;
 		AdvancedCommandsPanel.add(ListAllIDButton, gbc_ListAllIDButton);
-		ListAllIDButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					RconHandler.command(("listallplayersteamid"));
-				} catch (IOException | AuthenticationException e1) {
-					e1.printStackTrace();
-				}
-				SteamIDReturnDialog.createGui();
-			}
-		});
+		ListAllIDButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
 		
 		GridBagConstraints gbc_ListAllIDCheckBox = new GridBagConstraints();
 		gbc_ListAllIDCheckBox.gridx = 5;
-		gbc_ListAllIDCheckBox.gridy = 4;
+		gbc_ListAllIDCheckBox.gridy = 6;
 		AdvancedCommandsPanel.add(ListAllIDCheckBox, gbc_ListAllIDCheckBox);
 		ListAllIDCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
+		/**
+		 * this is the panel for the custom commands, this is a dynamicly build panel.
+		 */
 		JPanel CustomCommandsPanel = new JPanel();
 		tabbedPane.addTab("custom commands", null, CustomCommandsPanel, null);
 		GridBagLayout gbl_CustomCommandsPanel = new GridBagLayout();
@@ -830,6 +734,9 @@ public class AAMGui extends JFrame {
 		gbc_CCDescLabel.gridy = 0;
 		CustomCommandsPanel.add(CCDescLabel, gbc_CCDescLabel);
 		
+		/**
+		 * the building of the button for adding custom commands and its corresponding menu
+		 */
 		JButton CCNewButton = new JButton("\u2795");
 		GridBagConstraints gbc_CCNewButton = new GridBagConstraints();
 		gbc_CCNewButton.insets = new Insets(0, 0, 5, 0);
@@ -839,37 +746,28 @@ public class AAMGui extends JFrame {
 		
 		JPopupMenu AddCommandPopup = new JPopupMenu();
 		AddCommandPopup.add(new JMenuItem(new AbstractAction("Add Script Command") {
-			
-			
 			private static final long serialVersionUID = 3544446822075232063L;
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AddNewScriptGui.createGui();
 			}
 		}));
 		AddCommandPopup.add(new JMenuItem(new AbstractAction("Add Plugin Command") {
-			
 			private static final long serialVersionUID = -5126190973173806036L;
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AddNewPluginCommand.createGui();
 			}
 		}));
 		AddCommandPopup.add(new JMenuItem(new AbstractAction("Add Command Series") {
-			
 			private static final long serialVersionUID = -2072104664682254395L;
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(ContentPane, "doesnt work atm");
-				//AddNewSeriesGui.createGui();
+				JOptionPane.showMessageDialog(ContentPane, "not functional");
 			}
 		}));
 		
 		CCNewButton.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AddCommandPopup.show(CCNewButton, 0, 22);
@@ -892,6 +790,9 @@ public class AAMGui extends JFrame {
 		gbc_CCHelpButton.gridy = 1;
 		CustomCommandsPanel.add(CCHelpButton, gbc_CCHelpButton);
 		
+		/**
+		 * a scrollpane is used inside the custom command pane to accomodate for more commands that that can physically on screen
+		 */
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
@@ -918,9 +819,7 @@ public class AAMGui extends JFrame {
 					gbc_buttonPanel.gridy++;
 				}
 			}
-		} catch(NullPointerException e){
-			//e.printStackTrace();
-		}
+		} catch(NullPointerException e){}
 		
 		try {
 			for (int i = 0; i < cfg.PluginCommandsNames().length; i++) {
@@ -931,25 +830,11 @@ public class AAMGui extends JFrame {
 					gbc_buttonPanel.gridy++;
 				}
 			}
-		} catch(NullPointerException e){
-			//e.printStackTrace();
-		}
+		} catch(NullPointerException e){}
 
-		/*
-		try {
-			for (int i = 0; i < cfg.CommandSeriesName().length; i++) {
-				System.out.println("added");
-				ButtonPanel.add(CustomButtonBuilder.BuildSeriesButton(cfg.CommandSeriesName()[i].replace("[", "").replace("]", ""), cfg.CommandSeries()[i]), gbc_buttonPanel);
-				gbc_buttonPanel.gridx++;
-				if(gbc_buttonPanel.gridx == 2) {
-					gbc_buttonPanel.gridx = 0;
-					gbc_buttonPanel.gridy++;
-				}
-			}
-		} catch(NullPointerException e){
-			e.printStackTrace();
-		}
-		*/
+		/**
+		 * the panel for showing the items imported by the user, also makes use of a scrollpane
+		 */
 		JPanel ImpotedItemsPanel = new JPanel();
 		tabbedPane.addTab("imported items", null, ImpotedItemsPanel, null);
 		GridBagLayout gbl_ImpotedItemsPanel = new GridBagLayout();
@@ -1024,6 +909,9 @@ public class AAMGui extends JFrame {
 			
 		}
 		
+		/**
+		 * the panel used for seeing and running queued commands
+		 */
 		tabbedPane.addTab("queue", null, QueuePanel, null);
 		tabbedPane.setEnabledAt(5, true);
 		GridBagLayout gbl_QueuePanel = new GridBagLayout();
@@ -1107,9 +995,12 @@ public class AAMGui extends JFrame {
 			gbc_commandButtonList.gridy++;
 		}
 		
-		int[] favoriteString = cfg.Favorites();
+		/**
+		 * this added the favorite commands to the the favorites panel. the buttons are clones of the ones used in original panels
+		 */
+		int[] favoriteInts = cfg.Favorites();
 		
-		for (int integer : favoriteString) {
+		for (int integer : favoriteInts) {
 			if(integer == 0) continue;
 			Reference.FavoriteButtonList.add((JNumberedButton)Utils.findButtonByNumber(integer).clone());
 		}
@@ -1131,7 +1022,9 @@ public class AAMGui extends JFrame {
 			}
 		}
 		
-
+		/**
+		 * setting up the welcome panel that overlays the program on first launch.
+		 */
 	    final JPanel glass = (JPanel) getGlassPane();
 	    
 	    GridBagLayout gbl_WelcomePanel = new GridBagLayout();
@@ -1193,13 +1086,15 @@ public class AAMGui extends JFrame {
 	    
 	    if(cfg.ShowWelcome()) glass.setVisible(true);
 	    
-
 	    AAMGui.tabbedPaneOut.setSelectedIndex(-1);
 		
+	    /**
+	     * this ChangeListner makes it so panels are reloaded when someone opens the corresponding tab.
+	     * this also reloads the look and feel to prevent errors with it.
+	     */
 		tabbedPane.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				
 				
 				if(tabbedPane.getSelectedIndex() == 0) {
 
@@ -1223,9 +1118,6 @@ public class AAMGui extends JFrame {
 							}
 						}
 					}
-				
-
-					
 				}else if (tabbedPane.getSelectedIndex() == 1) {
 					SwingUtilities.updateComponentTreeUI(SimpleCommandsPanel);
 				}else if (tabbedPane.getSelectedIndex() == 2) {
@@ -1239,12 +1131,10 @@ public class AAMGui extends JFrame {
 					
 					AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
 					
-
 					gbc_buttonPanel.insets = new Insets(0, 0, 5, 5);
 					gbc_buttonPanel.fill = GridBagConstraints.BOTH;
 					gbc_buttonPanel.gridx = 0;
 					gbc_buttonPanel.gridy = 0;
-					
 					
 					try {
 						for (int i = 0; i < cfg.ScriptCommandsNames().length; i++) {
@@ -1274,8 +1164,6 @@ public class AAMGui extends JFrame {
 				}else if(tabbedPane.getSelectedIndex() == 4) {
 					SwingUtilities.updateComponentTreeUI(ImpotedItemsPanel);
 					
-					
-					
 					GridBagConstraints gbc_ImItemLabel = new GridBagConstraints();
 					gbc_ImItemLabel.insets = new Insets(0, 0, 0, 5);
 					gbc_ImItemLabel.gridx = 0;
@@ -1292,7 +1180,6 @@ public class AAMGui extends JFrame {
 					ScrollPanel.repaint();
 						
 					for(int i = 0; i < Reference.ImportedItemGroups.size(); i++) {
-						
 						
 						ScrollPanel.add(Utils.generateTitleLabel(Reference.ImportedItemGroups.get(i).getFirstValue()), gbc_ImItemLabel);
 						gbc_ImItemLabel.gridy++;
@@ -1326,7 +1213,6 @@ public class AAMGui extends JFrame {
 					QueueList.add(CommandLable, gbc_commandLable);
 					QueueList.add(RemoveLabel, gbc_RemoveLabel);
 					
-					
 					QueuePanel.add(DelaySpinner, gbc_DelaySpinner);
 					
 					QueuePanel.add(RunDelayButton, gbc_RunDelayButton);
@@ -1345,7 +1231,6 @@ public class AAMGui extends JFrame {
 						gbc_commandList.gridy++;
 						gbc_commandButtonList.gridy++;
 					}
-					
 
 					QueuePanel.add(QHelpButton, gbc_QHelpButton);
 				}
@@ -1353,26 +1238,29 @@ public class AAMGui extends JFrame {
 			}
 		});
 		
+		/**
+		 * this set the tooltips for the fav checkboxes, done with a loop for more efficiency
+		 */
 		Component[] components = SimpleCommandsPanel.getComponents();
-		
 		for(int i = 1; i < components.length; i++) {
-			
 			if(components[i] instanceof JNumberedCheckbox) ((JNumberedCheckbox) components[i]).setToolTipText("click this to favorite the command");
-			
 		}
 		
+		/**
+		 * setting up the settings for the tooltips
+		 */
 		int dismissDelay = Integer.MAX_VALUE;
 	    ToolTipManager.sharedInstance().setDismissDelay(dismissDelay);
 	    ToolTipManager.sharedInstance().setInitialDelay(0);
-
 	    ScrollPane.setBorder(BorderFactory.createEmptyBorder());
-	    
 	    ScrollPane.getVerticalScrollBar().setUnitIncrement(16);
 	    
+	    /**
+	     * this window listener is used to save any information on closing the window
+	     */
 	    addWindowListener(new WindowListener() {
 	    	
 	    	public void windowClosing(WindowEvent arg0) {
-				  
 				  
 				  ArrayList<Integer> ButtonNumbers = new ArrayList<Integer>();
 				  String ButtonNumbersString = "0";
@@ -1393,7 +1281,6 @@ public class AAMGui extends JFrame {
 					  e1.printStackTrace();
 				  }
 				  
-				  
 				  System.exit(0);
 			  }
 
@@ -1406,7 +1293,10 @@ public class AAMGui extends JFrame {
 		});
 	    
 	    setVisible(true);
-
+	    
+	    /**
+	     * this code is used to make it so a user is asked to relog on restart.
+	     */
 	    int logon = 1;
 	    if(cfg.LastLogin() != -1) {
 	    	logon = JOptionPane.showConfirmDialog(ContentPane, "Do you want to log on to the server form last session?", "relog", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -1422,34 +1312,43 @@ public class AAMGui extends JFrame {
 			}
 		}
 	    
-	    SetTimeButton.setEnabled(false);
-	    SetTimeCheckBox.setEnabled(false);
-	    PlayerOnlyButton.setEnabled(false);
-	    PlayerOnlyCheckBox.setEnabled(false);
-	    
 	}
 	
+	/**
+	 * adding buttons to the favorite list
+	 * @param button the button to be added to the favorite list
+	 */
 	public static void AddFavorite(JNumberedButton button) {
 		Reference.FavoriteButtonList.add(button);
 	}
 	
+	/**
+	 * removing buttons to the favorite list
+	 * @param button the button to be removed from the favorite list
+	 */
 	public static void RemoveFavorite(JNumberedButton Button) {
 		Reference.FavoriteButtonList.remove(Button);
 	}
 	
+	/**
+	 * @return the simple command panel
+	 */
 	public static JPanel GetSCPanel() {
 		return SimpleCommandsPanel;
 	}
 	
+	/**
+	 * @return the advanced command panel
+	 */
 	public static JPanel GetACPanel() {
 		return AdvancedCommandsPanel;
 	}
 	
+	/**
+	 * @return the look and feel
+	 */
 	public static LookAndFeel getLookAndFeel() {
 		return UIManager.getLookAndFeel();
 	}
-	
-	
-
 
 }

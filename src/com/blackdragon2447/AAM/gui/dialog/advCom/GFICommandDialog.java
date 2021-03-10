@@ -45,9 +45,6 @@ import net.kronos.rkon.core.ex.AuthenticationException;
 
 public class GFICommandDialog extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3122563720977107636L;
 	private JPanel contentPane;
 	private JTextField PlayerIDField;
@@ -70,9 +67,10 @@ public class GFICommandDialog extends JFrame {
 	RefreshThread refreshThread = new RefreshThread();
 	Thread thread = new Thread(refreshThread);
 
-	
+	/**
+	 * the method for opening the gui
+	 */
 	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
-		
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -87,9 +85,8 @@ public class GFICommandDialog extends JFrame {
 		});
 	}
 	
-
 	/**
-	 * Create the frame.
+	 * the constructor: build the gui
 	 * @throws UnsupportedLookAndFeelException 
 	 */
 	public GFICommandDialog() throws UnsupportedLookAndFeelException {
@@ -153,6 +150,7 @@ public class GFICommandDialog extends JFrame {
 		
 		PlayerIdLabel = new JLabel("player steam id");
 		GridBagConstraints gbc_PlayerIdLabel = new GridBagConstraints();
+		gbc_PlayerIdLabel.anchor = GridBagConstraints.EAST;
 		gbc_PlayerIdLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_PlayerIdLabel.gridx = 1;
 		gbc_PlayerIdLabel.gridy = 4;
@@ -186,6 +184,7 @@ public class GFICommandDialog extends JFrame {
 		
 		ItemLabel = new JLabel("item");
 		GridBagConstraints gbc_ItemLabel = new GridBagConstraints();
+		gbc_ItemLabel.anchor = GridBagConstraints.EAST;
 		gbc_ItemLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_ItemLabel.gridx = 1;
 		gbc_ItemLabel.gridy = 5;
@@ -219,6 +218,7 @@ public class GFICommandDialog extends JFrame {
 		
 		QuanityLabel = new JLabel("quantity");
 		GridBagConstraints gbc_QuanityLabel = new GridBagConstraints();
+		gbc_QuanityLabel.anchor = GridBagConstraints.EAST;
 		gbc_QuanityLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_QuanityLabel.gridx = 1;
 		gbc_QuanityLabel.gridy = 6;
@@ -226,6 +226,7 @@ public class GFICommandDialog extends JFrame {
 		
 		QuantitySpinner = new JSpinner();
 		GridBagConstraints gbc_QuantitySpinner = new GridBagConstraints();
+		gbc_QuantitySpinner.anchor = GridBagConstraints.WEST;
 		gbc_QuantitySpinner.insets = new Insets(0, 0, 5, 5);
 		gbc_QuantitySpinner.gridx = 2;
 		gbc_QuantitySpinner.gridy = 6;
@@ -234,6 +235,7 @@ public class GFICommandDialog extends JFrame {
 		
 		QualityLabel = new JLabel("quality");
 		GridBagConstraints gbc_QualityLabel = new GridBagConstraints();
+		gbc_QualityLabel.anchor = GridBagConstraints.EAST;
 		gbc_QualityLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_QualityLabel.gridx = 1;
 		gbc_QualityLabel.gridy = 7;
@@ -250,6 +252,7 @@ public class GFICommandDialog extends JFrame {
 		
 		blueprintLabel = new JLabel("blueprint");
 		GridBagConstraints gbc_blueprintLabel = new GridBagConstraints();
+		gbc_blueprintLabel.anchor = GridBagConstraints.EAST;
 		gbc_blueprintLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_blueprintLabel.gridx = 1;
 		gbc_blueprintLabel.gridy = 8;
@@ -257,6 +260,7 @@ public class GFICommandDialog extends JFrame {
 		
 		BlueprintCheckBox = new JCheckBox("");
 		GridBagConstraints gbc_BlueprintCheckBox = new GridBagConstraints();
+		gbc_BlueprintCheckBox.anchor = GridBagConstraints.WEST;
 		gbc_BlueprintCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_BlueprintCheckBox.gridx = 2;
 		gbc_BlueprintCheckBox.gridy = 8;
@@ -304,8 +308,8 @@ public class GFICommandDialog extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String[] arguments = {null, null, null, null, null};
 				
-				arguments[1] = PlayerIDField.getText();
-				arguments[2] = "\"bluepint\'" + FullItemPairList.get(comboBox.getSelectedIndex()).getFirstValue() + "\'\"";
+				arguments[0] = PlayerIDField.getText();
+				arguments[1] = comboBox.getSelectedIndex() != -1 ?  arguments[2] = "\"bluepint\'" + FullItemPairList.get(comboBox.getSelectedIndex()).getFirstValue() + "\'\"" : "";
 				arguments[2] = String.valueOf(QuantitySpinner.getValue());
 				arguments[3] = String.valueOf(QualityComboBox.getSelectedIndex());
 				arguments[4] = BlueprintCheckBox.isSelected() ? "1" : "0";
@@ -399,6 +403,10 @@ public class GFICommandDialog extends JFrame {
 
 	}
 	
+	/**
+	 * the refresh thread, an extra thread used to refesh the shown command one a sec to prevent having to use a lot of listners
+	 * @author Blackdragon2447
+	 */
 	class RefreshThread implements Runnable {
 
 		Thread RefreshThead;

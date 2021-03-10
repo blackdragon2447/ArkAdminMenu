@@ -12,6 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * the dialog for the command series
+ * temp depricated til it is fixed
+ * @author Blackdragon2447
+ *
+ */
+@Deprecated
 public class CommandSeriesDialog extends JDialog {
 
 	private static final long serialVersionUID = -640493604537651948L;

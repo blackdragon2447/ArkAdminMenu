@@ -5,6 +5,11 @@ import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
 
+/**
+ * a model for a sorting a combobox, not used yet but needs to be implementeds
+ * @author Blackdragon2447
+ *
+ */
 public class SortedComboBoxModel<E> extends DefaultComboBoxModel<E>{
 
 	private static final long serialVersionUID = 809230250805391426L;

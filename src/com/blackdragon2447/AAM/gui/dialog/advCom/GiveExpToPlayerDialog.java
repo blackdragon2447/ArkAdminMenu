@@ -45,9 +45,6 @@ import net.kronos.rkon.core.ex.AuthenticationException;
 
 public class GiveExpToPlayerDialog extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3122563720977107636L;
 	private JPanel contentPane;
 	private JButton RunButton;
@@ -66,9 +63,10 @@ public class GiveExpToPlayerDialog extends JFrame {
 	private JLabel ShareWithTribeLabel;
 	private JCheckBox ShareWithTribeCheckBox;
 
-	
+	/**
+	 * the method for opening the gui
+	 */
 	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
-		
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -85,7 +83,7 @@ public class GiveExpToPlayerDialog extends JFrame {
 	
 
 	/**
-	 * Create the frame.
+	 * the constructor: build the gui
 	 * @throws UnsupportedLookAndFeelException 
 	 */
 	public GiveExpToPlayerDialog() throws UnsupportedLookAndFeelException {
@@ -149,6 +147,7 @@ public class GiveExpToPlayerDialog extends JFrame {
 		
 		PlayerSteamIDLabel = new JLabel("Player steam Id");
 		GridBagConstraints gbc_PlayerSteamIDLabel = new GridBagConstraints();
+		gbc_PlayerSteamIDLabel.anchor = GridBagConstraints.EAST;
 		gbc_PlayerSteamIDLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_PlayerSteamIDLabel.gridx = 1;
 		gbc_PlayerSteamIDLabel.gridy = 4;
@@ -166,6 +165,7 @@ public class GiveExpToPlayerDialog extends JFrame {
 
 		XpAmountLabel = new JLabel("Xp anmount");
 		GridBagConstraints gbc_XpAmountLabel = new GridBagConstraints();
+		gbc_XpAmountLabel.anchor = GridBagConstraints.EAST;
 		gbc_XpAmountLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_XpAmountLabel.gridx = 1;
 		gbc_XpAmountLabel.gridy = 5;
@@ -174,6 +174,7 @@ public class GiveExpToPlayerDialog extends JFrame {
 		XpAmountSpinner = new JSpinner();
 		XpAmountSpinner.setModel(new SpinnerNumberModel(new Integer(1000), new Integer(0), null, new Integer(1000)));
 		GridBagConstraints gbc_XpAmountSpinner = new GridBagConstraints();
+		gbc_XpAmountSpinner.anchor = GridBagConstraints.WEST;
 		gbc_XpAmountSpinner.insets = new Insets(0, 0, 5, 5);
 		gbc_XpAmountSpinner.gridx = 2;
 		gbc_XpAmountSpinner.gridy = 5;
@@ -184,6 +185,7 @@ public class GiveExpToPlayerDialog extends JFrame {
 		
 		ShareWithTribeLabel = new JLabel("Share With Tribe");
 		GridBagConstraints gbc_ShareWithTribeLabel = new GridBagConstraints();
+		gbc_ShareWithTribeLabel.anchor = GridBagConstraints.EAST;
 		gbc_ShareWithTribeLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_ShareWithTribeLabel.gridx = 1;
 		gbc_ShareWithTribeLabel.gridy = 6;
@@ -191,6 +193,7 @@ public class GiveExpToPlayerDialog extends JFrame {
 		
 		ShareWithTribeCheckBox = new JCheckBox("");
 		GridBagConstraints gbc_ShareWithTribeCheckBox = new GridBagConstraints();
+		gbc_ShareWithTribeCheckBox.anchor = GridBagConstraints.WEST;
 		gbc_ShareWithTribeCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_ShareWithTribeCheckBox.gridx = 2;
 		gbc_ShareWithTribeCheckBox.gridy = 6;
@@ -332,6 +335,10 @@ public class GiveExpToPlayerDialog extends JFrame {
 
 	}
 	
+	/**
+	 * the refresh thread, an extra thread used to refesh the shown command one a sec to prevent having to use a lot of listners
+	 * @author Blackdragon2447
+	 */
 	class RefreshThread implements Runnable {
 
 		Thread RefreshThead;

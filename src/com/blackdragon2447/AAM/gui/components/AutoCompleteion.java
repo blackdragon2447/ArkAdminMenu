@@ -10,6 +10,7 @@ import javax.swing.text.*;
  * To view a copy of the public domain dedication, visit
  * http://creativecommons.org/licenses/publicdomain/
  */
+@Deprecated
 public class AutoCompleteion extends PlainDocument {
 /**
 	 * 

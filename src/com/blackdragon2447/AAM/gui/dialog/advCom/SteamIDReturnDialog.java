@@ -18,7 +18,9 @@ public class SteamIDReturnDialog extends JFrame {
 static final long serialVersionUID = -7969913714004038511L;
 	private JPanel contentPane;
 
-	
+	/**
+	 * the method for opening the gui
+	 */
 	public static void createGui() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -31,7 +33,10 @@ static final long serialVersionUID = -7969913714004038511L;
 			}
 		});
 	}
-
+	
+	/**
+	 * the constructor: build the gui
+	 */
 	public SteamIDReturnDialog() {
 		
 		try {

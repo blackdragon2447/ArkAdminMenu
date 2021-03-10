@@ -29,6 +29,13 @@ import org.aeonbits.owner.ConfigFactory;
 import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 
+/**
+ * the dialog for adding a command series
+ * temp depricated til it is fixed
+ * @author Blackdragon2447
+ *
+ */
+@Deprecated
 public class AddNewSeriesGui extends JFrame {
 
 	private static final long serialVersionUID = -3517898970202091099L;
