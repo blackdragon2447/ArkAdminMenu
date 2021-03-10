@@ -4,6 +4,10 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
+/**
+ * a limitor for textfield length
+ * @author Blackdragon2447
+ */
 public class JTextFieldLimit extends PlainDocument {
 
 	private static final long serialVersionUID = -3756897035798057855L;

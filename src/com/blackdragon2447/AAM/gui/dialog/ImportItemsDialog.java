@@ -27,16 +27,20 @@ import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.util.ItemSetBuilder;
 
+/**
+ * the dialog for importing items.
+ * @author Blackdragon2447
+ */
 public class ImportItemsDialog extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2730499381240887555L;
 	private final JPanel ContentPanel = new JPanel();
 	private JFileChooser FileChooser = new JFileChooser();
 	private File SelectedFile;
 	
+	/**
+	 * the method for opening the dialog
+	 */
 	public static void createDialog() {
 		try {
 			ImportItemsDialog dialog = new ImportItemsDialog();

@@ -41,9 +41,6 @@ import net.kronos.rkon.core.ex.AuthenticationException;
 
 public class ForceIntoTribeDialog extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3122563720977107636L;
 	private JPanel contentPane;
 	private JTextField PlayerIDField;
@@ -60,9 +57,10 @@ public class ForceIntoTribeDialog extends JFrame {
 	Thread thread = new Thread(refreshThread);
 	private JTextField TribeNameField;
 
-	
+	/**
+	 * the method for opening the gui
+	 */
 	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
-		
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -76,8 +74,11 @@ public class ForceIntoTribeDialog extends JFrame {
 			}
 		});
 	}
-	
 
+	/**
+	 * the constructor: build the gui
+	 * @throws UnsupportedLookAndFeelException
+	 */
 	public ForceIntoTribeDialog() throws UnsupportedLookAndFeelException {
 		
 
@@ -320,6 +321,10 @@ public class ForceIntoTribeDialog extends JFrame {
 
 	}
 	
+	/**
+	 * the refresh thread, an extra thread used to refesh the shown command one a sec to prevent having to use a lot of listners
+	 * @author Blackdragon2447
+	 */
 	class RefreshThread implements Runnable {
 
 		Thread RefreshThead;

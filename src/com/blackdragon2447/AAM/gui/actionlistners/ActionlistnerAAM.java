@@ -16,11 +16,24 @@ import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.gui.components.JNumberedButton;
 import com.blackdragon2447.AAM.gui.components.JNumberedCheckbox;
 import com.blackdragon2447.AAM.gui.dialog.SimpleCommandDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.ForceIntoTribeDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.GFICommandDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.GiveExpToPlayerDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.RenamePlayerDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.RenameTribeDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.SpawnDinoCoordsDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.SpawnDinoNearDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.SteamIDReturnDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.SteamToUE4Dialog;
 import com.blackdragon2447.AAM.util.RconHandler;
 import com.blackdragon2447.AAM.util.Utils;
 
 import net.kronos.rkon.core.ex.AuthenticationException;
 
+/**
+ * the class that contains the actionlistners that are used multiple times in the prorgram
+ * @author Blackdragon2447
+ */
 public class ActionlistnerAAM {
 	
 	public static ActionListener FavButtonListner = new ActionListener() {
@@ -177,7 +190,7 @@ public class ActionlistnerAAM {
 		}
 	};
 	
-public static ActionListener FavBackwardListner = new ActionListener() {
+	public static ActionListener FavBackwardListner = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -202,6 +215,92 @@ public static ActionListener FavBackwardListner = new ActionListener() {
 			Reference.FavoriteButtonList.add(index - 1, button);
 			AAMGui.tabbedPaneOut.setSelectedIndex(1);
 			AAMGui.tabbedPaneOut.setSelectedIndex(0);
+			
+		}
+	};
+	
+	public static ActionListener AdvancedComListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JNumberedButton source = (JNumberedButton) e.getSource();
+			
+			switch (source.getNumber()) {
+			case 14:
+				try {
+					GFICommandDialog.createGui();
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
+						| UnsupportedLookAndFeelException e1) {
+					e1.printStackTrace();
+				}
+				break;
+			case 15:
+				try {
+					RenamePlayerDialog.createGui();
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
+						| UnsupportedLookAndFeelException e1) {
+					e1.printStackTrace();
+				}
+				break;
+			case 16:
+				try {
+					RenameTribeDialog.createGui();
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
+						| UnsupportedLookAndFeelException e1) {
+					e1.printStackTrace();
+				}
+				break;
+			case 17:
+				try {
+					ForceIntoTribeDialog.createGui();
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
+						| UnsupportedLookAndFeelException e1) {
+					e1.printStackTrace();
+				}
+				break;
+			case 18:
+				try {
+					GiveExpToPlayerDialog.createGui();
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
+						| UnsupportedLookAndFeelException e1) {
+					e1.printStackTrace();
+				}
+				break;
+			case 19:
+				try {
+					SteamToUE4Dialog.createGui();
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
+						| UnsupportedLookAndFeelException e1) {
+					e1.printStackTrace();
+				}
+				break;
+			case 20:
+				try {
+					SpawnDinoNearDialog.createGui();
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
+						| UnsupportedLookAndFeelException e1) {
+					e1.printStackTrace();
+				}
+				break;
+			case 21:
+				try {
+					SpawnDinoCoordsDialog.createGui();
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
+						| UnsupportedLookAndFeelException e1) {
+					e1.printStackTrace();
+				}
+				break;
+			case 22:
+				try {
+					RconHandler.command(("listallplayersteamid"));
+				} catch (IOException | AuthenticationException e1) {
+					e1.printStackTrace();
+				}
+				SteamIDReturnDialog.createGui();
+				break;
+			default:
+				break;
+			}
 			
 		}
 	};

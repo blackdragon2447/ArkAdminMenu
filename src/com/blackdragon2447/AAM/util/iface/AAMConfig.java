@@ -4,7 +4,10 @@ import org.aeonbits.owner.Accessible;
 import org.aeonbits.owner.Config.Sources;
 import org.aeonbits.owner.Mutable;
 
-
+/**
+ * the config interface for the program
+ * @author Blackdragon2447
+ */
 @Sources({"file:AAMConfig.properties"})
 public interface AAMConfig extends Accessible, Mutable{
 	

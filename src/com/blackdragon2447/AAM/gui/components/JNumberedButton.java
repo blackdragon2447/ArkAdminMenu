@@ -6,20 +6,16 @@ import java.beans.ConstructorProperties;
 import javax.swing.Icon;
 import javax.swing.JButton;
 
+/**
+ * the JNumberedButton is a a version of {@link JButton} that can be numbered
+ * @author Blackdragon2447
+ */
 public class JNumberedButton extends JButton implements Cloneable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	public int Number;
 	
 
-    /**
-     * Creates a button with text.
-     *
-     * @param text  the text of the button
-     */
     @ConstructorProperties({"text"})
     public JNumberedButton(String text, int number) {
         super(text, null);
@@ -30,20 +26,10 @@ public class JNumberedButton extends JButton implements Cloneable{
         super(null, null);
     }
 
-    /**
-     * Creates a button with an icon.
-     *
-     * @param icon  the Icon image to display on the button
-     */
     public JNumberedButton(Icon icon) {
         super(null, icon);
     }
 
-    /**
-     * Creates a button with text.
-     *
-     * @param text  the text of the button
-     */
     @ConstructorProperties({"text"})
     public JNumberedButton(String text) {
         super(text, null);
@@ -54,11 +40,6 @@ public class JNumberedButton extends JButton implements Cloneable{
         this.Number = number;
     }
 
-    /**
-     * Creates a button with an icon.
-     *
-     * @param icon  the Icon image to display on the button
-     */
     public JNumberedButton(Icon icon, int number) {
         super(null, icon);
         this.Number = number;

@@ -2,6 +2,11 @@ package com.blackdragon2447.AAM.util.obj;
 
 import com.blackdragon2447.AAM.Reference;
 
+/**
+ * the object class for the simple command datatype
+ * @author Blackdragon2447
+ *
+ */
 public class SimpleCommand {
 	
 	private String Prefix;
@@ -11,6 +16,11 @@ public class SimpleCommand {
 	private String Arguments;
 	private String[] ArgumentsList = {""};
 	
+	/**
+	 * the constructor
+	 * @param index the index in the {@link Reference#SimpleCommandList} of the command
+	 * @param Arguments the argument of the command
+	 */
 	public SimpleCommand(int index, String Arguments) {
 				
 		this.Command = Reference.SimpleCommandList.get(index).getFirstValue();
@@ -28,6 +38,7 @@ public class SimpleCommand {
 		ArgumentsList[0] = Arguments;
 	}
 	
+	@Deprecated
 	public String getPrefix() {
 		return Prefix;
 	}
@@ -44,6 +55,7 @@ public class SimpleCommand {
 		return HasArguments;
 	}
 	
+	@Deprecated
 	public void setPrefix(String prefix) {
 		Prefix = prefix;
 	}
@@ -60,13 +72,19 @@ public class SimpleCommand {
 		this.HasArguments = hasArguments;
 	}
 	
+	/**
+	 * @return outputs the string version of the command
+	 */
 	public String generateCommand() {
 		
-		if(HasArguments) return Prefix + Command + Arguments;
-		else return Prefix + Command;
+		if(HasArguments) return Command + Arguments;
+		else return Command;
 		
 	}
 	
+	/**
+	 * @return returns a {@link GenericCommand} obj for the simple command
+	 */
 	public GenericCommand generateGenericCommand() {
 		return new GenericCommand(Index, ArgumentsList);
 		

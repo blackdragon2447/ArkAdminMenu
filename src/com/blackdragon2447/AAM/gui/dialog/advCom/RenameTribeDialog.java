@@ -41,9 +41,6 @@ import net.kronos.rkon.core.ex.AuthenticationException;
 
 public class RenameTribeDialog extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3122563720977107636L;
 	private JPanel contentPane;
 	private JTextField TribeNameField;
@@ -60,7 +57,9 @@ public class RenameTribeDialog extends JFrame {
 	Thread thread = new Thread(refreshThread);
 	private JTextField newTribeNameField;
 
-	
+	/**
+	 * the method for opening the gui
+	 */
 	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 		
 		
@@ -79,8 +78,8 @@ public class RenameTribeDialog extends JFrame {
 	
 
 	/**
-	 * Create the frame.
-	 * @throws UnsupportedLookAndFeelException 
+	 * the constructor: build the gui
+	 * @throws UnsupportedLookAndFeelException
 	 */
 	public RenameTribeDialog() throws UnsupportedLookAndFeelException {
 		
@@ -143,6 +142,7 @@ public class RenameTribeDialog extends JFrame {
 		
 		TribeNameLabel = new JLabel("Tribe name");
 		GridBagConstraints gbc_TribeNameLabel = new GridBagConstraints();
+		gbc_TribeNameLabel.anchor = GridBagConstraints.EAST;
 		gbc_TribeNameLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_TribeNameLabel.gridx = 1;
 		gbc_TribeNameLabel.gridy = 4;
@@ -176,6 +176,7 @@ public class RenameTribeDialog extends JFrame {
 		
 		NewTribeNameLabel = new JLabel("new Tribe name");
 		GridBagConstraints gbc_NewTribeNameLabel = new GridBagConstraints();
+		gbc_NewTribeNameLabel.anchor = GridBagConstraints.EAST;
 		gbc_NewTribeNameLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_NewTribeNameLabel.gridx = 1;
 		gbc_NewTribeNameLabel.gridy = 5;
@@ -324,6 +325,10 @@ public class RenameTribeDialog extends JFrame {
 
 	}
 	
+	/**
+	 * the refresh thread, an extra thread used to refesh the shown command one a sec to prevent having to use a lot of listners
+	 * @author Blackdragon2447
+	 */
 	class RefreshThread implements Runnable {
 
 		Thread RefreshThead;

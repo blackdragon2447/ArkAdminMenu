@@ -28,12 +28,18 @@ import javax.swing.border.EmptyBorder;
 
 import com.blackdragon2447.AAM.gui.AAMGui;
 
+/**
+ * the dialog showing the 
+ * @author Blackdragon2447
+ */
 public class HelpDialog extends JDialog {
 
 	private static final long serialVersionUID = -3536957765367588913L;
 	private final JPanel ContentPanel = new JPanel();
 
-	
+	/**
+	 * the method to open the dialog
+	 */
 	public static void createDialog() {
 		try {
 			HelpDialog dialog = new HelpDialog();
@@ -44,6 +50,9 @@ public class HelpDialog extends JDialog {
 		}
 	}
 	
+	/**
+	 * the constructor: build the gui.
+	 */
 	public HelpDialog() {
 
 		try {

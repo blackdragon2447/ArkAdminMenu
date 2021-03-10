@@ -17,9 +17,17 @@ import com.blackdragon2447.AAM.gui.components.JNumberedButton;
 import com.blackdragon2447.AAM.gui.components.JNumberedCheckbox;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 
+/**
+ * the utils class, contains multiple utility methods
+ * @author Blackdragon2447
+ */
 public class Utils {
 	
-	
+	/**
+	 * this method finds buttons in the SCPanel and ACPanel by their number, for numbering these the JNumberedButton.java class is used
+	 * @param Number the number of the button
+	 * @return the found button
+	 */
 	public static JNumberedButton findButtonByNumber(int Number){
 		Component[] components = AAMGui.GetSCPanel().getComponents();
 		Component[] components2 = AAMGui.GetACPanel().getComponents();
@@ -44,6 +52,11 @@ public class Utils {
 		return foundButton;
 	}
 	
+	/**
+	 * same as findButtonByNumber but finds the button in the instead.
+	 * @param Number the number of the button
+	 * @return the found button
+	 */
 	public static JNumberedButton findButtonInListByNumber(int Number){
 		ArrayList<JNumberedButton> buttons = Reference.FavoriteButtonList;
 		
@@ -55,6 +68,11 @@ public class Utils {
 		return foundButton;
 	}
 	
+	/**
+	 * same as the findButtonByNumber but for checkboxes, uses {@link JNumberedCheckbox}
+	 * @param Number the number of the button
+	 * @return the found button
+	 */
 	public static JNumberedCheckbox findCheckboxByNumber(int Number){
 		Component[] components = AAMGui.GetSCPanel().getComponents();
 		Component[] components2 = AAMGui.GetACPanel().getComponents();
@@ -80,12 +98,22 @@ public class Utils {
 		return foundBox;
 	}
 	
+	/**
+	 * finds a command in the list of commands
+	 * @param commandNumber the number of the command
+	 * @return the found command
+	 */
 	public static String GenerateCommand(int commandNumber) {
 		String ListItem = Reference.SimpleCommandList.get(commandNumber).getFirstValue();
 		return ListItem;
 	}
 
 	
+	/**
+	 * generates a label with text in a bigger font fur use as a title, used for generated lists of labels
+	 * @param text the text to be put in the label
+	 * @return the generated label
+	 */
 	public static JLabel generateTitleLabel(String text) {
 		
 		JLabel label = new JLabel(text);
@@ -94,6 +122,12 @@ public class Utils {
 		
 	}
 	
+	/**
+	 * adds a server to the config
+	 * @param name the server name
+	 * @param ip the server ip
+	 * @param port the server port
+	 */
 	public static void AddServer(String name, String ip, int port) {
 		AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
 		
@@ -132,8 +166,6 @@ public class Utils {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		  
-		
 		
 	}
 

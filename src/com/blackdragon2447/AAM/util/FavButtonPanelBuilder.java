@@ -22,6 +22,11 @@ public class FavButtonPanelBuilder {
 
 	static AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
 	
+	/**
+	 * builds a panel with a favorited button a button to remove it and some arrows
+	 * @param button the button to be put in the panel.
+	 * @return returns a numbered panel with the needed components added
+	 */
 	public static JNumberedPanel buildPanel(JButton button) {
 		
 		if(cfg.Darkmode() == true) {

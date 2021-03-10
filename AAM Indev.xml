@@ -2,8 +2,8 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>C:\Users\thoma\Desktop\java workspace\ArkAdminMenu\AAM Indev.jar</jar>
-  <outfile>C:\Users\thoma\Desktop\java workspace\ArkAdminMenu\AAM Indev.exe</outfile>
+  <jar>C:\Users\thoma\Desktop\java workspace\ArkAdminMenu\AAM 0.2 - prerelease\AAM.jar</jar>
+  <outfile>C:\Users\thoma\Desktop\java workspace\ArkAdminMenu\AAM 0.2 - prerelease\AAM.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>

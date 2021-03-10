@@ -40,9 +40,7 @@ import net.kronos.rkon.core.ex.AuthenticationException;
 
 public class SteamToUE4Dialog extends JFrame {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 3122563720977107636L;
 	private JPanel contentPane;
 	private JTextField SteamIDField;
@@ -56,7 +54,9 @@ public class SteamToUE4Dialog extends JFrame {
 	RefreshThread refreshThread = new RefreshThread();
 	Thread thread = new Thread(refreshThread);
 
-	
+	/**
+	 * the method for opening the gui
+	 */
 	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 		
 		
@@ -75,8 +75,8 @@ public class SteamToUE4Dialog extends JFrame {
 	
 
 	/**
-	 * Create the frame.
-	 * @throws UnsupportedLookAndFeelException 
+	 * the constructor: build the gui
+	 * @throws UnsupportedLookAndFeelException
 	 */
 	public SteamToUE4Dialog() throws UnsupportedLookAndFeelException {
 		
@@ -139,6 +139,7 @@ public class SteamToUE4Dialog extends JFrame {
 		
 		SteamIdLabel = new JLabel("player steam ID");
 		GridBagConstraints gbc_SteamIdLabel = new GridBagConstraints();
+		gbc_SteamIdLabel.anchor = GridBagConstraints.EAST;
 		gbc_SteamIdLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_SteamIdLabel.gridx = 1;
 		gbc_SteamIdLabel.gridy = 4;

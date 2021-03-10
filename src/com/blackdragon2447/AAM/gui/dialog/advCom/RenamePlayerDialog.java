@@ -41,9 +41,7 @@ import net.kronos.rkon.core.ex.AuthenticationException;
 
 public class RenamePlayerDialog extends JFrame {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 3122563720977107636L;
 	private JPanel contentPane;
 	private JTextField PlayerSteamIdField;
@@ -60,9 +58,10 @@ public class RenamePlayerDialog extends JFrame {
 	Thread thread = new Thread(refreshThread);
 	private JTextField newPlayerNameField;
 
-	
+	/**
+	 * the method for opening the gui
+	 */
 	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
-		
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -79,8 +78,8 @@ public class RenamePlayerDialog extends JFrame {
 	
 
 	/**
-	 * Create the frame.
-	 * @throws UnsupportedLookAndFeelException 
+	 * the constructor: build the gui
+	 * @throws UnsupportedLookAndFeelException
 	 */
 	public RenamePlayerDialog() throws UnsupportedLookAndFeelException {
 		
@@ -143,6 +142,7 @@ public class RenamePlayerDialog extends JFrame {
 		
 		PlayerSteamIDLabel = new JLabel("player steam id");
 		GridBagConstraints gbc_PlayerSteamIDLabel = new GridBagConstraints();
+		gbc_PlayerSteamIDLabel.anchor = GridBagConstraints.EAST;
 		gbc_PlayerSteamIDLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_PlayerSteamIDLabel.gridx = 1;
 		gbc_PlayerSteamIDLabel.gridy = 4;
@@ -176,6 +176,7 @@ public class RenamePlayerDialog extends JFrame {
 		
 		NewPlayerNameLabel = new JLabel("new player name");
 		GridBagConstraints gbc_NewPlayerNameLabel = new GridBagConstraints();
+		gbc_NewPlayerNameLabel.anchor = GridBagConstraints.EAST;
 		gbc_NewPlayerNameLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_NewPlayerNameLabel.gridx = 1;
 		gbc_NewPlayerNameLabel.gridy = 5;
@@ -324,6 +325,10 @@ public class RenamePlayerDialog extends JFrame {
 
 	}
 	
+	/**
+	 * the refresh thread, an extra thread used to refesh the shown command one a sec to prevent having to use a lot of listners
+	 * @author Blackdragon2447
+	 */
 	class RefreshThread implements Runnable {
 
 		Thread RefreshThead;

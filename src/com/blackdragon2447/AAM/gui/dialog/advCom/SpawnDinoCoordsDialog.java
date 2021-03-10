@@ -73,7 +73,9 @@ public class SpawnDinoCoordsDialog extends JFrame {
 	private JTextField YField;
 	private JTextField ZField;
 
-	
+	/**
+	 * the method for opening the gui
+	 */
 	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 		
 		
@@ -92,7 +94,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 	
 
 	/**
-	 * Create the frame.
+	 * the constructor: build the gui
 	 * @throws UnsupportedLookAndFeelException 
 	 */
 	public SpawnDinoCoordsDialog() throws UnsupportedLookAndFeelException {
@@ -156,6 +158,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		
 		PlayerSteamIDLabel = new JLabel("Player steam Id");
 		GridBagConstraints gbc_PlayerSteamIDLabel = new GridBagConstraints();
+		gbc_PlayerSteamIDLabel.anchor = GridBagConstraints.EAST;
 		gbc_PlayerSteamIDLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_PlayerSteamIDLabel.gridx = 1;
 		gbc_PlayerSteamIDLabel.gridy = 4;
@@ -172,6 +175,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		
 		BPPathLabel = new JLabel("Dino");
 		GridBagConstraints gbc_BPPathLabel = new GridBagConstraints();
+		gbc_BPPathLabel.anchor = GridBagConstraints.EAST;
 		gbc_BPPathLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_BPPathLabel.gridx = 1;
 		gbc_BPPathLabel.gridy = 5;
@@ -209,6 +213,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 
 		LevelLabel = new JLabel("Level");
 		GridBagConstraints gbc_LevelLabel = new GridBagConstraints();
+		gbc_LevelLabel.anchor = GridBagConstraints.EAST;
 		gbc_LevelLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_LevelLabel.gridx = 1;
 		gbc_LevelLabel.gridy = 6;
@@ -217,6 +222,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		LevelSpinner = new JSpinner();
 		LevelSpinner.setModel(new SpinnerNumberModel(600, 0, 900, 20));
 		GridBagConstraints gbc_LevelSpinner = new GridBagConstraints();
+		gbc_LevelSpinner.anchor = GridBagConstraints.WEST;
 		gbc_LevelSpinner.insets = new Insets(0, 0, 5, 5);
 		gbc_LevelSpinner.gridx = 2;
 		gbc_LevelSpinner.gridy = 6;
@@ -227,6 +233,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		
 		TamedLabel = new JLabel("Tamed");
 		GridBagConstraints gbc_TamedLabel = new GridBagConstraints();
+		gbc_TamedLabel.anchor = GridBagConstraints.EAST;
 		gbc_TamedLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_TamedLabel.gridx = 1;
 		gbc_TamedLabel.gridy = 7;
@@ -234,6 +241,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		
 		TamedCheckBox = new JCheckBox("");
 		GridBagConstraints gbc_TamedCheckBox = new GridBagConstraints();
+		gbc_TamedCheckBox.anchor = GridBagConstraints.WEST;
 		gbc_TamedCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_TamedCheckBox.gridx = 2;
 		gbc_TamedCheckBox.gridy = 7;
@@ -241,6 +249,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		
 		XCoordLabel = new JLabel("X");
 		GridBagConstraints gbc_XCoordLabel = new GridBagConstraints();
+		gbc_XCoordLabel.anchor = GridBagConstraints.EAST;
 		gbc_XCoordLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_XCoordLabel.gridx = 1;
 		gbc_XCoordLabel.gridy = 8;
@@ -257,6 +266,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		
 		YCoordLabel = new JLabel("Y");
 		GridBagConstraints gbc_YCoordLabel = new GridBagConstraints();
+		gbc_YCoordLabel.anchor = GridBagConstraints.EAST;
 		gbc_YCoordLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_YCoordLabel.gridx = 1;
 		gbc_YCoordLabel.gridy = 9;
@@ -273,6 +283,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 		
 		ZCoordLabel = new JLabel("Z");
 		GridBagConstraints gbc_ZCoordLabel = new GridBagConstraints();
+		gbc_ZCoordLabel.anchor = GridBagConstraints.EAST;
 		gbc_ZCoordLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_ZCoordLabel.gridx = 1;
 		gbc_ZCoordLabel.gridy = 10;
@@ -426,6 +437,10 @@ public class SpawnDinoCoordsDialog extends JFrame {
 
 	}
 	
+	/**
+	 * the refresh thread, an extra thread used to refesh the shown command one a sec to prevent having to use a lot of listners
+	 * @author Blackdragon2447
+	 */
 	class RefreshThread implements Runnable {
 
 		Thread RefreshThead;

@@ -26,7 +26,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
+/**
+ * no documetnaion cause depricated
+ * @author Blackdragon2447
+ *
+ */
+@Deprecated
 public class CustomPFDialog extends JDialog {
 
 	/**

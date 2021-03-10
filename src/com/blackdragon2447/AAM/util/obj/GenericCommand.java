@@ -2,11 +2,20 @@ package com.blackdragon2447.AAM.util.obj;
 
 import com.blackdragon2447.AAM.Reference;
 
+/**
+ * the object class for the generic command datatype
+ * @author Blackdragon2447
+ */
 public class GenericCommand {
 	
 	private String Command;
 	private String[] Arguments;
 	
+	/**
+	 * the constructor
+	 * @param index the index in the {@link Reference#SimpleCommandList} of the command
+	 * @param Arguments the arguments of the command
+	 */
 	public GenericCommand(int index, String[] Arguments) {
 		
 		
@@ -15,6 +24,11 @@ public class GenericCommand {
 		this.Arguments = Arguments;
 	}
 	
+	/**
+	 * the constructor
+	 * @param command the string version of the commands
+	 * @param Arguments the arguments of the command
+	 */
 	public GenericCommand(String command, String[] Arguments) {
 		
 		this.Command = command;
@@ -39,7 +53,10 @@ public class GenericCommand {
 	public void setArguments(String arguments[]) {
 		Arguments = arguments;
 	}
-	
+
+	/**
+	 * @return outputs the string version of the command
+	 */
 	public String generateCommand() {
 		
 		String result;

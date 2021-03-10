@@ -17,6 +17,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * the gui for entering args and running the plugin commands
+ * @author Blackdragon2447
+ *
+ */
 public class PluginCommandDialog extends JDialog {
 
 	private static final long serialVersionUID = -640493604537651948L;
@@ -26,6 +31,11 @@ public class PluginCommandDialog extends JDialog {
 	JLabel CommandLabel = new JLabel();
 	private JTextField textField;
 
+	/**
+	 * the method for opening the gui
+	 * @param command the command
+	 * @param args the args for the command
+	 */
 	public static void createGui(String command, Boolean args) {
 		Command = command;
 		Args = args;
@@ -38,6 +48,9 @@ public class PluginCommandDialog extends JDialog {
 		}
 	}
 
+	/**
+	 * the constructor: builds the gui
+	 */
 	public PluginCommandDialog() {
 		setBounds(100, 100, 283, 165);
 		getContentPane().setLayout(new BorderLayout());
@@ -112,7 +125,6 @@ public class PluginCommandDialog extends JDialog {
 				});
 			}
 			
-			//pack();
 		}
 	}
 

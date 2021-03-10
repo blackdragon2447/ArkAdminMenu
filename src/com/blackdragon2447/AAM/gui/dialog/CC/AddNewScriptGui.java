@@ -28,6 +28,11 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.awt.event.ActionEvent;
 
+/**
+ * the dialog for adding a new script command
+ * @author Blackdragon2447
+ *
+ */
 public class AddNewScriptGui extends JFrame {
 
 	private static final long serialVersionUID = -3517898970202091099L;
@@ -40,6 +45,9 @@ public class AddNewScriptGui extends JFrame {
 	private JButton btnNewButton_1;
 	AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
 
+	/**
+	 * the method for opening the gui
+	 */
 	public static void createGui() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -53,6 +61,9 @@ public class AddNewScriptGui extends JFrame {
 		});
 	}
 
+	/**
+	 * the constructor: build the gui
+	 */
 	public AddNewScriptGui() {
 		
 		try {
@@ -92,6 +103,7 @@ public class AddNewScriptGui extends JFrame {
 		
 		JLabel CommandNameLabel = new JLabel("Command Name (short)");
 		GridBagConstraints gbc_CommandNameLabel = new GridBagConstraints();
+		gbc_CommandNameLabel.anchor = GridBagConstraints.EAST;
 		gbc_CommandNameLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_CommandNameLabel.gridx = 1;
 		gbc_CommandNameLabel.gridy = 2;
@@ -109,6 +121,7 @@ public class AddNewScriptGui extends JFrame {
 		
 		CommandLabel = new JLabel("Command");
 		GridBagConstraints gbc_CommandLabel = new GridBagConstraints();
+		gbc_CommandLabel.anchor = GridBagConstraints.EAST;
 		gbc_CommandLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_CommandLabel.gridx = 1;
 		gbc_CommandLabel.gridy = 3;

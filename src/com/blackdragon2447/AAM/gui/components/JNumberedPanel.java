@@ -7,6 +7,10 @@ import java.io.Serializable;
 import javax.accessibility.Accessible;
 import javax.swing.JPanel;
 
+/**
+ * the JNumberedPanel is a a version of {@link JPanel} that can be numbered
+ * @author Blackdragon2447
+ */
 public class JNumberedPanel extends JPanel implements Accessible, Serializable{
 
 	private static final long serialVersionUID = 1L;
