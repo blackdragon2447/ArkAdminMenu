@@ -12,7 +12,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -20,8 +19,8 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -45,7 +44,7 @@ import com.jidesoft.swing.ComboBoxSearchable;
 
 import net.kronos.rkon.core.ex.AuthenticationException;
 
-public class SpawnDinoCoordsDialog extends JFrame {
+public class SpawnDinoCoordsDialog extends JDialog {
 
 	private static final long serialVersionUID = -7611273233935193420L;
 	private JPanel contentpane;
@@ -83,7 +82,6 @@ public class SpawnDinoCoordsDialog extends JFrame {
 			public void run() {
 				try {
 					SpawnDinoCoordsDialog frame = new SpawnDinoCoordsDialog();
-					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -98,7 +96,9 @@ public class SpawnDinoCoordsDialog extends JFrame {
 	 * @throws UnsupportedLookAndFeelException 
 	 */
 	public SpawnDinoCoordsDialog() throws UnsupportedLookAndFeelException {
-		
+
+		setModal(true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
 		try {
 			UIManager.setLookAndFeel(AAMGui.getLookAndFeel());
@@ -106,7 +106,6 @@ public class SpawnDinoCoordsDialog extends JFrame {
 			e.printStackTrace();
 		}
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 530, 364);
 		contentpane = new JPanel();
 		contentpane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -308,23 +307,39 @@ public class SpawnDinoCoordsDialog extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					String result = null;
+				String result = null;
+				if(!Reference.MultipleServer) {
 					try {
 						result = RconHandler.command(OutPutLabel.getText());
-					} catch (AuthenticationException e1) {
+					} catch (Exception e1) {
 						if(e1 instanceof AuthenticationException) result = "failed to outheticate";
+						else if (Reference.Password == null) {
+							JOptionPane.showInternalMessageDialog(contentpane, "not logged on", "", JOptionPane.ERROR_MESSAGE);
+						}
 						else {
 							result = "an unkown error occured";
 							e1.printStackTrace();
 						}
 					}
-					JOptionPane.showInternalMessageDialog(contentpane, result);
-				} catch (IOException e1) {
-					e1.printStackTrace();
+				} else {
+					try {
+						result = RconHandler.MultipleCommand(OutPutLabel.getText());
+					} catch (Exception e1) {
+						if(e1 instanceof AuthenticationException) result = "failed to outheticate";
+						else if (Reference.Password == null) {
+							JOptionPane.showInternalMessageDialog(contentpane, "not logged on", "", JOptionPane.ERROR_MESSAGE);
+						}
+						else {
+							result = "an unkown error occured";
+							e1.printStackTrace();
+						}
+					}
 				}
+				if(result.contains("no response"))
+					JOptionPane.showInternalMessageDialog(contentpane, "server recived, assuming it exectued!");
+				else
+					JOptionPane.showInternalMessageDialog(contentpane, result);
 				dispose();
-				refreshThread.stop();
 			}
 		});
 		
@@ -341,7 +356,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 				String[] arguments = {null, null, null, null, null, null, null};
 				
 				arguments[0] = PlayerIDField.getText();
-				arguments[1] = "\""+FullCreaturePairList.get(DinoBPComboBox.getSelectedIndex()).getFirstValue()+"\"";
+				arguments[1] = "\""+FullCreaturePairList.get(DinoBPComboBox.getSelectedIndex()).getSecondValue()+"\"";
 				arguments[2] = String.valueOf(((Integer) LevelSpinner.getValue()));
 				arguments[3] = TamedCheckBox.isSelected() ? "1" : "0";
 				arguments[4] = "0";
@@ -463,7 +478,7 @@ public class SpawnDinoCoordsDialog extends JFrame {
 
 				arguments[0] = PlayerIDField.getText();
 				try {
-					arguments[1] = "\""+FullCreaturePairList.get(DinoBPComboBox.getSelectedIndex()).getFirstValue()+"\"";
+					arguments[1] = "\""+FullCreaturePairList.get(DinoBPComboBox.getSelectedIndex()).getSecondValue()+"\"";
 				} catch (ArrayIndexOutOfBoundsException e) {
 					arguments[1] = "";
 				}

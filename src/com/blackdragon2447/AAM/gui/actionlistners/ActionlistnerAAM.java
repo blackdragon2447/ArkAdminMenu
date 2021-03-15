@@ -24,7 +24,7 @@ import com.blackdragon2447.AAM.gui.dialog.advCom.RenamePlayerDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.RenameTribeDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.SpawnDinoCoordsDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.SpawnDinoNearDialog;
-import com.blackdragon2447.AAM.gui.dialog.advCom.SteamToUE4Dialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.SteamIDReturnDialog;
 import com.blackdragon2447.AAM.util.RconHandler;
 import com.blackdragon2447.AAM.util.Utils;
 
@@ -267,15 +267,10 @@ public class ActionlistnerAAM {
 				}
 				break;
 			case 19:
-				try {
-					SteamToUE4Dialog.createGui();
-				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
-						| UnsupportedLookAndFeelException e1) {
-					e1.printStackTrace();
-				}
+				JOptionPane.showMessageDialog(AAMGui.getContentPanel(), "depricated", null, JOptionPane.ERROR_MESSAGE);
 				break;
 			case 20:
-				JOptionPane.showMessageDialog(AAMGui.getContentPanel(), "not yet implemented", null, JOptionPane.ERROR_MESSAGE);
+				SteamIDReturnDialog.createGui();
 				break;
 			case 21:
 				try {

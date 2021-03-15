@@ -12,7 +12,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -20,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -43,7 +42,7 @@ import com.jidesoft.swing.ComboBoxSearchable;
 
 import net.kronos.rkon.core.ex.AuthenticationException;
 
-public class GFICommandDialog extends JFrame {
+public class GFICommandDialog extends JDialog {
 
 	private static final long serialVersionUID = 3122563720977107636L;
 	private JPanel contentPane;
@@ -76,7 +75,6 @@ public class GFICommandDialog extends JFrame {
 			public void run() {
 				try {
 					GFICommandDialog frame = new GFICommandDialog();
-					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -90,7 +88,9 @@ public class GFICommandDialog extends JFrame {
 	 * @throws UnsupportedLookAndFeelException 
 	 */
 	public GFICommandDialog() throws UnsupportedLookAndFeelException {
-		
+
+		setModal(true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
 		try {
 			UIManager.setLookAndFeel(AAMGui.getLookAndFeel());
@@ -98,7 +98,6 @@ public class GFICommandDialog extends JFrame {
 			e.printStackTrace();
 		}
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 530, 413);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -276,23 +275,40 @@ public class GFICommandDialog extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					String result = null;
+				String result = null;
+				if(!Reference.MultipleServer) {
 					try {
 						result = RconHandler.command(OutPutLabel.getText());
-					} catch (AuthenticationException e1) {
+					} catch (Exception e1) {
 						if(e1 instanceof AuthenticationException) result = "failed to outheticate";
+						else if (Reference.Password == null) {
+							JOptionPane.showInternalMessageDialog(contentPane, "not logged on", "", JOptionPane.ERROR_MESSAGE);
+						}
 						else {
 							result = "an unkown error occured";
 							e1.printStackTrace();
 						}
 					}
-					JOptionPane.showInternalMessageDialog(contentPane, result);
-				} catch (IOException e1) {
-					e1.printStackTrace();
+				} else {
+					try {
+						result = RconHandler.MultipleCommand(OutPutLabel.getText());
+					} catch (Exception e1) {
+						if(e1 instanceof AuthenticationException) result = "failed to outheticate";
+						else if (Reference.Password == null) {
+							JOptionPane.showInternalMessageDialog(contentPane, "not logged on", "", JOptionPane.ERROR_MESSAGE);
+						}
+						else {
+							result = "an unkown error occured";
+							e1.printStackTrace();
+						}
+					}
 				}
-				dispose();
+				if(result.contains("no response"))
+					JOptionPane.showInternalMessageDialog(contentPane, "server recived, assuming it exectued!");
+				else
+					JOptionPane.showInternalMessageDialog(contentPane, result);
 				refreshThread.stop();
+				dispose();
 			}
 		});
 		
@@ -309,7 +325,7 @@ public class GFICommandDialog extends JFrame {
 				String[] arguments = {null, null, null, null, null};
 				
 				arguments[0] = PlayerIDField.getText();
-				arguments[1] = comboBox.getSelectedIndex() != -1 ?  arguments[2] = "\"bluepint\'" + FullItemPairList.get(comboBox.getSelectedIndex()).getFirstValue() + "\'\"" : "";
+				arguments[1] = comboBox.getSelectedIndex() != -1 ?  arguments[2] = "blueprint\'" + FullItemPairList.get(comboBox.getSelectedIndex()).getFirstValue() + "\'" : "";
 				arguments[2] = String.valueOf(QuantitySpinner.getValue());
 				arguments[3] = String.valueOf(QualityComboBox.getSelectedIndex());
 				arguments[4] = BlueprintCheckBox.isSelected() ? "1" : "0";
@@ -391,6 +407,7 @@ public class GFICommandDialog extends JFrame {
 			
 			@Override
 			public void windowClosing(WindowEvent e) {
+				System.out.println("closing");
 				refreshThread.stop();
 			}
 			
@@ -428,7 +445,7 @@ public class GFICommandDialog extends JFrame {
 				String[] arguments = {null, null, null, null, null};
 				
 				arguments[0] = PlayerIDField.getText();
-				arguments[1] = comboBox.getSelectedIndex() != -1 ?  arguments[2] = "\"bluepint\'" + FullItemPairList.get(comboBox.getSelectedIndex()).getFirstValue() + "\'\"" : "";
+				arguments[1] = comboBox.getSelectedIndex() != -1 ?  arguments[2] = "blueprint\'" + FullItemPairList.get(comboBox.getSelectedIndex()).getFirstValue() + "\'" : "";
 				arguments[2] = String.valueOf(QuantitySpinner.getValue());
 				arguments[3] = String.valueOf(QualityComboBox.getSelectedIndex());
 				arguments[4] = BlueprintCheckBox.isSelected() ? "1" : "0";

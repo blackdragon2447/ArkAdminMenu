@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.blackdragon2447.AAM.gui.components.JNumberedButton;
 import com.blackdragon2447.AAM.util.Pair;
 import com.blackdragon2447.AAM.util.obj.GenericCommand;
+import com.blackdragon2447.AAM.util.obj.Server;
 
 /**
  * the reference class, contains not panel specific global information
@@ -30,5 +31,7 @@ public class Reference {
 	public static String RConIp;
 	public static int RConPort;
 	public static int theme;
+	public static ArrayList<Server> LoggedServers = new ArrayList<Server>();
+	public static Boolean MultipleServer = false;
 
 }

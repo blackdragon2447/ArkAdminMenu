@@ -3,6 +3,7 @@ package com.blackdragon2447.AAM.util;
 import java.io.IOException;
 
 import com.blackdragon2447.AAM.Reference;
+import com.blackdragon2447.AAM.util.obj.Server;
 
 import net.kronos.rkon.core.Rcon;
 import net.kronos.rkon.core.ex.AuthenticationException;
@@ -22,8 +23,26 @@ public class RconHandler {
 	 */
 	public static String command(String command) throws IOException, AuthenticationException {
 		final Rcon rcon = new Rcon(Reference.RConIp, Reference.RConPort, Reference.Password.getBytes());
+		System.out.println("sending command");
+		String Result = rcon.command(command);
+		System.out.println("command sent");
+		//rcon.disconnect();
+		return Result;
+	}
+	
+	public static String MultipleCommand(String command) throws IOException, AuthenticationException {
+		Rcon rcon = null;
+		String FullResult = "";
+		String Result;
 		
-		return rcon.command(command);
+		for (Server server : Reference.LoggedServers) {
+			rcon = new Rcon(server.getIP(), server.getPort(), server.getPassword().getBytes());
+			Result = rcon.command(command);
+			
+			FullResult = FullResult + "\n" + server.getName() + "\n" + Result;
+		}
+		//rcon.disconnect();
+		return FullResult;
 	}
 
 }
