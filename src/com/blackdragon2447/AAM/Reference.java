@@ -29,5 +29,6 @@ public class Reference {
 	public static String Password;
 	public static String RConIp;
 	public static int RConPort;
+	public static int theme;
 
 }

@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -23,7 +24,6 @@ import com.blackdragon2447.AAM.gui.dialog.advCom.RenamePlayerDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.RenameTribeDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.SpawnDinoCoordsDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.SpawnDinoNearDialog;
-import com.blackdragon2447.AAM.gui.dialog.advCom.SteamIDReturnDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.SteamToUE4Dialog;
 import com.blackdragon2447.AAM.util.RconHandler;
 import com.blackdragon2447.AAM.util.Utils;
@@ -275,6 +275,9 @@ public class ActionlistnerAAM {
 				}
 				break;
 			case 20:
+				JOptionPane.showMessageDialog(AAMGui.getContentPanel(), "not yet implemented", null, JOptionPane.ERROR_MESSAGE);
+				break;
+			case 21:
 				try {
 					SpawnDinoNearDialog.createGui();
 				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
@@ -282,26 +285,16 @@ public class ActionlistnerAAM {
 					e1.printStackTrace();
 				}
 				break;
-			case 21:
-				try {
-					SpawnDinoCoordsDialog.createGui();
-				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException
-						| UnsupportedLookAndFeelException e1) {
-					e1.printStackTrace();
-				}
-				break;
 			case 22:
 				try {
-					RconHandler.command(("listallplayersteamid"));
-				} catch (IOException | AuthenticationException e1) {
+					SpawnDinoCoordsDialog.createGui();
+				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | UnsupportedLookAndFeelException e1) {
 					e1.printStackTrace();
 				}
-				SteamIDReturnDialog.createGui();
 				break;
 			default:
 				break;
 			}
-			
 		}
 	};
 	
