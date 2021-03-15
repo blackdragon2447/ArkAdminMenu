@@ -15,7 +15,6 @@ import org.aeonbits.owner.ConfigFactory;
 import com.blackdragon2447.AAM.gui.actionlistners.ActionlistnerAAM;
 import com.blackdragon2447.AAM.gui.components.JNumberedPanel;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
-import com.formdev.flatlaf.FlatDarkLaf;
 
 public class FavButtonPanelBuilder {
 	
@@ -29,14 +28,13 @@ public class FavButtonPanelBuilder {
 	 */
 	public static JNumberedPanel buildPanel(JButton button) {
 		
-		if(cfg.Darkmode() == true) {
-			try {
-				UIManager.setLookAndFeel(new FlatDarkLaf());
-			} catch (UnsupportedLookAndFeelException e1) {
-				e1.printStackTrace();
-			}
-		}
 		
+		try {
+			UIManager.setLookAndFeel(Themes.getLookAndFeel(cfg.Theme()));
+		} catch (UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(button == null) return new JNumberedPanel();
 		
 		

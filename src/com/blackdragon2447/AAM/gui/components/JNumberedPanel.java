@@ -2,7 +2,6 @@ package com.blackdragon2447.AAM.gui.components;
 
 import java.awt.FlowLayout;
 import java.awt.LayoutManager;
-import java.io.Serializable;
 
 import javax.accessibility.Accessible;
 import javax.swing.JPanel;
@@ -11,7 +10,7 @@ import javax.swing.JPanel;
  * the JNumberedPanel is a a version of {@link JPanel} that can be numbered
  * @author Blackdragon2447
  */
-public class JNumberedPanel extends JPanel implements Accessible, Serializable{
+public class JNumberedPanel extends JPanel implements Accessible, Cloneable{
 
 	private static final long serialVersionUID = 1L;
 	private int Number;
@@ -60,6 +59,11 @@ public class JNumberedPanel extends JPanel implements Accessible, Serializable{
     public void setNumber(int number) {
 		this.Number = number;
 	}
+    
+    @Override
+   	public Object clone() throws CloneNotSupportedException {
+    	return super.clone();
+    }
 
 	
 	

@@ -11,9 +11,6 @@ import org.aeonbits.owner.Mutable;
 @Sources({"file:AAMConfig.properties"})
 public interface AAMConfig extends Accessible, Mutable{
 	
-	@DefaultValue("false")
-	Boolean Darkmode();
-	
 	String CustomPrefix();
 	
 	int[] Favorites();
@@ -42,4 +39,7 @@ public interface AAMConfig extends Accessible, Mutable{
 	int[] Ports();
 	
 	int LastLogin();
+	
+	@DefaultValue("0")
+	int Theme();
 }

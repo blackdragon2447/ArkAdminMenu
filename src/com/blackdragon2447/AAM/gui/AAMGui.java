@@ -23,7 +23,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -33,6 +32,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.LookAndFeel;
@@ -51,17 +51,17 @@ import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.actionlistners.ActionlistnerAAM;
 import com.blackdragon2447.AAM.gui.components.JNumberedButton;
 import com.blackdragon2447.AAM.gui.components.JNumberedCheckbox;
+import com.blackdragon2447.AAM.gui.components.JNumberedPanel;
 import com.blackdragon2447.AAM.gui.dialog.HelpDialog;
 import com.blackdragon2447.AAM.gui.dialog.ImportItemsDialog;
 import com.blackdragon2447.AAM.gui.dialog.CC.AddNewPluginCommand;
 import com.blackdragon2447.AAM.gui.dialog.CC.AddNewScriptGui;
 import com.blackdragon2447.AAM.util.CustomButtonBuilder;
 import com.blackdragon2447.AAM.util.FavButtonPanelBuilder;
+import com.blackdragon2447.AAM.util.ThemeButtonBuilder;
+import com.blackdragon2447.AAM.util.Themes;
 import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLightLaf;
-import javax.swing.JSeparator;
 
 public class AAMGui extends JFrame {
 	
@@ -70,7 +70,7 @@ public class AAMGui extends JFrame {
 	 * all the swing components in this part needed to be accesed outside the constructor.
 	 */
 	private static final long serialVersionUID = -735583961255908606L;
-	private JPanel ContentPane;
+	private static JPanel ContentPane;
 	static JPanel SimpleCommandsPanel = new JPanel();
 	static JPanel AdvancedCommandsPanel = new JPanel();
 	ButtonGroup group = new ButtonGroup();
@@ -137,6 +137,8 @@ public class AAMGui extends JFrame {
 	private final JPanel ButtonPanel = new JPanel();
 	private final JSeparator separator = new JSeparator();
 	private final JSeparator separator_1 = new JSeparator();
+	public static final JMenu ThemeMenu = new JMenu("Theme");
+	static JMenuBar menuBar = new JMenuBar();
 	
 
 	
@@ -174,12 +176,11 @@ public class AAMGui extends JFrame {
 		 */
 		setTitle("ArkAdminManager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 675, 500);
+		setBounds(100, 100, 660, 500);
 		
 		/**
 		 * adding the menu bar the options are pretty self explanatory by name.
 		 */
-		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
 		JMenu settingsMenu = new JMenu("settings");
@@ -203,45 +204,12 @@ public class AAMGui extends JFrame {
 			}
 		});
 		
-		/**
-		 * this one is a bit more complicated, it set the dark or light mode for the program and writes to the config file
-		 */
-		JCheckBoxMenuItem DTCheckItem = new JCheckBoxMenuItem("dark theme");
-		settingsMenu.add(DTCheckItem);
-		DTCheckItem.addActionListener(new ActionListener() {
-			  public void actionPerformed(ActionEvent e) {
-					if(DTCheckItem.isSelected() == true) {
-						try {
-							UIManager.setLookAndFeel(new FlatDarkLaf());
-							SwingUtilities.updateComponentTreeUI(ContentPane);
-							SwingUtilities.updateComponentTreeUI(menuBar);
-						} catch (UnsupportedLookAndFeelException e1) {
-							e1.printStackTrace();
-						}
-						cfg.setProperty("Darkmode", "true");
-						try {
-							cfg.store(new FileOutputStream("AAMConfig.properties"), "no comments");
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-					}
-					else {
-						try {
-							UIManager.setLookAndFeel(new FlatLightLaf());
-							SwingUtilities.updateComponentTreeUI(ContentPane);
-							SwingUtilities.updateComponentTreeUI(menuBar);
-						} catch (UnsupportedLookAndFeelException e1) {
-							e1.printStackTrace();
-						}
-						cfg.setProperty("Darkmode", "false");
-						try {
-							cfg.store(new FileOutputStream("AAMConfig.properties"), "no comments");
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-					}
-			  }
-		});
+		settingsMenu.add(ThemeMenu);
+		
+		Themes[] themes = Themes.values();
+		for (Themes themes2 : themes) {
+			ThemeMenu.add(ThemeButtonBuilder.BuildThemeButton(themes2));
+		}
 		
 		JMenuItem helpMenuItem = new JMenuItem("help");
 		settingsMenu.add(helpMenuItem);
@@ -256,30 +224,12 @@ public class AAMGui extends JFrame {
 		});
 		
 		/**
-		 * this set the dark/light mode on starting the program, invoked after setting the menu bar to make it so the look of the bar can actually be set.
+		 * this set the theme on starting the program, invoked after setting the menu bar to make it so the look of the bar can actually be set.
 		 */
-		if(cfg.Darkmode() == true) {
-			try {
-				UIManager.setLookAndFeel(new FlatDarkLaf());
-				SwingUtilities.updateComponentTreeUI(ContentPane);
-				SwingUtilities.updateComponentTreeUI(menuBar);
-			} catch (UnsupportedLookAndFeelException e1) {
-				e1.printStackTrace();
-			}
-			DTCheckItem.setSelected(cfg.Darkmode());
-		} else {
-			try {
-				UIManager.setLookAndFeel(new FlatLightLaf());
-				SwingUtilities.updateComponentTreeUI(ContentPane);
-				SwingUtilities.updateComponentTreeUI(menuBar);
-			} catch (UnsupportedLookAndFeelException e1) {
-				e1.printStackTrace();
-			}
-			DTCheckItem.setSelected(cfg.Darkmode());
-		}
 		
-		
-		
+		if(cfg.ShowWelcome()) setVisual(Themes.getLookAndFeel(0));
+		else setVisual(Themes.getLookAndFeel(cfg.Theme()));
+		Reference.theme = cfg.Theme();
 		
 		/**
 		 * this part of the constructor builds the tabbed pane and the panels in it
@@ -835,7 +785,7 @@ public class AAMGui extends JFrame {
 		/**
 		 * the panel for showing the items imported by the user, also makes use of a scrollpane
 		 */
-		JPanel ImpotedItemsPanel = new JPanel();
+		JNumberedPanel ImpotedItemsPanel = new JNumberedPanel();
 		tabbedPane.addTab("imported items", null, ImpotedItemsPanel, null);
 		GridBagLayout gbl_ImpotedItemsPanel = new GridBagLayout();
 		gbl_ImpotedItemsPanel.columnWidths = new int[]{40, 564, 40, 0};
@@ -891,11 +841,6 @@ public class AAMGui extends JFrame {
 		gbc_ImItemLabel2.weighty = 1;
 		
 		for(int i = 0; i < Reference.ImportedItemGroups.size(); i++) {
-			
-			ScrollPanel.add(Utils.generateTitleLabel(Reference.ImportedItemGroups.get(i).getFirstValue()), gbc_ImItemLabel);
-			gbc_ImItemLabel.gridy++;
-			ScrollPanel.add(Utils.generateTitleLabel("BP Path"), gbc_ImItemLabel2);
-			gbc_ImItemLabel2.gridy++;
 			
 			for(int x = 0; x < Reference.ImportedItemGroups.get(i).getSecondValue().size(); x++) {
 				ScrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(x).getSecondValue()), gbc_ImItemLabel);
@@ -1060,7 +1005,7 @@ public class AAMGui extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				glass.setVisible(false);
-				
+				setVisual(Themes.getLookAndFeel(cfg.Theme()));
 			}
 		});
 	    
@@ -1076,13 +1021,17 @@ public class AAMGui extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				cfg.setProperty("ShowWelcome", "false");
+				try {
+					cfg.store(new FileOutputStream("AAMConfig.properties"), "no comments");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 				
 			}
 		});
 	    
 	    glass.setOpaque(true);
-	    if(cfg.Darkmode()) glass.setBackground(Color.DARK_GRAY);
-	    else glass.setBackground(Color.WHITE);
+	    glass.setBackground(Color.WHITE);
 	    
 	    if(cfg.ShowWelcome()) glass.setVisible(true);
 	    
@@ -1181,11 +1130,6 @@ public class AAMGui extends JFrame {
 						
 					for(int i = 0; i < Reference.ImportedItemGroups.size(); i++) {
 						
-						ScrollPanel.add(Utils.generateTitleLabel(Reference.ImportedItemGroups.get(i).getFirstValue()), gbc_ImItemLabel);
-						gbc_ImItemLabel.gridy++;
-						ScrollPanel.add(Utils.generateTitleLabel("BP Path"), gbc_ImItemLabel2);
-						gbc_ImItemLabel2.gridy++;
-						
 						for(int x = 0; x < Reference.ImportedItemGroups.get(i).getSecondValue().size(); x++) {
 							ScrollPanel.add(new JLabel(Reference.ImportedItemGroups.get(i).getSecondValue().get(x).getSecondValue()), gbc_ImItemLabel);
 							gbc_ImItemLabel.gridy++;
@@ -1274,6 +1218,8 @@ public class AAMGui extends JFrame {
 				  
 				  cfg = ConfigFactory.create(AAMConfig.class);
 				  
+				  cfg.setProperty("Theme", String.valueOf(Reference.theme));
+				  
 				  cfg.setProperty("Favorites", ButtonNumbersString);
 				  try {
 					  cfg.store(new FileOutputStream("AAMConfig.properties"), "no comments");
@@ -1349,6 +1295,21 @@ public class AAMGui extends JFrame {
 	 */
 	public static LookAndFeel getLookAndFeel() {
 		return UIManager.getLookAndFeel();
+	}
+	
+	public static JPanel getContentPanel() {
+		return ContentPane;
+	}
+	
+	public static void setVisual(LookAndFeel lookAndFeel) {
+		try {
+			UIManager.setLookAndFeel(lookAndFeel);
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+		SwingUtilities.updateComponentTreeUI(ContentPane);
+		SwingUtilities.updateComponentTreeUI(menuBar);
+
 	}
 
 }
