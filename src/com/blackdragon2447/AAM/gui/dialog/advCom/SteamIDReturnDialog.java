@@ -6,13 +6,18 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
+import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
+import com.blackdragon2447.AAM.util.RconHandler;
+
+import net.kronos.rkon.core.ex.AuthenticationException;
 
 public class SteamIDReturnDialog extends JFrame {
 static final long serialVersionUID = -7969913714004038511L;
@@ -57,12 +62,48 @@ static final long serialVersionUID = -7969913714004038511L;
 		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		JLabel ResponseLabel = new JLabel("this isnt done yet");
+		String result = null;
+		if(!Reference.MultipleServer) {
+			try {
+				result = RconHandler.command("ListAllPlayerSteamID");
+			} catch (Exception e1) {
+				if(e1 instanceof AuthenticationException) result = "failed to outheticate";
+				else if (Reference.Password == null) {
+					JOptionPane.showInternalMessageDialog(contentPane, "not logged on", "", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					result = "an unkown error occured";
+					e1.printStackTrace();
+				}
+			}
+		} else {
+			try {
+				result = RconHandler.MultipleCommand("ListAllPlayerSteamID");
+			} catch (Exception e1) {
+				if(e1 instanceof AuthenticationException) result = "failed to autheticate";
+				else if (Reference.Password == null) {
+					JOptionPane.showInternalMessageDialog(contentPane, "not logged on", "", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					result = "an unkown error occured";
+					e1.printStackTrace();
+				}
+			}
+		}
+		if(result.contains("no response"))
+			JOptionPane.showInternalMessageDialog(contentPane, "server recived, assuming it exectued!");
+		
+
+		JTextArea ResponseLabel = new JTextArea(result);
+		ResponseLabel.setEditable(false);
 		GridBagConstraints gbc_ResponseLabel = new GridBagConstraints();
 		gbc_ResponseLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_ResponseLabel.gridx = 1;
 		gbc_ResponseLabel.gridy = 1;
 		contentPane.add(ResponseLabel, gbc_ResponseLabel);
+		
+		setBounds(getBounds().x, getBounds().y, getBounds().height, 20 * ResponseLabel.getLineCount());
+		System.out.println(getBounds());
 	}
 
 }

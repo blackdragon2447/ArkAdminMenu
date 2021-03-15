@@ -31,8 +31,10 @@ import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.util.RconHandler;
 import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
+import com.blackdragon2447.AAM.util.obj.Server;
 
 import net.kronos.rkon.core.ex.AuthenticationException;
+import javax.swing.JToggleButton;
 
 /**
  * the gui for the program settings atm only used for servers
@@ -73,7 +75,7 @@ public class SettingsGUI extends JFrame {
 
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 358);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -99,9 +101,9 @@ public class SettingsGUI extends JFrame {
 		contentPane.add(ServersPanel, gbc_ServersPanel);
 		GridBagLayout gbl_ServersPanel = new GridBagLayout();
 		gbl_ServersPanel.columnWidths = new int[]{0, 0, 0};
-		gbl_ServersPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+		gbl_ServersPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_ServersPanel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-		gbl_ServersPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_ServersPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		ServersPanel.setLayout(gbl_ServersPanel);
 		
 		JLabel NameLabel = new JLabel("Server Name");
@@ -194,7 +196,7 @@ public class SettingsGUI extends JFrame {
 		
 		JButton RemoveButton = new JButton("Remove");
 		GridBagConstraints gbc_RemoveButton = new GridBagConstraints();
-		gbc_RemoveButton.insets = new Insets(0, 0, 0, 5);
+		gbc_RemoveButton.insets = new Insets(0, 0, 5, 5);
 		gbc_RemoveButton.gridx = 0;
 		gbc_RemoveButton.gridy = 5;
 		ServersPanel.add(RemoveButton, gbc_RemoveButton);
@@ -206,6 +208,7 @@ public class SettingsGUI extends JFrame {
 		
 		JButton AuthenticateButton = new JButton("Autheticate");
 		GridBagConstraints gbc_AuthenticateButton = new GridBagConstraints();
+		gbc_AuthenticateButton.insets = new Insets(0, 0, 5, 0);
 		gbc_AuthenticateButton.gridx = 1;
 		gbc_AuthenticateButton.gridy = 5;
 		ServersPanel.add(AuthenticateButton, gbc_AuthenticateButton);
@@ -214,6 +217,37 @@ public class SettingsGUI extends JFrame {
 				
 				Authenticate(list.getSelectedIndex());
 				
+			}
+		});
+		
+		JToggleButton MSToggleButton = new JToggleButton("Use Multiple Servers");
+		GridBagConstraints gbc_MSToggleButton = new GridBagConstraints();
+		gbc_MSToggleButton.insets = new Insets(0, 0, 0, 5);
+		gbc_MSToggleButton.gridx = 0;
+		gbc_MSToggleButton.gridy = 6;
+		ServersPanel.add(MSToggleButton, gbc_MSToggleButton);
+		MSToggleButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Reference.MultipleServer = MSToggleButton.isSelected();
+			}
+		});
+		
+		JButton AuthenticateAllButton = new JButton("Authenticate All");
+		GridBagConstraints gbc_AuthenticateAllButton = new GridBagConstraints();
+		gbc_AuthenticateAllButton.gridx = 1;
+		gbc_AuthenticateAllButton.gridy = 6;
+		ServersPanel.add(AuthenticateAllButton, gbc_AuthenticateAllButton);
+		AuthenticateAllButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (!MSToggleButton.isSelected()) {
+					if(0 == JOptionPane.showOptionDialog(contentPane, "use multiple servers is disabled, do you want to enable it", null, JOptionPane.YES_NO_OPTION, 0, null, null, null)) {
+						MSToggleButton.setSelected(true);
+					}
+				}
+				for (int server : list.getSelectedIndices()) {
+					Reference.LoggedServers.add(Authenticate(server));
+				}
+				Reference.MultipleServer = MSToggleButton.isSelected();
 			}
 		});
 		
@@ -313,14 +347,15 @@ public class SettingsGUI extends JFrame {
 	 * method to check if a server password is correct and setting it to be used for further used
 	 * @param serverNum the number of the selected server
 	 */
-	public static void Authenticate(int serverNum) {
+	public static Server Authenticate(int serverNum) {
 
 		Boolean succeeded = true;
-		
+		Boolean loop = true;
 		Reference.RConIp = cfg.IPs()[serverNum];
 		Reference.RConPort = cfg.Ports()[serverNum];
 		JPasswordField pwd = new JPasswordField(10);
-	    JOptionPane.showConfirmDialog(null, pwd, "Enter Password",JOptionPane.OK_CANCEL_OPTION);
+	    int Cancel = JOptionPane.showConfirmDialog(null, pwd, "Enter Password",JOptionPane.OK_CANCEL_OPTION);
+	    loop = Cancel == 1? true : false;
 	    Reference.Password = String.valueOf(pwd.getPassword());
 	    pwd.setText("");
 	    int cancel = 1;
@@ -345,7 +380,10 @@ public class SettingsGUI extends JFrame {
 	    			e1.printStackTrace();
 	    		}
 	    		break;
-	    	}else{
+	    	}else if (!loop) {
+				break;
+			}
+	    	else{
 	    		Reference.RConIp = cfg.IPs()[serverNum];
 	    		Reference.RConPort = cfg.Ports()[serverNum];
 	    		pwd = new JPasswordField(10);
@@ -364,7 +402,11 @@ public class SettingsGUI extends JFrame {
 	    		}
 	    	}
 	    }
+	    
+	    return new Server(cfg.ServerNames()[serverNum], cfg.IPs()[serverNum], Integer.valueOf(cfg.Ports()[serverNum]), Reference.Password);
 	}
+	
+	
 	
 	
 }

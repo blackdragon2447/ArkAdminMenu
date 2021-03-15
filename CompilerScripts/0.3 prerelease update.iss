@@ -16,7 +16,7 @@ AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=C:\Users\thoma\Desktop\java workspace\ArkAdminMenu\AAM 0.1 - prerelease\license.txt
+LicenseFile=C:\Users\thoma\Desktop\java workspace\ArkAdminMenu\AAM 0.3 - prerelease\license.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog

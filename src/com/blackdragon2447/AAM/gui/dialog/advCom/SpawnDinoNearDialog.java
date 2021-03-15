@@ -12,7 +12,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -20,8 +19,8 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -45,7 +44,7 @@ import com.jidesoft.swing.ComboBoxSearchable;
 
 import net.kronos.rkon.core.ex.AuthenticationException;
 
-public class SpawnDinoNearDialog extends JFrame {
+public class SpawnDinoNearDialog extends JDialog {
 
 	private static final long serialVersionUID = -3379509028862039726L;
 	private JPanel contentPane;
@@ -77,7 +76,6 @@ public class SpawnDinoNearDialog extends JFrame {
 			public void run() {
 				try {
 					SpawnDinoNearDialog frame = new SpawnDinoNearDialog();
-					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -93,14 +91,15 @@ public class SpawnDinoNearDialog extends JFrame {
 	 */
 	public SpawnDinoNearDialog() throws UnsupportedLookAndFeelException {
 		
-
+		setModal(true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		
 		try {
 			UIManager.setLookAndFeel(AAMGui.getLookAndFeel());
 		} catch (UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 530, 275);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -251,23 +250,39 @@ public class SpawnDinoNearDialog extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					String result = null;
+				String result = null;
+				if(!Reference.MultipleServer) {
 					try {
 						result = RconHandler.command(OutPutLabel.getText());
-					} catch (AuthenticationException e1) {
+					} catch (Exception e1) {
 						if(e1 instanceof AuthenticationException) result = "failed to outheticate";
+						else if (Reference.Password == null) {
+							JOptionPane.showInternalMessageDialog(contentPane, "not logged on", "", JOptionPane.ERROR_MESSAGE);
+						}
 						else {
 							result = "an unkown error occured";
 							e1.printStackTrace();
 						}
 					}
-					JOptionPane.showInternalMessageDialog(contentPane, result);
-				} catch (IOException e1) {
-					e1.printStackTrace();
+				} else {
+					try {
+						result = RconHandler.MultipleCommand(OutPutLabel.getText());
+					} catch (Exception e1) {
+						if(e1 instanceof AuthenticationException) result = "failed to outheticate";
+						else if (Reference.Password == null) {
+							JOptionPane.showInternalMessageDialog(contentPane, "not logged on", "", JOptionPane.ERROR_MESSAGE);
+						}
+						else {
+							result = "an unkown error occured";
+							e1.printStackTrace();
+						}
+					}
 				}
+				if(result.contains("no response"))
+					JOptionPane.showInternalMessageDialog(contentPane, "server recived, assuming it exectued!");
+				else
+					JOptionPane.showInternalMessageDialog(contentPane, result);
 				dispose();
-				refreshThread.stop();
 			}
 		});
 		
