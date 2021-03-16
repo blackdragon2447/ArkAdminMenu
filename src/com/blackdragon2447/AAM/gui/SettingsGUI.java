@@ -13,6 +13,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.swing.JButton;
@@ -216,7 +217,8 @@ public class SettingsGUI extends JFrame {
 		ServersPanel.add(AuthenticateButton, gbc_AuthenticateButton);
 		AuthenticateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				Reference.MultipleServer = false;
+				Reference.LoggedServers = new ArrayList<Server>();
 				Authenticate(list.getSelectedIndex());
 				
 			}
@@ -351,6 +353,10 @@ public class SettingsGUI extends JFrame {
 	 */
 	public static Server Authenticate(int serverNum) {
 
+		Reference.RConIp = null;
+		Reference.RConPort = 0;
+		Reference.Password = null;
+		
 		Boolean succeeded = true;
 		Boolean loop = true;
 		Reference.RConIp = cfg.IPs()[serverNum];
