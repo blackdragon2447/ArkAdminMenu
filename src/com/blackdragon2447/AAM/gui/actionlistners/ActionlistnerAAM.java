@@ -17,9 +17,11 @@ import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.gui.components.JNumberedButton;
 import com.blackdragon2447.AAM.gui.components.JNumberedCheckbox;
 import com.blackdragon2447.AAM.gui.dialog.SimpleCommandDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.AllPlayerPosReturnDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.ForceIntoTribeDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.GFICommandDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.GiveExpToPlayerDialog;
+import com.blackdragon2447.AAM.gui.dialog.advCom.ListUnclaimedReturnDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.RenamePlayerDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.RenameTribeDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.SpawnDinoCoordsDialog;
@@ -286,6 +288,12 @@ public class ActionlistnerAAM {
 				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | UnsupportedLookAndFeelException e1) {
 					e1.printStackTrace();
 				}
+				break;
+			case 23:
+				AllPlayerPosReturnDialog.createGui();
+				break;
+			case 24:
+				ListUnclaimedReturnDialog.createGui();
 				break;
 			default:
 				break;

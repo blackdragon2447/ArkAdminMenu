@@ -2,7 +2,7 @@
 playersonly,FALSE
 ToggleDamageNumbers,FALSE
 broadcast,TRUE
-serverchat,TRUE
+clientchat,TRUE
 getchat,FALSE
 getgamelog,FALSE
 doexit,FALSE

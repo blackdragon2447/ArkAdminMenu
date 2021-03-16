@@ -39,7 +39,7 @@ public class RconHandler {
 			rcon = new Rcon(server.getIP(), server.getPort(), server.getPassword().getBytes());
 			Result = rcon.command(command);
 			
-			FullResult = FullResult + "\n" + server.getName() + "\n" + Result;
+			FullResult = FullResult + server.getName() + "\n" + Result;
 		}
 		//rcon.disconnect();
 		return FullResult;
