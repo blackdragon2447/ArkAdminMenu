@@ -462,5 +462,11 @@ public class GFICommandDialog extends JDialog {
 		}
 		
 	}
+	
+	@Override
+	public void dispose() {
+		refreshThread.stop();
+		super.dispose();
+	}
 
 }

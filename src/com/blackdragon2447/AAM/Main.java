@@ -47,10 +47,23 @@ public class Main {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		File file = new File("AAMUpdater.exe");
+		File file = null;
+		Boolean firstRun = false;
+		file = new File("AAMUpdater.exe");
 		File file2 = new File("AAMUpdater(new).exe");
-		byte[] f1 = Files.readAllBytes(file.toPath());
+		
+		byte[] f1 = null;
+		try {
+			f1 = Files.readAllBytes(file.toPath());
+		}catch (Exception e) {
+			e.printStackTrace();
+			firstRun = true;
+		}
+		
+		if (firstRun) {
+			Files.copy(file2.toPath(), new File("AAMUpdater.exe").toPath());
+			f1 = Files.readAllBytes(file.toPath());
+		}
 		byte[] f2 = Files.readAllBytes(file2.toPath());
 		
 		System.out.println(Arrays.equals(f1, f2));
