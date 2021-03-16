@@ -127,7 +127,7 @@ public class AAMGui extends JFrame {
 	JNumberedCheckbox GivePlayerXPCheckbox = new JNumberedCheckbox("", 18);
 	JNumberedButton GetUE4IDButton = new JNumberedButton("get player ingame id", 19);
 	JNumberedCheckbox GetUE4IDCheckbox = new JNumberedCheckbox("", 19);
-	JNumberedButton ListAllIDButton = new JNumberedButton("List All Online Steam ID", 20);
+	JNumberedButton ListAllIDButton = new JNumberedButton("List All Steam ID", 20);
 	JNumberedCheckbox ListAllIDCheckBox = new JNumberedCheckbox("", 20);
 	JNumberedButton SpawnDinoNearButton = new JNumberedButton("Spawn Dino Near Player", 21);
 	JNumberedCheckbox SpawnDinoNearCheckBox = new JNumberedCheckbox("", 21);
@@ -139,6 +139,11 @@ public class AAMGui extends JFrame {
 	private final JSeparator separator_1 = new JSeparator();
 	public static final JMenu ThemeMenu = new JMenu("Theme");
 	static JMenuBar menuBar = new JMenuBar();
+	JNumberedButton ListPlayerPosButton = new JNumberedButton("List All Player Pos", 23);
+	JNumberedCheckbox ListPlayerPosCheckbox = new JNumberedCheckbox("", 23);
+	JNumberedButton ListAllUNCDinoButton = new JNumberedButton("List All Unclaimed Dinos", 24);
+	JNumberedCheckbox ListAllUNCDinoCheckBox = new JNumberedCheckbox("", 24);
+	private final JSeparator separator_2 = new JSeparator();
 	
 
 	
@@ -244,8 +249,8 @@ public class AAMGui extends JFrame {
 		tabbedPane.addTab("favorites", null, FavoritesPanel, null);
 		GridBagLayout gbl_FavoritesPanel = new GridBagLayout();
 		gbl_FavoritesPanel.rowWeights = new double[]{};
-		gbl_FavoritesPanel.columnWidths = new int[]{215, 215, 215, 0};
-		gbl_FavoritesPanel.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_FavoritesPanel.columnWidths = new int[]{240, 240, 240, 0};
+		gbl_FavoritesPanel.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
 		FavoritesPanel.setLayout(gbl_FavoritesPanel);
 		
 		SimpleCommandsPanel.setToolTipText("");
@@ -485,9 +490,9 @@ public class AAMGui extends JFrame {
 		tabbedPane.addTab("advanced commands", null, AdvancedCommandsPanel, null);
 		GridBagLayout gbl_AdvancedCommandsPanel = new GridBagLayout();
 		gbl_AdvancedCommandsPanel.columnWidths = new int[]{185, 0, 185, 0, 185, 0, 0};
-		gbl_AdvancedCommandsPanel.rowHeights = new int[]{23, 0, 0, 10, 0, 10, 0, 0};
+		gbl_AdvancedCommandsPanel.rowHeights = new int[]{23, 0, 0, 10, 0, 10, 0, 10, 0, 0};
 		gbl_AdvancedCommandsPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_AdvancedCommandsPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_AdvancedCommandsPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		AdvancedCommandsPanel.setLayout(gbl_AdvancedCommandsPanel);
 		
 		JLabel ACDescLabel = new JLabel("Advanced Commands\r\n");
@@ -612,21 +617,21 @@ public class AAMGui extends JFrame {
 		
 		GridBagConstraints gbc_separator_1 = new GridBagConstraints();
 		gbc_separator_1.gridwidth = 6;
-		gbc_separator_1.insets = new Insets(0, 0, 5, 5);
+		gbc_separator_1.insets = new Insets(0, 0, 5, 0);
 		gbc_separator_1.gridx = 0;
 		gbc_separator_1.gridy = 5;
 		AdvancedCommandsPanel.add(separator_1, gbc_separator_1);
 		
 		GridBagConstraints gbc_SpawnDinoNearButton = new GridBagConstraints();
 		gbc_SpawnDinoNearButton.fill = GridBagConstraints.HORIZONTAL;
-		gbc_SpawnDinoNearButton.insets = new Insets(0, 0, 0, 5);
+		gbc_SpawnDinoNearButton.insets = new Insets(0, 0, 5, 5);
 		gbc_SpawnDinoNearButton.gridx = 0;
 		gbc_SpawnDinoNearButton.gridy = 6;
 		AdvancedCommandsPanel.add(SpawnDinoNearButton, gbc_SpawnDinoNearButton);
 		SpawnDinoNearButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
 		
 		GridBagConstraints gbc_SpawnDinoNearCheckBox = new GridBagConstraints();
-		gbc_SpawnDinoNearCheckBox.insets = new Insets(0, 0, 0, 5);
+		gbc_SpawnDinoNearCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_SpawnDinoNearCheckBox.gridx = 1;
 		gbc_SpawnDinoNearCheckBox.gridy = 6;
 		AdvancedCommandsPanel.add(SpawnDinoNearCheckBox, gbc_SpawnDinoNearCheckBox);
@@ -634,14 +639,14 @@ public class AAMGui extends JFrame {
 		
 		GridBagConstraints gbc_SpawnDinoCoordsButton = new GridBagConstraints();
 		gbc_SpawnDinoCoordsButton.fill = GridBagConstraints.HORIZONTAL;
-		gbc_SpawnDinoCoordsButton.insets = new Insets(0, 0, 0, 5);
+		gbc_SpawnDinoCoordsButton.insets = new Insets(0, 0, 5, 5);
 		gbc_SpawnDinoCoordsButton.gridx = 2;
 		gbc_SpawnDinoCoordsButton.gridy = 6;
 		AdvancedCommandsPanel.add(SpawnDinoCoordsButton, gbc_SpawnDinoCoordsButton);
 		SpawnDinoCoordsButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
 		
 		GridBagConstraints gbc_SpawnDinoCoordsCheckBox = new GridBagConstraints();
-		gbc_SpawnDinoCoordsCheckBox.insets = new Insets(0, 0, 0, 5);
+		gbc_SpawnDinoCoordsCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_SpawnDinoCoordsCheckBox.gridx = 3;
 		gbc_SpawnDinoCoordsCheckBox.gridy = 6;
 		AdvancedCommandsPanel.add(SpawnDinoCoordsCheckBox, gbc_SpawnDinoCoordsCheckBox);
@@ -652,17 +657,57 @@ public class AAMGui extends JFrame {
 		 */
 		GridBagConstraints gbc_ListAllIDButton = new GridBagConstraints();
 		gbc_ListAllIDButton.fill = GridBagConstraints.HORIZONTAL;
-		gbc_ListAllIDButton.insets = new Insets(0, 0, 0, 5);
+		gbc_ListAllIDButton.insets = new Insets(0, 0, 5, 5);
 		gbc_ListAllIDButton.gridx = 4;
 		gbc_ListAllIDButton.gridy = 6;
 		AdvancedCommandsPanel.add(ListAllIDButton, gbc_ListAllIDButton);
 		ListAllIDButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
 		
 		GridBagConstraints gbc_ListAllIDCheckBox = new GridBagConstraints();
+		gbc_ListAllIDButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_ListAllIDCheckBox.insets = new Insets(0, 0, 5, 0);
 		gbc_ListAllIDCheckBox.gridx = 5;
 		gbc_ListAllIDCheckBox.gridy = 6;
 		AdvancedCommandsPanel.add(ListAllIDCheckBox, gbc_ListAllIDCheckBox);
-		ListAllIDCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
+		
+		GridBagConstraints gbc_numberedButton = new GridBagConstraints();
+		gbc_numberedButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_ListAllIDButton.fill = GridBagConstraints.HORIZONTAL;
+		
+		GridBagConstraints gbc_separator_2 = new GridBagConstraints();
+		gbc_separator_2.gridwidth = 6;
+		gbc_separator_2.insets = new Insets(0, 0, 5, 5);
+		gbc_separator_2.gridx = 0;
+		gbc_separator_2.gridy = 7;
+		AdvancedCommandsPanel.add(separator_2, gbc_separator_2);
+		gbc_numberedButton.insets = new Insets(0, 0, 0, 5);
+		gbc_numberedButton.gridx = 0;
+		gbc_numberedButton.gridy = 8;
+		AdvancedCommandsPanel.add(ListPlayerPosButton, gbc_numberedButton);
+		ListPlayerPosButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
+		
+		GridBagConstraints gbc_numberedCheckbox = new GridBagConstraints();
+		gbc_numberedCheckbox.insets = new Insets(0, 0, 0, 5);
+		gbc_numberedCheckbox.gridx = 1;
+		gbc_numberedCheckbox.gridy = 8;
+		AdvancedCommandsPanel.add(ListPlayerPosCheckbox, gbc_numberedCheckbox);
+		ListPlayerPosCheckbox.addActionListener(ActionlistnerAAM.FavButtonListner);
+		
+		GridBagConstraints gbc_numberedButton_1 = new GridBagConstraints();
+		gbc_numberedButton_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_ListAllIDButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_numberedButton_1.insets = new Insets(0, 0, 0, 5);
+		gbc_numberedButton_1.gridx = 2;
+		gbc_numberedButton_1.gridy = 8;
+		AdvancedCommandsPanel.add(ListAllUNCDinoButton, gbc_numberedButton_1);
+		ListAllUNCDinoButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
+		
+		GridBagConstraints gbc_numberedCheckbox_1 = new GridBagConstraints();
+		gbc_numberedCheckbox_1.insets = new Insets(0, 0, 0, 5);
+		gbc_numberedCheckbox_1.gridx = 3;
+		gbc_numberedCheckbox_1.gridy = 8;
+		AdvancedCommandsPanel.add(ListAllUNCDinoCheckBox, gbc_numberedCheckbox_1);
+		ListAllUNCDinoCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
 		/**
 		 * this is the panel for the custom commands, this is a dynamicly build panel.
@@ -948,6 +993,7 @@ public class AAMGui extends JFrame {
 		for (int integer : favoriteInts) {
 			if(integer == 0) continue;
 			Reference.FavoriteButtonList.add((JNumberedButton)Utils.findButtonByNumber(integer).clone());
+			Utils.findCheckboxByNumber(integer).setSelected(true);
 		}
 		
 		gbc_FavButtons.insets = new Insets(0, 0, 0, 5);

@@ -1,11 +1,18 @@
 package com.blackdragon2447.AAM;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.blackdragon2447.AAM.gui.AAMGui;
@@ -26,14 +33,40 @@ import com.blackdragon2447.AAM.util.Pair;
  */
 
 public class Main {
-	
-
-	
 
 	@SuppressWarnings("unused")
-	public static void main(String[] args){
+	public static void main(String[] args) throws NoSuchAlgorithmException, IOException{
 		
-
+		try (BufferedInputStream in = new BufferedInputStream(new URL("https://github.com/blackdragon2447/ArkAdminMenu/releases/download/latest/AAMUpdater.exe").openStream());
+			FileOutputStream fileOutputStream = new FileOutputStream("AAMUpdater(new).exe")) {
+			    byte dataBuffer[] = new byte[1024];
+			    int bytesRead;
+			    while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+			        fileOutputStream.write(dataBuffer, 0, bytesRead);
+			    }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		File file = new File("AAMUpdater.exe");
+		File file2 = new File("AAMUpdater(new).exe");
+		byte[] f1 = Files.readAllBytes(file.toPath());
+		byte[] f2 = Files.readAllBytes(file2.toPath());
+		
+		System.out.println(Arrays.equals(f1, f2));
+		
+		if (!(Arrays.equals(f1, f2))) {
+			
+			if(JOptionPane.showConfirmDialog(null, "a new update is available, do you wanna update?") == 0) {
+				file.delete();
+				file2.renameTo(file);
+				ProcessBuilder pb = new ProcessBuilder("AAMUpdater.exe");
+				pb.directory(new File(System.getProperty("user.dir")));
+				Process p = pb.start();
+				System.exit(0);
+			}
+		}
+	    
 		/**
 		 * this piece of the code will import any files needed to run before opening the actual GUI to prevent delay
 		 * because of loading in code

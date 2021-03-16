@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.FileOutputStream;
@@ -22,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 
 import org.aeonbits.owner.ConfigFactory;
@@ -34,7 +37,6 @@ import com.blackdragon2447.AAM.util.iface.AAMConfig;
 import com.blackdragon2447.AAM.util.obj.Server;
 
 import net.kronos.rkon.core.ex.AuthenticationException;
-import javax.swing.JToggleButton;
 
 /**
  * the gui for the program settings atm only used for servers
@@ -353,15 +355,20 @@ public class SettingsGUI extends JFrame {
 		Boolean loop = true;
 		Reference.RConIp = cfg.IPs()[serverNum];
 		Reference.RConPort = cfg.Ports()[serverNum];
-		JPasswordField pwd = new JPasswordField(10);
+		final JPasswordField pwd = new JPasswordField(10);
 	    int Cancel = JOptionPane.showConfirmDialog(null, pwd, "Enter Password",JOptionPane.OK_CANCEL_OPTION);
+	    pwd.addComponentListener(new ComponentAdapter() {
+	    	public void componentShown(ComponentEvent ce){
+				pwd.requestFocusInWindow();
+			}
+		});
 	    loop = Cancel == 1? true : false;
 	    Reference.Password = String.valueOf(pwd.getPassword());
 	    pwd.setText("");
 	    int cancel = 1;
 	    
 	    try {
-			RconHandler.command("saveworld");
+			RconHandler.command("printcolors");
 		} catch (IOException e1) {
 			succeeded = false;
 			e1.printStackTrace();
@@ -386,12 +393,11 @@ public class SettingsGUI extends JFrame {
 	    	else{
 	    		Reference.RConIp = cfg.IPs()[serverNum];
 	    		Reference.RConPort = cfg.Ports()[serverNum];
-	    		pwd = new JPasswordField(10);
 	    		cancel = JOptionPane.showConfirmDialog(null, pwd, "Try Again" ,JOptionPane.OK_CANCEL_OPTION);
 	    		if(cancel == 2) break;
 	    		Reference.Password = String.valueOf(pwd.getPassword());
 	    		try {
-	    			RconHandler.command("saveworld");
+	    			RconHandler.command("printcolors");
 	    			succeeded = true;
 	    		} catch (IOException e1) {
 	    			succeeded = false;

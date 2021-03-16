@@ -165,7 +165,10 @@ public class SimpleCommandDialog extends JDialog {
 			
 			@Override
 			public void keyReleased(KeyEvent e) {
-				OutPutLabel.setText(Utils.GenerateCommand(command) + " " + ArgumentField.getText());
+				if(command != 4)
+					OutPutLabel.setText(Utils.GenerateCommand(command) + " " + ArgumentField.getText());
+				else
+					OutPutLabel.setText(Utils.GenerateCommand(command) + " \'" + ArgumentField.getText() + "\' server");
 				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) dispose();
 			}
 			
