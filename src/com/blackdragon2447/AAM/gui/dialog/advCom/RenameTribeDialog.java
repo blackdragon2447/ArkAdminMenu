@@ -379,5 +379,11 @@ public class RenameTribeDialog extends JDialog {
 		}
 		
 	}
+	
+	@Override
+	public void dispose() {
+		refreshThread.stop();
+		super.dispose();
+	}
 
 }

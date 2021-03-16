@@ -251,6 +251,7 @@ public class SpawnDinoNearDialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String result = null;
+				System.out.println(OutPutLabel.getText());
 				if(!Reference.MultipleServer) {
 					try {
 						result = RconHandler.command(OutPutLabel.getText());
@@ -299,7 +300,7 @@ public class SpawnDinoNearDialog extends JDialog {
 				String[] arguments = {null, null, null, null, null, null, null};
 				
 				arguments[0] = PlayerIDField.getText();
-				arguments[1] = "\""+FullCreaturePairList.get(DinoBPComboBox.getSelectedIndex()).getFirstValue()+"\"";
+				arguments[1] = "\"blueprint\'"+FullCreaturePairList.get(DinoBPComboBox.getSelectedIndex()).getSecondValue()+"\'\"";
 				arguments[2] = String.valueOf(((Integer) LevelSpinner.getValue()));
 				arguments[3] = TamedCheckBox.isSelected() ? "1" : "0";
 				arguments[4] = "0";
@@ -421,7 +422,7 @@ public class SpawnDinoNearDialog extends JDialog {
 
 				arguments[0] = PlayerIDField.getText();
 				try {
-					arguments[1] = "\""+FullCreaturePairList.get(DinoBPComboBox.getSelectedIndex()).getFirstValue()+"\"";
+					arguments[1] = "\"blueprint\'"+FullCreaturePairList.get(DinoBPComboBox.getSelectedIndex()).getFirstValue()+"\'\"";
 				} catch (ArrayIndexOutOfBoundsException e) {
 					arguments[1] = "";
 				}
@@ -443,5 +444,10 @@ public class SpawnDinoNearDialog extends JDialog {
 		}
 		
 	}
-
+	
+	@Override
+	public void dispose() {
+		refreshThread.stop();
+		super.dispose();
+	}
 }

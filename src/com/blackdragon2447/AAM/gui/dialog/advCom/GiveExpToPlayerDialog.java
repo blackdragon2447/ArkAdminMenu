@@ -391,5 +391,11 @@ public class GiveExpToPlayerDialog extends JDialog {
 		}
 		
 	}
+	
+	@Override
+	public void dispose() {
+		refreshThread.stop();
+		super.dispose();
+	}
 
 }

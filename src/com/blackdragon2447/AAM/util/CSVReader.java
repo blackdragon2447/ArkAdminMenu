@@ -136,7 +136,7 @@ public class CSVReader {
 		Line = "";
 		while((Line = br.readLine()) != null) {
 			String[] values = Line.split(",");
-			DataPair = new Pair<String, String>(values[0].replace("﻿", ""), values[0]);
+			DataPair = new Pair<String, String>(values[0].replace("﻿", ""), values[1]);
 			CreatureBPList.add(DataPair);
 		}
 		
