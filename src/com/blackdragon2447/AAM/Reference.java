@@ -33,5 +33,7 @@ public class Reference {
 	public static int theme;
 	public static ArrayList<Server> LoggedServers = new ArrayList<Server>();
 	public static Boolean MultipleServer = false;
+	public static ArrayList<Pair<String,String>> Logins;
+	public static String chatName;
 
 }

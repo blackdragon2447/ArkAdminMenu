@@ -144,4 +144,25 @@ public class CSVReader {
 		return CreatureBPList;
 		
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<Pair<String, String>> readLogin(String path) throws IOException {
+		
+		ArrayList<Pair<String, String>> ItemBPList;
+		ItemBPList = new ArrayList<Pair<String, String>>();
+		ItemBPList.clear();
+		DataPair = new Pair<String, String>(null, null);
+		BufferedReader br = new BufferedReader(new FileReader(path));
+		Line = "";
+		while((Line = br.readLine()) != null) {
+			String[] values = Line.split(",");
+			DataPair = new Pair<String, String>(values[0].replace("﻿", ""), values[1]);
+			ItemBPList.add(DataPair);
+		}
+		
+		br.close();
+		path = null;
+		return ItemBPList;
+		
+	}
 }

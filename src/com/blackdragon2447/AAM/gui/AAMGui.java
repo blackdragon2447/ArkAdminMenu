@@ -1,7 +1,6 @@
 package com.blackdragon2447.AAM.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -232,8 +231,7 @@ public class AAMGui extends JFrame {
 		 * this set the theme on starting the program, invoked after setting the menu bar to make it so the look of the bar can actually be set.
 		 */
 		
-		if(cfg.ShowWelcome()) setVisual(Themes.getLookAndFeel(0));
-		else setVisual(Themes.getLookAndFeel(cfg.Theme()));
+		setVisual(Themes.getLookAndFeel(cfg.Theme()));
 		Reference.theme = cfg.Theme();
 		
 		/**
@@ -355,6 +353,7 @@ public class AAMGui extends JFrame {
 		gbc_ChatLogButton.gridy = 6;
 		SimpleCommandsPanel.add(ChatLogButton, gbc_ChatLogButton);
 		ChatLogButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
+		ChatLogButton.setEnabled(false);
 		
 		GridBagConstraints gbc_ChatLogCheckBox = new GridBagConstraints();
 		gbc_ChatLogCheckBox.insets = new Insets(0, 0, 5, 5);
@@ -362,6 +361,7 @@ public class AAMGui extends JFrame {
 		gbc_ChatLogCheckBox.gridy = 6;
 		SimpleCommandsPanel.add(ChatLogCheckBox, gbc_ChatLogCheckBox);
 		ChatLogCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
+		ChatLogCheckBox.setEnabled(false);
 		
 		GridBagConstraints gbc_GameLogButton = new GridBagConstraints();
 		gbc_GameLogButton.fill = GridBagConstraints.HORIZONTAL;
@@ -370,6 +370,7 @@ public class AAMGui extends JFrame {
 		gbc_GameLogButton.gridy = 6;
 		SimpleCommandsPanel.add(GameLogButton, gbc_GameLogButton);
 		GameLogButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
+		GameLogButton.setEnabled(false);
 		
 		GridBagConstraints gbc_GameLogCheckBox = new GridBagConstraints();
 		gbc_GameLogCheckBox.insets = new Insets(0, 0, 5, 5);
@@ -377,6 +378,7 @@ public class AAMGui extends JFrame {
 		gbc_GameLogCheckBox.gridy = 6;
 		SimpleCommandsPanel.add(GameLogCheckBox, gbc_GameLogCheckBox);
 		GameLogCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
+		GameLogCheckBox.setEnabled(false);
 		
 		JLabel ServerManagementLabel = new JLabel("server managemnt");
 		GridBagConstraints gbc_ServerManagementLabel = new GridBagConstraints();
@@ -1050,8 +1052,11 @@ public class AAMGui extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				glass.setVisible(false);
-				setVisual(Themes.getLookAndFeel(cfg.Theme()));
+				//glass.setVisible(false);
+				glass.removeAll();
+				glass.setOpaque(false);
+				glass.revalidate();
+				glass.repaint();
 			}
 		});
 	    
@@ -1077,7 +1082,7 @@ public class AAMGui extends JFrame {
 		});
 	    
 	    glass.setOpaque(true);
-	    glass.setBackground(Color.WHITE);
+	    SwingUtilities.updateComponentTreeUI(glass);
 	    
 	    if(cfg.ShowWelcome()) glass.setVisible(true);
 	    

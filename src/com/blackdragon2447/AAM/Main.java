@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.blackdragon2447.AAM.gui.AAMGui;
+import com.blackdragon2447.AAM.gui.LoginDialog;
 import com.blackdragon2447.AAM.util.CSVReader;
 import com.blackdragon2447.AAM.util.CreatureSetBuilder;
 import com.blackdragon2447.AAM.util.ItemSetBuilder;
@@ -34,6 +35,8 @@ import com.blackdragon2447.AAM.util.Pair;
 
 public class Main {
 
+	public static Boolean firstRun = true;
+	
 	@SuppressWarnings("unused")
 	public static void main(String[] args) throws NoSuchAlgorithmException, IOException{
 		
@@ -48,7 +51,6 @@ public class Main {
 			e.printStackTrace();
 		}
 		File file = null;
-		Boolean firstRun = false;
 		file = new File("AAMUpdater.exe");
 		File file2 = new File("AAMUpdater(new).exe");
 		
@@ -61,7 +63,7 @@ public class Main {
 		}
 		
 		if (firstRun) {
-			Files.copy(file2.toPath(), new File("AAMUpdater.exe").toPath());
+			//Files.copy(file2.toPath(), new File("AAMUpdater.exe").toPath());
 			f1 = Files.readAllBytes(file.toPath());
 		}
 		byte[] f2 = Files.readAllBytes(file2.toPath());
@@ -80,6 +82,10 @@ public class Main {
 			}
 		}
 	    
+		Reference.Logins = CSVReader.readLogin("login.csv");
+		
+		LoginDialog.CreateGui();
+		
 		/**
 		 * this piece of the code will import any files needed to run before opening the actual GUI to prevent delay
 		 * because of loading in code

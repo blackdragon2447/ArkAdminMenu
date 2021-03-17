@@ -168,7 +168,7 @@ public class SimpleCommandDialog extends JDialog {
 				if(command != 4)
 					OutPutLabel.setText(Utils.GenerateCommand(command) + " " + ArgumentField.getText());
 				else
-					OutPutLabel.setText(Utils.GenerateCommand(command) + " \'" + ArgumentField.getText() + "\' server");
+					OutPutLabel.setText(Utils.GenerateCommand(command) + " \'" + ArgumentField.getText() + "\'" + Reference.chatName);
 				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) dispose();
 			}
 			
