@@ -2,6 +2,7 @@ package com.blackdragon2447.AAM.util;
 
 import java.io.IOException;
 
+import com.blackdragon2447.AAM.Main;
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.util.obj.Server;
 
@@ -23,9 +24,8 @@ public class RconHandler {
 	 */
 	public static String command(String command) throws IOException, AuthenticationException {
 		final Rcon rcon = new Rcon(Reference.RConIp, Reference.RConPort, Reference.Password.getBytes());
-		System.out.println("sending command");
+		Main.logger.LogUser("sending command: " + command);
 		String Result = rcon.command(command);
-		System.out.println("command sent");
 		//rcon.disconnect();
 		return Result;
 	}
@@ -36,6 +36,7 @@ public class RconHandler {
 		String Result;
 		
 		for (Server server : Reference.LoggedServers) {
+			Main.logger.LogUser("sending command: " + command);
 			rcon = new Rcon(server.getIP(), server.getPort(), server.getPassword().getBytes());
 			Result = rcon.command(command);
 			

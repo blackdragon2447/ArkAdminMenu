@@ -26,6 +26,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.aeonbits.owner.ConfigFactory;
 
+import com.blackdragon2447.AAM.Main;
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.util.Pair;
 import com.blackdragon2447.AAM.util.Themes;
@@ -243,6 +244,7 @@ public class LoginDialog extends JDialog {
     @Override
     public void dispose() {
     	Reference.chatName = UserNameField.getText();
+    	Main.logger.LogUser("User " + UserNameField.getText() + " Logged On");
     	super.dispose();
     }
 

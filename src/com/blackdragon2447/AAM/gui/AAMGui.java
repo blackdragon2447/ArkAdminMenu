@@ -1052,11 +1052,18 @@ public class AAMGui extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//glass.setVisible(false);
+				glass.setVisible(true);
 				glass.removeAll();
 				glass.setOpaque(false);
 				glass.revalidate();
 				glass.repaint();
+				
+				JLabel LoginLabel = new JLabel("logged in as " + Reference.chatName);
+				GridBagConstraints gbc_LoginLabel = new GridBagConstraints();
+				gbc_LoginLabel.insets = new Insets(2, 0, 0, 5);
+				gbc_LoginLabel.gridx = 10;
+				gbc_LoginLabel.gridy = 0;
+				glass.add(LoginLabel, gbc_LoginLabel);
 			}
 		});
 	    
@@ -1085,6 +1092,7 @@ public class AAMGui extends JFrame {
 	    SwingUtilities.updateComponentTreeUI(glass);
 	    
 	    if(cfg.ShowWelcome()) glass.setVisible(true);
+	    else WelcomeOkButton.doClick();
 	    
 	    AAMGui.tabbedPaneOut.setSelectedIndex(-1);
 		

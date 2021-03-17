@@ -11,6 +11,9 @@ import java.nio.file.Files;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.SimpleFormatter;
 
 import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -21,6 +24,7 @@ import com.blackdragon2447.AAM.util.CSVReader;
 import com.blackdragon2447.AAM.util.CreatureSetBuilder;
 import com.blackdragon2447.AAM.util.ItemSetBuilder;
 import com.blackdragon2447.AAM.util.Pair;
+import com.blackdragon2447.AAM.util.logger.AAMLogger;
 
 /**
  * the main class of AAM
@@ -36,9 +40,18 @@ import com.blackdragon2447.AAM.util.Pair;
 public class Main {
 
 	public static Boolean firstRun = true;
-	
+	public static AAMLogger logger;
 	@SuppressWarnings("unused")
 	public static void main(String[] args) throws NoSuchAlgorithmException, IOException{
+		
+		logger = new AAMLogger(Level.INFO, Level.ALL, Boolean.valueOf(args[0]));
+		System.out.println(Boolean.valueOf(args[0]));
+		SimpleFormatter formatter = new SimpleFormatter();
+		logger.LogDebug("Starting Debug Log");
+		logger.LogUser("Starting Command Log");
+		
+		logger.AddFileHandlerUser(new FileHandler("CommandLog.txt"));
+		logger.AddFileHandlerDebug(new FileHandler("DebugLog.txt"));
 		
 		try (BufferedInputStream in = new BufferedInputStream(new URL("https://github.com/blackdragon2447/ArkAdminMenu/releases/download/latest/AAMUpdater.exe").openStream());
 			FileOutputStream fileOutputStream = new FileOutputStream("AAMUpdater(new).exe")) {
