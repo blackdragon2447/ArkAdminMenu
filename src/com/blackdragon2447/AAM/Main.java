@@ -1,19 +1,22 @@
 package com.blackdragon2447.AAM;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
-import java.util.logging.SimpleFormatter;
 
 import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -25,6 +28,10 @@ import com.blackdragon2447.AAM.util.CreatureSetBuilder;
 import com.blackdragon2447.AAM.util.ItemSetBuilder;
 import com.blackdragon2447.AAM.util.Pair;
 import com.blackdragon2447.AAM.util.logger.AAMLogger;
+import com.blackdragon2447.AAM.util.obj.auth.Account;
+import com.blackdragon2447.AAM.util.tools.AccountMaker;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * the main class of AAM
@@ -43,15 +50,34 @@ public class Main {
 	public static AAMLogger logger;
 	@SuppressWarnings("unused")
 	public static void main(String[] args) throws NoSuchAlgorithmException, IOException{
+		try {
+			if(args[1] != null) {
+				AccountMaker.CreateGui();
+				TimeUnit.HOURS.sleep(1);
+			}
+		} catch (Exception e) {}
+		
+		String systemipaddress = ""; 
+        try{ 
+            URL url_name = new URL("http://bot.whatismyipaddress.com"); 
+  
+            BufferedReader sc = new BufferedReader(new InputStreamReader(url_name.openStream())); 
+  
+            systemipaddress = sc.readLine().trim(); 
+        } catch (Exception e) { 
+            systemipaddress = "Cannot Execute Properly"; 
+        } 
 		
 		logger = new AAMLogger(Level.INFO, Level.ALL, Boolean.valueOf(args[0]));
-		System.out.println(Boolean.valueOf(args[0]));
-		SimpleFormatter formatter = new SimpleFormatter();
-		logger.LogDebug("Starting Debug Log");
-		logger.LogUser("Starting Command Log");
 		
-		logger.AddFileHandlerUser(new FileHandler("CommandLog.txt"));
-		logger.AddFileHandlerDebug(new FileHandler("DebugLog.txt"));
+		FileHandler UserFileHandler = new FileHandler("UserLog.txt");
+		FileHandler DebugFileHandler = new FileHandler("DebugLog.txt");
+		
+		logger.AddFileHandlerUser(UserFileHandler);
+		logger.AddFileHandlerDebug(DebugFileHandler);
+		
+		logger.LogDebug("Starting Debug Log", Level.INFO);
+		logger.LogUser("Starting new session at: " + systemipaddress, Level.INFO);
 		
 		try (BufferedInputStream in = new BufferedInputStream(new URL("https://github.com/blackdragon2447/ArkAdminMenu/releases/download/latest/AAMUpdater.exe").openStream());
 			FileOutputStream fileOutputStream = new FileOutputStream("AAMUpdater(new).exe")) {
@@ -80,9 +106,7 @@ public class Main {
 			f1 = Files.readAllBytes(file.toPath());
 		}
 		byte[] f2 = Files.readAllBytes(file2.toPath());
-		
-		System.out.println(Arrays.equals(f1, f2));
-		
+				
 		if (!(Arrays.equals(f1, f2))) {
 			
 			if(JOptionPane.showConfirmDialog(null, "a new update is available, do you wanna update?") == 0) {
@@ -94,8 +118,17 @@ public class Main {
 				System.exit(0);
 			}
 		}
-	    
-		Reference.Logins = CSVReader.readLogin("login.csv");
+		
+		try (BufferedReader br = new BufferedReader(new FileReader("Users.txt"))) {
+		    String line;
+		    while ((line = br.readLine()) != null) {
+		    	GsonBuilder builder = new GsonBuilder();
+				Gson gson = builder.create();
+				
+				Account user = gson.fromJson(line, Account.class);
+		    	Reference.Logins.add(user);
+		    }
+		}
 		
 		LoginDialog.CreateGui();
 		

@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -16,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -46,6 +48,7 @@ import javax.swing.event.ChangeListener;
 
 import org.aeonbits.owner.ConfigFactory;
 
+import com.blackdragon2447.AAM.Main;
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.actionlistners.ActionlistnerAAM;
 import com.blackdragon2447.AAM.gui.components.JNumberedButton;
@@ -174,6 +177,7 @@ public class AAMGui extends JFrame {
 	 * @throws CloneNotSupportedException
 	 */
 	public AAMGui() throws NumberFormatException, CloneNotSupportedException {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(AAMGui.class.getResource("/com/blackdragon2447/AAM/assets/AAM.logo.png")));
 		
 		/**
 		 * setting the default settings for the GUI
@@ -204,7 +208,7 @@ public class AAMGui extends JFrame {
 		settingsMenu.add(ServersMenuItem);
 		ServersMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SettingsGUI.createGui();
+				ServersGUI.createGui();
 			}
 		});
 		
@@ -353,7 +357,6 @@ public class AAMGui extends JFrame {
 		gbc_ChatLogButton.gridy = 6;
 		SimpleCommandsPanel.add(ChatLogButton, gbc_ChatLogButton);
 		ChatLogButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
-		ChatLogButton.setEnabled(false);
 		
 		GridBagConstraints gbc_ChatLogCheckBox = new GridBagConstraints();
 		gbc_ChatLogCheckBox.insets = new Insets(0, 0, 5, 5);
@@ -361,7 +364,6 @@ public class AAMGui extends JFrame {
 		gbc_ChatLogCheckBox.gridy = 6;
 		SimpleCommandsPanel.add(ChatLogCheckBox, gbc_ChatLogCheckBox);
 		ChatLogCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
-		ChatLogCheckBox.setEnabled(false);
 		
 		GridBagConstraints gbc_GameLogButton = new GridBagConstraints();
 		gbc_GameLogButton.fill = GridBagConstraints.HORIZONTAL;
@@ -370,7 +372,6 @@ public class AAMGui extends JFrame {
 		gbc_GameLogButton.gridy = 6;
 		SimpleCommandsPanel.add(GameLogButton, gbc_GameLogButton);
 		GameLogButton.addActionListener(ActionlistnerAAM.SimpleSCBListner);
-		GameLogButton.setEnabled(false);
 		
 		GridBagConstraints gbc_GameLogCheckBox = new GridBagConstraints();
 		gbc_GameLogCheckBox.insets = new Insets(0, 0, 5, 5);
@@ -378,7 +379,6 @@ public class AAMGui extends JFrame {
 		gbc_GameLogCheckBox.gridy = 6;
 		SimpleCommandsPanel.add(GameLogCheckBox, gbc_GameLogCheckBox);
 		GameLogCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
-		GameLogCheckBox.setEnabled(false);
 		
 		JLabel ServerManagementLabel = new JLabel("server managemnt");
 		GridBagConstraints gbc_ServerManagementLabel = new GridBagConstraints();
@@ -664,6 +664,7 @@ public class AAMGui extends JFrame {
 		gbc_ListAllIDButton.gridy = 6;
 		AdvancedCommandsPanel.add(ListAllIDButton, gbc_ListAllIDButton);
 		ListAllIDButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
+		ListAllIDButton.setToolTipText("refreshes itself every 30 sec");
 		
 		GridBagConstraints gbc_ListAllIDCheckBox = new GridBagConstraints();
 		gbc_ListAllIDButton.fill = GridBagConstraints.HORIZONTAL;
@@ -1058,7 +1059,7 @@ public class AAMGui extends JFrame {
 				glass.revalidate();
 				glass.repaint();
 				
-				JLabel LoginLabel = new JLabel("logged in as " + Reference.chatName);
+				JLabel LoginLabel = new JLabel("logged in as " + Reference.UserName);
 				GridBagConstraints gbc_LoginLabel = new GridBagConstraints();
 				gbc_LoginLabel.insets = new Insets(2, 0, 0, 5);
 				gbc_LoginLabel.gridx = 10;
@@ -1286,6 +1287,8 @@ public class AAMGui extends JFrame {
 					  e1.printStackTrace();
 				  }
 				  
+				  Main.logger.LogUser("Session with " + Reference.UserName + " ended", Level.INFO);
+				  
 				  System.exit(0);
 			  }
 
@@ -1307,7 +1310,7 @@ public class AAMGui extends JFrame {
 	    	logon = JOptionPane.showConfirmDialog(ContentPane, "Do you want to log on to the server form last session?", "relog", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 	    }
 	    if (logon == 0) {
-			SettingsGUI.Authenticate(cfg.LastLogin());
+			ServersGUI.Authenticate(cfg.LastLogin());
 		} else {
 			cfg.setProperty("LastLogin", "-1");
 			try {
@@ -1316,6 +1319,11 @@ public class AAMGui extends JFrame {
 				e1.printStackTrace();
 			}
 		}
+	    
+	    for(int i : Reference.currentUser.getDisabledCommands()) {
+	    	Utils.findButtonByNumber(i).setEnabled(false);
+	    	Utils.findCheckboxByNumber(i).setEnabled(false);
+	    }
 	    
 	}
 	
@@ -1360,6 +1368,10 @@ public class AAMGui extends JFrame {
 		return ContentPane;
 	}
 	
+	/**
+	 * setting the look and feel for the gui. this is used to se t
+	 * @param lookAndFeel
+	 */
 	public static void setVisual(LookAndFeel lookAndFeel) {
 		try {
 			UIManager.setLookAndFeel(lookAndFeel);

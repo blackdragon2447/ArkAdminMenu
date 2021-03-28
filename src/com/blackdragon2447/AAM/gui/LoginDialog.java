@@ -1,17 +1,21 @@
 package com.blackdragon2447.AAM.gui;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -28,12 +32,9 @@ import org.aeonbits.owner.ConfigFactory;
 
 import com.blackdragon2447.AAM.Main;
 import com.blackdragon2447.AAM.Reference;
-import com.blackdragon2447.AAM.util.Pair;
 import com.blackdragon2447.AAM.util.Themes;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
-import java.awt.Color;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import com.blackdragon2447.AAM.util.obj.auth.Account;
 
 public class LoginDialog extends JDialog {
 
@@ -69,15 +70,15 @@ public class LoginDialog extends JDialog {
 		
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		setModal(true);
-		setBounds(100, 100, 450, 195);
+		setBounds(100, 100, 450, 214);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 19, 0, 0, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{0, 19, 0, 0, 0, 0, 0};
 		gbl_contentPane.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
 		JLabel LoginLabel = new JLabel("Login");
@@ -144,24 +145,30 @@ public class LoginDialog extends JDialog {
 		GridBagConstraints gbc_LogInButton = new GridBagConstraints();
 		gbc_LogInButton.insets = new Insets(0, 0, 0, 5);
 		gbc_LogInButton.gridx = 1;
-		gbc_LogInButton.gridy = 4;
+		gbc_LogInButton.gridy = 5;
 		contentPane.add(LogInButton, gbc_LogInButton);
 		LogInButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Boolean CorrectName = false;
 				Boolean CorrectPW = false;
 				checkloop:
-				for(Pair<String, String> account : Reference.Logins) {
+				for(Account account : Reference.Logins) {
 					try {
-						CorrectName = account.getFirstValue().equals(UserNameField.getText());
-						CorrectPW = account.getSecondValue().equals(toHexString(getSHA(String.valueOf(passwordField.getPassword()))));
-						if(CorrectName && CorrectPW) break checkloop;
+						CorrectName = account.getUserName().equals(UserNameField.getText());
+						CorrectPW = account.getHash().equals(toHexString(getSHA(String.valueOf(passwordField.getPassword()))));
+						if(CorrectName && CorrectPW) {Reference.currentUser = account; break checkloop;}
 					} catch (NoSuchAlgorithmException e1) {
 						e1.printStackTrace();
 					}
 				}
-				if(CorrectName && CorrectPW) dispose();
-				else resultLabel.setText("username or password incorrect");
+				if(CorrectName && CorrectPW) {
+			    	Main.logger.LogUser("User " + UserNameField.getText() + " Logged On", Level.INFO);
+					dispose();
+				}
+				else{
+					Main.logger.LogUser("a faild logon attemp was made with username: " + UserNameField.getText(), Level.WARNING);
+					resultLabel.setText("username or password incorrect");
+				}
 			}
 		});
 		
@@ -169,7 +176,7 @@ public class LoginDialog extends JDialog {
 		GridBagConstraints gbc_CancelButton = new GridBagConstraints();
 		gbc_CancelButton.insets = new Insets(0, 0, 0, 5);
 		gbc_CancelButton.gridx = 2;
-		gbc_CancelButton.gridy = 4;
+		gbc_CancelButton.gridy = 5;
 		contentPane.add(CancelButton, gbc_CancelButton);
 		CancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -243,8 +250,7 @@ public class LoginDialog extends JDialog {
     
     @Override
     public void dispose() {
-    	Reference.chatName = UserNameField.getText();
-    	Main.logger.LogUser("User " + UserNameField.getText() + " Logged On");
+    	Reference.UserName = UserNameField.getText();
     	super.dispose();
     }
 

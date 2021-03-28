@@ -44,5 +44,6 @@ public interface AAMConfig extends Accessible, Mutable{
 	int Theme();
 	
 	@DefaultValue("server")
-	String chatName();
+	String UserName();
+	
 }

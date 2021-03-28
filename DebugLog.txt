@@ -1,0 +1,2 @@
+Mar 28, 2021 7:58:47 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   Starting Debug Log
+Mar 28, 2021 7:58:47 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   Starting new session at: 213.46.87.220

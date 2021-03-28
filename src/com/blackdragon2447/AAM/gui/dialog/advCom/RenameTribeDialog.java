@@ -135,10 +135,6 @@ public class RenameTribeDialog extends JDialog {
 		gbc_argumentLabel.gridy = 3;
 		contentPane.add(ArgumentLabel, gbc_argumentLabel);
 		
-		for (Pair<Integer, String> pair: Reference.AdvancedCommandArgList) {
-			System.out.println(pair.GetcsvValue());
-		}
-		
 		TribeNameLabel = new JLabel("Tribe name");
 		GridBagConstraints gbc_TribeNameLabel = new GridBagConstraints();
 		gbc_TribeNameLabel.anchor = GridBagConstraints.EAST;
@@ -367,7 +363,6 @@ public class RenameTribeDialog extends JDialog {
 				arguments[0] = "\"" + TribeNameField.getText() + "\"";
 				arguments[1] = newTribeNameField.getText();
 				
-				System.out.println("-----");
 				OutPutLabel.setText(new GenericCommand("renametribe", arguments).generateCommand());
 				
 			}

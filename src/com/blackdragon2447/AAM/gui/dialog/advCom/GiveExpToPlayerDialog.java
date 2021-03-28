@@ -140,10 +140,6 @@ public class GiveExpToPlayerDialog extends JDialog {
 		gbc_argumentLabel.gridy = 3;
 		contentPane.add(ArgumentLabel, gbc_argumentLabel);
 		
-		for (Pair<Integer, String> pair: Reference.AdvancedCommandArgList) {
-			System.out.println(pair.GetcsvValue());
-		}
-		
 		PlayerSteamIDLabel = new JLabel("Player steam Id");
 		GridBagConstraints gbc_PlayerSteamIDLabel = new GridBagConstraints();
 		gbc_PlayerSteamIDLabel.anchor = GridBagConstraints.EAST;
@@ -379,7 +375,6 @@ public class GiveExpToPlayerDialog extends JDialog {
 				arguments[2] = "0";
 				arguments[3] = ShareWithTribeCheckBox.isSelected() ? "0" : "1";
 				
-				System.out.println("-----");
 				OutPutLabel.setText(new GenericCommand("addexperience", arguments).generateCommand());
 				
 			}

@@ -6,6 +6,7 @@ import com.blackdragon2447.AAM.gui.components.JNumberedButton;
 import com.blackdragon2447.AAM.util.Pair;
 import com.blackdragon2447.AAM.util.obj.GenericCommand;
 import com.blackdragon2447.AAM.util.obj.Server;
+import com.blackdragon2447.AAM.util.obj.auth.Account;
 
 /**
  * the reference class, contains not panel specific global information
@@ -33,7 +34,9 @@ public class Reference {
 	public static int theme;
 	public static ArrayList<Server> LoggedServers = new ArrayList<Server>();
 	public static Boolean MultipleServer = false;
-	public static ArrayList<Pair<String,String>> Logins;
-	public static String chatName;
+	public static ArrayList<Account> Logins = new ArrayList<Account>();
+	public static Account currentUser;
+	public static String UserName;
+	public static String ServerName;
 
 }

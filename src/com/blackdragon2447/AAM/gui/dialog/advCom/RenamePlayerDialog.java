@@ -134,11 +134,7 @@ public class RenamePlayerDialog extends JDialog {
 		gbc_argumentLabel.gridx = 1;
 		gbc_argumentLabel.gridy = 3;
 		contentPane.add(ArgumentLabel, gbc_argumentLabel);
-		
-		for (Pair<Integer, String> pair: Reference.AdvancedCommandArgList) {
-			System.out.println(pair.GetcsvValue());
-		}
-		
+
 		PlayerSteamIDLabel = new JLabel("player steam id");
 		GridBagConstraints gbc_PlayerSteamIDLabel = new GridBagConstraints();
 		gbc_PlayerSteamIDLabel.anchor = GridBagConstraints.EAST;
@@ -367,7 +363,6 @@ public class RenamePlayerDialog extends JDialog {
 				arguments[0] = PlayerSteamIdField.getText();
 				arguments[1] = newPlayerNameField.getText();
 				
-				System.out.println("-----");
 				OutPutLabel.setText(new GenericCommand("renamecharacter", arguments).generateCommand());
 				
 			}

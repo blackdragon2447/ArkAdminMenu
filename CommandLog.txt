@@ -1,6 +1,0 @@
-Mar 17, 2021 10:05:05 PM com.blackdragon2447.AAM.util.logger.AAMLogger AddFileHandlerUser
-INFO: Added File
-Mar 17, 2021 10:05:13 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogUser
-INFO: User Username Logged On
-Mar 17, 2021 10:05:13 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogUser
-INFO: User Username Logged On

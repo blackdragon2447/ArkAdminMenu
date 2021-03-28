@@ -150,11 +150,7 @@ public class SpawnDinoCoordsDialog extends JDialog {
 		gbc_argumentLabel.gridx = 1;
 		gbc_argumentLabel.gridy = 3;
 		contentpane.add(ArgumentLabel, gbc_argumentLabel);
-		
-		for (Pair<Integer, String> pair: Reference.AdvancedCommandArgList) {
-			System.out.println(pair.GetcsvValue());
-		}
-		
+
 		PlayerSteamIDLabel = new JLabel("Player steam Id");
 		GridBagConstraints gbc_PlayerSteamIDLabel = new GridBagConstraints();
 		gbc_PlayerSteamIDLabel.anchor = GridBagConstraints.EAST;
@@ -193,11 +189,9 @@ public class SpawnDinoCoordsDialog extends JDialog {
 		ArrayList<String> FullCreatureList = new ArrayList<String>();
 		FullCreaturePairList = new ArrayList<Pair<String, String>>();
 		for(int i = 0; i < Reference.ImportedCreatureGroups.size(); i++) {
-			System.out.println(Reference.ImportedCreatureGroups.get(i).getSecondValue().size());
 			for(int x = 0; x < Reference.ImportedCreatureGroups.get(i).getSecondValue().size(); x++) {
 				FullCreatureList.add(Reference.ImportedCreatureGroups.get(i).getSecondValue().get(x).getSecondValue());
 				FullCreaturePairList.add(Reference.ImportedCreatureGroups.get(i).getSecondValue().get(x));
-				System.out.println(Reference.ImportedCreatureGroups.get(i).getSecondValue().get(x).getSecondValue());
 			}
 			
 		}
@@ -488,7 +482,6 @@ public class SpawnDinoCoordsDialog extends JDialog {
 				arguments[5] = "0";
 				arguments[6] = "0";
 				
-				System.out.println("-----");
 				OutPutLabel.setText(new GenericCommand("spawndino", arguments).generateCommand());
 				
 			}

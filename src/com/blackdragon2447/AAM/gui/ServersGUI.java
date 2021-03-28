@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,6 +32,7 @@ import javax.swing.border.EmptyBorder;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.commons.lang3.ArrayUtils;
 
+import com.blackdragon2447.AAM.Main;
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.util.RconHandler;
 import com.blackdragon2447.AAM.util.Utils;
@@ -44,7 +46,7 @@ import net.kronos.rkon.core.ex.AuthenticationException;
  * @author Blackdragon2447
  *
  */
-public class SettingsGUI extends JFrame {
+public class ServersGUI extends JFrame {
 
 	private static final long serialVersionUID = 422929525233814207L;
 	private static JPanel contentPane;
@@ -62,7 +64,7 @@ public class SettingsGUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					new SettingsGUI();
+					new ServersGUI();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -73,7 +75,7 @@ public class SettingsGUI extends JFrame {
 	/**
 	 * the constructor, this builds the full gui
 	 */
-	public SettingsGUI() {
+	public ServersGUI() {
 		
 
 		
@@ -331,7 +333,6 @@ public class SettingsGUI extends JFrame {
 		int[] PortList = cfg.Ports();
 		PortList = ArrayUtils.removeElement(PortList, PortList[index]);
 		
-		System.out.println(Arrays.toString(NamesList).replace("[", "").replace("]", ""));
 		
 		cfg.setProperty("ServerNames", Arrays.toString(NamesList).replace("[", "").replace("]", ""));
 		cfg.setProperty("IPs", Arrays.toString(IPList).replace("[", "").replace("]", ""));
@@ -344,7 +345,6 @@ public class SettingsGUI extends JFrame {
 		}
 		refresh();
 		
-		System.out.println("removed");
 	}
 
 	/**
@@ -368,17 +368,20 @@ public class SettingsGUI extends JFrame {
 				pwd.requestFocusInWindow();
 			}
 		});
-	    loop = Cancel == 1? true : false;
+	    loop = Cancel != 1? true : false;
 	    Reference.Password = String.valueOf(pwd.getPassword());
 	    pwd.setText("");
 	    int cancel = 1;
 	    
+	    
 	    try {
-			RconHandler.command("printcolors");
+	    	Main.logger.LogUser("using pritcolors command to verify a valid connection", Level.INFO);
+			RconHandler.command("printcolors", cfg.ServerNames()[serverNum]);
 		} catch (IOException e1) {
 			succeeded = false;
 			e1.printStackTrace();
 		} catch (AuthenticationException e1) {
+			Main.logger.LogUser(Reference.UserName + " unsuccesfully tried to log onto " + cfg.ServerNames()[serverNum], Level.WARNING);
 			succeeded = false;
 			JOptionPane.showMessageDialog(contentPane, "Password incorrect", "", JOptionPane.ERROR_MESSAGE);
 		}
@@ -392,28 +395,31 @@ public class SettingsGUI extends JFrame {
 	    		} catch (IOException e1) {
 	    			e1.printStackTrace();
 	    		}
+	    	    Main.logger.LogUser(Reference.UserName + " logged succesfully onto " + cfg.ServerNames()[serverNum], Level.INFO);
 	    		break;
 	    	}else if (!loop) {
 				break;
 			}
 	    	else{
+	    		Reference.ServerName = cfg.ServerNames()[serverNum];
 	    		Reference.RConIp = cfg.IPs()[serverNum];
 	    		Reference.RConPort = cfg.Ports()[serverNum];
 	    		cancel = JOptionPane.showConfirmDialog(null, pwd, "Try Again" ,JOptionPane.OK_CANCEL_OPTION);
 	    		if(cancel == 2) break;
 	    		Reference.Password = String.valueOf(pwd.getPassword());
 	    		try {
-	    			RconHandler.command("printcolors");
+	    			RconHandler.command("printcolors", cfg.ServerNames()[serverNum]);
 	    			succeeded = true;
 	    		} catch (IOException e1) {
 	    			succeeded = false;
 	    			e1.printStackTrace();
 	    		} catch (AuthenticationException e1) {
 	    			succeeded = false;
-	    			JOptionPane.showMessageDialog(contentPane, "Password incorrect", "", JOptionPane.ERROR_MESSAGE);
+	    			if(!loop) JOptionPane.showMessageDialog(contentPane, "Password incorrect", "", JOptionPane.ERROR_MESSAGE);
 	    		}
 	    	}
 	    }
+	    
 	    
 	    return new Server(cfg.ServerNames()[serverNum], cfg.IPs()[serverNum], Integer.valueOf(cfg.Ports()[serverNum]), Reference.Password);
 	}

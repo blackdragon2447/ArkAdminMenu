@@ -142,11 +142,7 @@ public class GFICommandDialog extends JDialog {
 		gbc_argumentLabel.gridx = 1;
 		gbc_argumentLabel.gridy = 3;
 		contentPane.add(ArgumentLabel, gbc_argumentLabel);
-		
-		for (Pair<Integer, String> pair: Reference.AdvancedCommandArgList) {
-			System.out.println(pair.GetcsvValue());
-		}
-		
+
 		PlayerIdLabel = new JLabel("player steam id");
 		GridBagConstraints gbc_PlayerIdLabel = new GridBagConstraints();
 		gbc_PlayerIdLabel.anchor = GridBagConstraints.EAST;
@@ -407,7 +403,6 @@ public class GFICommandDialog extends JDialog {
 			
 			@Override
 			public void windowClosing(WindowEvent e) {
-				System.out.println("closing");
 				refreshThread.stop();
 			}
 			
@@ -450,7 +445,6 @@ public class GFICommandDialog extends JDialog {
 				arguments[3] = String.valueOf(QualityComboBox.getSelectedIndex());
 				arguments[4] = BlueprintCheckBox.isSelected() ? "1" : "0";
 				
-				System.out.println("-----");
 				OutPutLabel.setText(new GenericCommand("giveitem", arguments).generateCommand());
 				
 			}
