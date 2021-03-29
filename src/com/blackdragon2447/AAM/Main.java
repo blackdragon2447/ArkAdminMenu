@@ -130,7 +130,7 @@ public class Main {
 		    }
 		}
 		
-		LoginDialog.CreateGui();
+		LoginDialog.createGui();
 		
 		/**
 		 * this piece of the code will import any files needed to run before opening the actual GUI to prevent delay

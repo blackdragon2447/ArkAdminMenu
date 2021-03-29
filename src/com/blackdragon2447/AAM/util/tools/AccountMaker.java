@@ -149,7 +149,7 @@ public class AccountMaker extends JFrame {
 				Account user;
 				user = null;
 				try {
-					user = new Account(textField.getText(), LoginDialog.toHexString(LoginDialog.getSHA(textField_1.getText())), Long.valueOf(textField_2.getText()), true);
+					user = new Account(textField.getText(), LoginDialog.toHexString(LoginDialog.getSHA(textField_1.getText())), Long.valueOf(textField_2.getText()), false);
 				} catch (NumberFormatException | NoSuchAlgorithmException e2) {
 					e2.printStackTrace();
 				}

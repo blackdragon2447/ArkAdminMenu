@@ -1,2 +1,2 @@
-{"Username":"Username","Hash":"e7cf3ef4f17c3999a94f2c6f612e8a888e5b1026878e4e19398b23bd38ec221a","SteamID":54551654546564,"ExcudedCommands":[0]}
-{"Username":"BlackDragon2447","Hash":"e7cf3ef4f17c3999a94f2c6f612e8a888e5b1026878e4e19398b23bd38ec221a","SteamID":76561198870018877,"ExcudedCommands":[6,7]}
+{"UserName":"Username","Hash":"e7cf3ef4f17c3999a94f2c6f612e8a888e5b1026878e4e19398b23bd38ec221a","SteamID":76561198870018877,"DisabledCommands":[0],"UserType":true,"Registered":false}
+{"UserName":"BlackDragon2447","Hash":"e7cf3ef4f17c3999a94f2c6f612e8a888e5b1026878e4e19398b23bd38ec221a","SteamID":76561198870018877,"DisabledCommands":[0],"UserType":false,"Registered":true}

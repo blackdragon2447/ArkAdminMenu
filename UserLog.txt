@@ -1,1 +1,3 @@
-Mar 28, 2021 7:58:47 PM INFO:   Starting new session at: 213.46.87.220
+Mar 28, 2021 9:52:27 PM INFO:   Starting new session at: 213.46.87.220
+Mar 28, 2021 9:52:44 PM INFO:   User BlackDragon2447 Logged On
+Mar 28, 2021 9:52:48 PM INFO:   Session with BlackDragon2447 ended

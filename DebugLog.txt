@@ -1,2 +1,4 @@
-Mar 28, 2021 7:58:47 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   Starting Debug Log
-Mar 28, 2021 7:58:47 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   Starting new session at: 213.46.87.220
+Mar 28, 2021 9:52:27 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   Starting Debug Log
+Mar 28, 2021 9:52:27 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   Starting new session at: 213.46.87.220
+Mar 28, 2021 9:52:44 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   User BlackDragon2447 Logged On
+Mar 28, 2021 9:52:48 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   Session with BlackDragon2447 ended

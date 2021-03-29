@@ -35,29 +35,31 @@ import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.util.Themes;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
 import com.blackdragon2447.AAM.util.obj.auth.Account;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class LoginDialog extends JDialog {
 
 	private static final long serialVersionUID = -8555976832679303299L;
-	private static JPanel contentPane;
-	private JTextField UserNameField;
+	private static JPanel contentPane = new JPanel();
+	private JTextField userNameField;
 	private JPasswordField passwordField;
 	AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
-	private JButton LogInButton;
-	private JButton CancelButton;
+	private JButton loginButton;
+	private JButton cancelButton;
 	private JLabel resultLabel;
 	
 	/**
 	 * Launch the application.
 	 */
-	public static void CreateGui() {
+	public static void createGui() {
 		LoginDialog frame = null;
 		try {
 			frame = new LoginDialog();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+			frame.setVisible(true);
+		}catch (NoSuchAlgorithmException e) {
+			Main.logger.LogDebug(e.toString(), Level.SEVERE);
 		}
-		frame.setVisible(true);
 	}
 
 	/**
@@ -71,7 +73,6 @@ public class LoginDialog extends JDialog {
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		setModal(true);
 		setBounds(100, 100, 450, 214);
-		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
@@ -81,14 +82,14 @@ public class LoginDialog extends JDialog {
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		JLabel LoginLabel = new JLabel("Login");
-		LoginLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
+		JLabel loginLabel = new JLabel("Login");
+		loginLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
 		GridBagConstraints gbc_LoginLabel = new GridBagConstraints();
 		gbc_LoginLabel.gridwidth = 2;
 		gbc_LoginLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_LoginLabel.gridx = 1;
 		gbc_LoginLabel.gridy = 0;
-		contentPane.add(LoginLabel, gbc_LoginLabel);
+		contentPane.add(loginLabel, gbc_LoginLabel);
 		
 		resultLabel = new JLabel("");
 		resultLabel.setForeground(Color.RED);
@@ -99,22 +100,23 @@ public class LoginDialog extends JDialog {
 		gbc_resultLabel.gridy = 1;
 		contentPane.add(resultLabel, gbc_resultLabel);
 		
-		JLabel UserNameLabel = new JLabel("UserName");
-		GridBagConstraints gbc_UserNameLabel = new GridBagConstraints();
-		gbc_UserNameLabel.anchor = GridBagConstraints.EAST;
-		gbc_UserNameLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_UserNameLabel.gridx = 1;
-		gbc_UserNameLabel.gridy = 2;
-		contentPane.add(UserNameLabel, gbc_UserNameLabel);
+		JLabel userNameLabel = new JLabel("UserName");
 		
-		UserNameField = new JTextField();
-		GridBagConstraints gbc_UserNameField = new GridBagConstraints();
-		gbc_UserNameField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_UserNameField.insets = new Insets(0, 0, 5, 5);
-		gbc_UserNameField.gridx = 2;
-		gbc_UserNameField.gridy = 2;
-		contentPane.add(UserNameField, gbc_UserNameField);
-		UserNameField.setColumns(10);
+		GridBagConstraints gbc_userNameLabel = new GridBagConstraints();
+		gbc_userNameLabel.anchor = GridBagConstraints.EAST;
+		gbc_userNameLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_userNameLabel.gridx = 1;
+		gbc_userNameLabel.gridy = 2;
+		contentPane.add(userNameLabel, gbc_userNameLabel);
+		
+		userNameField = new JTextField();
+		GridBagConstraints gbc_userNameField = new GridBagConstraints();
+		gbc_userNameField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_userNameField.insets = new Insets(0, 0, 5, 5);
+		gbc_userNameField.gridx = 2;
+		gbc_userNameField.gridy = 2;
+		contentPane.add(userNameField, gbc_userNameField);
+		userNameField.setColumns(10);
 		
 		JLabel PasswordLabel = new JLabel("Password");
 		GridBagConstraints gbc_PasswordLabel = new GridBagConstraints();
@@ -129,7 +131,7 @@ public class LoginDialog extends JDialog {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					LogInButton.doClick();
+					loginButton.doClick();
 				}
 					
 			}
@@ -141,20 +143,26 @@ public class LoginDialog extends JDialog {
 		gbc_passwordField.gridy = 3;
 		contentPane.add(passwordField, gbc_passwordField);
 		
-		LogInButton = new JButton("Log In");
-		GridBagConstraints gbc_LogInButton = new GridBagConstraints();
-		gbc_LogInButton.insets = new Insets(0, 0, 0, 5);
-		gbc_LogInButton.gridx = 1;
-		gbc_LogInButton.gridy = 5;
-		contentPane.add(LogInButton, gbc_LogInButton);
-		LogInButton.addActionListener(new ActionListener() {
+		loginButton = new JButton("Log In");
+		GridBagConstraints gbc_loginButton = new GridBagConstraints();
+		gbc_loginButton.insets = new Insets(0, 0, 0, 5);
+		gbc_loginButton.gridx = 1;
+		gbc_loginButton.gridy = 5;
+		contentPane.add(loginButton, gbc_loginButton);
+		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Boolean CorrectName = false;
 				Boolean CorrectPW = false;
 				checkloop:
 				for(Account account : Reference.Logins) {
+					GsonBuilder builder = new GsonBuilder();
+					Gson gson = builder.create();
+					
+					gson.toJson(account);
+					
+					System.out.println(account.getUserName());
 					try {
-						CorrectName = account.getUserName().equals(UserNameField.getText());
+						CorrectName = account.getUserName().equals(userNameField.getText());
 						CorrectPW = account.getHash().equals(toHexString(getSHA(String.valueOf(passwordField.getPassword()))));
 						if(CorrectName && CorrectPW) {Reference.currentUser = account; break checkloop;}
 					} catch (NoSuchAlgorithmException e1) {
@@ -162,23 +170,23 @@ public class LoginDialog extends JDialog {
 					}
 				}
 				if(CorrectName && CorrectPW) {
-			    	Main.logger.LogUser("User " + UserNameField.getText() + " Logged On", Level.INFO);
+			    	Main.logger.LogUser("User " + userNameField.getText() + " Logged On", Level.INFO);
 					dispose();
 				}
 				else{
-					Main.logger.LogUser("a faild logon attemp was made with username: " + UserNameField.getText(), Level.WARNING);
+					Main.logger.LogUser("a faild logon attemp was made with username: " + userNameField.getText(), Level.WARNING);
 					resultLabel.setText("username or password incorrect");
 				}
 			}
 		});
 		
-		CancelButton = new JButton("Cancel");
-		GridBagConstraints gbc_CancelButton = new GridBagConstraints();
-		gbc_CancelButton.insets = new Insets(0, 0, 0, 5);
-		gbc_CancelButton.gridx = 2;
-		gbc_CancelButton.gridy = 5;
-		contentPane.add(CancelButton, gbc_CancelButton);
-		CancelButton.addActionListener(new ActionListener() {
+		cancelButton = new JButton("Cancel");
+		GridBagConstraints gbc_cancelButton = new GridBagConstraints();
+		gbc_cancelButton.insets = new Insets(0, 0, 0, 5);
+		gbc_cancelButton.gridx = 2;
+		gbc_cancelButton.gridy = 5;
+		contentPane.add(cancelButton, gbc_cancelButton);
+		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
@@ -250,7 +258,7 @@ public class LoginDialog extends JDialog {
     
     @Override
     public void dispose() {
-    	Reference.UserName = UserNameField.getText();
+    	Reference.UserName = userNameField.getText();
     	super.dispose();
     }
 
