@@ -11,16 +11,20 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -35,6 +39,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.JTabbedPane;
 import javax.swing.LookAndFeel;
 import javax.swing.SpinnerNumberModel;
@@ -97,7 +102,7 @@ public class AAMGui extends JFrame {
 	JButton SCHelpButton;
 	AAMConfig cfg = ConfigFactory.create(AAMConfig.class);
 	GridBagConstraints gbc_FavButtons = new GridBagConstraints();
-	JNumberedButton ToggleDNButton = new JNumberedButton("toggle damage numbers", 3);		
+	JNumberedButton ToggleDNButton = new JNumberedButton("toggle dmg numbers", 3);		
 	JNumberedCheckbox ToggleDNCheckBox = new JNumberedCheckbox("", 3);
 	JNumberedButton BroadCastButton = new JNumberedButton("broadcast", 4);
 	JNumberedCheckbox BroadCastCheckBox = new JNumberedCheckbox("", 4);
@@ -147,7 +152,18 @@ public class AAMGui extends JFrame {
 	JNumberedButton ListAllUNCDinoButton = new JNumberedButton("List All Unclaimed Dinos", 24);
 	JNumberedCheckbox ListAllUNCDinoCheckBox = new JNumberedCheckbox("", 24);
 	private final JSeparator separator_2 = new JSeparator();
+	private final JLabel lblNewLabel = new JLabel("Command Sequences");
+	private final JPanel RconPanel = new JPanel();
+	private final JScrollPane RconScrollPane = new JScrollPane();
+	public static final JPanel RconLogPanel = new JPanel();
+	public static final JTextField RconField = new JTextField();
+	public static final JButton RconRunButton = new JButton("Run");
+	public static int GridY = 1;
 	private final JButton ServersButton = new JButton("Servers");
+	private final JNumberedButton DinoWipeSeqButton = new JNumberedButton("Dino Wipe", 25);
+	private final JNumberedCheckbox DinoWipeSeqCheckBox = new JNumberedCheckbox("", 25);
+	private final JNumberedButton ShutdownSeqButton = new JNumberedButton("Shut Down", 26);
+	private final JNumberedCheckbox ShutdownSeqCheckBox = new JNumberedCheckbox("", 26);
 	
 
 	
@@ -179,6 +195,21 @@ public class AAMGui extends JFrame {
 	 * @throws CloneNotSupportedException
 	 */
 	public AAMGui() throws NumberFormatException, CloneNotSupportedException {
+		RconField.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					RconRunButton.doClick();
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {}
+		});
+		RconField.setColumns(10);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AAMGui.class.getResource("/com/blackdragon2447/AAM/assets/AAM.logo.png")));
 		
 		/**
@@ -186,7 +217,7 @@ public class AAMGui extends JFrame {
 		 */
 		setTitle("ArkAdminManager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 660, 500);
+		setBounds(100, 100, 700, 500);
 		
 		/**
 		 * adding the menu bar the options are pretty self explanatory by name.
@@ -508,9 +539,9 @@ public class AAMGui extends JFrame {
 		tabbedPane.addTab("advanced commands", null, AdvancedCommandsPanel, null);
 		GridBagLayout gbl_AdvancedCommandsPanel = new GridBagLayout();
 		gbl_AdvancedCommandsPanel.columnWidths = new int[]{185, 0, 185, 0, 185, 0, 0};
-		gbl_AdvancedCommandsPanel.rowHeights = new int[]{23, 0, 0, 10, 0, 10, 0, 10, 0, 0};
+		gbl_AdvancedCommandsPanel.rowHeights = new int[]{23, 0, 0, 10, 0, 10, 0, 10, 0, 0, 0, 0};
 		gbl_AdvancedCommandsPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_AdvancedCommandsPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_AdvancedCommandsPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		AdvancedCommandsPanel.setLayout(gbl_AdvancedCommandsPanel);
 		
 		JLabel ACDescLabel = new JLabel("Advanced Commands\r\n");
@@ -595,7 +626,6 @@ public class AAMGui extends JFrame {
 		
 		GridBagConstraints gbc_ForcePlayerToTribeCheckbox = new GridBagConstraints();
 		gbc_ForcePlayerToTribeCheckbox.insets = new Insets(0, 0, 5, 5);
-		gbc_ForcePlayerToTribeCheckbox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_ForcePlayerToTribeCheckbox.gridx = 1;
 		gbc_ForcePlayerToTribeCheckbox.gridy = 4;
 		AdvancedCommandsPanel.add(ForcePlayerToTribeCheckbox, gbc_ForcePlayerToTribeCheckbox);
@@ -611,7 +641,6 @@ public class AAMGui extends JFrame {
 		
 		GridBagConstraints gbc_GivePlayerXPCheckbox = new GridBagConstraints();
 		gbc_GivePlayerXPCheckbox.insets = new Insets(0, 0, 5, 5);
-		gbc_GivePlayerXPCheckbox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_GivePlayerXPCheckbox.gridx = 3;
 		gbc_GivePlayerXPCheckbox.gridy = 4;
 		AdvancedCommandsPanel.add(GivePlayerXPCheckbox, gbc_GivePlayerXPCheckbox);
@@ -695,18 +724,18 @@ public class AAMGui extends JFrame {
 		
 		GridBagConstraints gbc_separator_2 = new GridBagConstraints();
 		gbc_separator_2.gridwidth = 6;
-		gbc_separator_2.insets = new Insets(0, 0, 5, 5);
+		gbc_separator_2.insets = new Insets(0, 0, 5, 0);
 		gbc_separator_2.gridx = 0;
 		gbc_separator_2.gridy = 7;
 		AdvancedCommandsPanel.add(separator_2, gbc_separator_2);
-		gbc_numberedButton.insets = new Insets(0, 0, 0, 5);
+		gbc_numberedButton.insets = new Insets(0, 0, 5, 5);
 		gbc_numberedButton.gridx = 0;
 		gbc_numberedButton.gridy = 8;
 		AdvancedCommandsPanel.add(ListPlayerPosButton, gbc_numberedButton);
 		ListPlayerPosButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
 		
 		GridBagConstraints gbc_numberedCheckbox = new GridBagConstraints();
-		gbc_numberedCheckbox.insets = new Insets(0, 0, 0, 5);
+		gbc_numberedCheckbox.insets = new Insets(0, 0, 5, 5);
 		gbc_numberedCheckbox.gridx = 1;
 		gbc_numberedCheckbox.gridy = 8;
 		AdvancedCommandsPanel.add(ListPlayerPosCheckbox, gbc_numberedCheckbox);
@@ -715,18 +744,95 @@ public class AAMGui extends JFrame {
 		GridBagConstraints gbc_numberedButton_1 = new GridBagConstraints();
 		gbc_numberedButton_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_ListAllIDButton.fill = GridBagConstraints.HORIZONTAL;
-		gbc_numberedButton_1.insets = new Insets(0, 0, 0, 5);
+		gbc_numberedButton_1.insets = new Insets(0, 0, 5, 5);
 		gbc_numberedButton_1.gridx = 2;
 		gbc_numberedButton_1.gridy = 8;
 		AdvancedCommandsPanel.add(ListAllUNCDinoButton, gbc_numberedButton_1);
 		ListAllUNCDinoButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
 		
 		GridBagConstraints gbc_numberedCheckbox_1 = new GridBagConstraints();
-		gbc_numberedCheckbox_1.insets = new Insets(0, 0, 0, 5);
+		gbc_numberedCheckbox_1.insets = new Insets(0, 0, 5, 5);
 		gbc_numberedCheckbox_1.gridx = 3;
 		gbc_numberedCheckbox_1.gridy = 8;
-		AdvancedCommandsPanel.add(ListAllUNCDinoCheckBox, gbc_numberedCheckbox_1);
+		AdvancedCommandsPanel.add(ListAllUNCDinoCheckBox, gbc_numberedCheckbox_1);		
 		ListAllUNCDinoCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
+		
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel.gridx = 2;
+		gbc_lblNewLabel.gridy = 9;
+		AdvancedCommandsPanel.add(lblNewLabel, gbc_lblNewLabel);
+		
+		GridBagConstraints gbc_DinoWipeSeqButton = new GridBagConstraints();
+		gbc_DinoWipeSeqButton.fill = GridBagConstraints.BOTH;
+		gbc_DinoWipeSeqButton.insets = new Insets(0, 0, 0, 5);
+		gbc_DinoWipeSeqButton.gridx = 0;
+		gbc_DinoWipeSeqButton.gridy = 10;
+		AdvancedCommandsPanel.add(DinoWipeSeqButton, gbc_DinoWipeSeqButton);
+		DinoWipeSeqButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
+		
+		GridBagConstraints gbc_DinoWipeSeqCheckBox = new GridBagConstraints();
+		gbc_DinoWipeSeqCheckBox.insets = new Insets(0, 0, 0, 5);
+		gbc_DinoWipeSeqCheckBox.gridx = 1;
+		gbc_DinoWipeSeqCheckBox.gridy = 10;
+		AdvancedCommandsPanel.add(DinoWipeSeqCheckBox, gbc_DinoWipeSeqCheckBox);
+		DinoWipeSeqCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
+		
+		GridBagConstraints gbc_ShutdownSeqButton = new GridBagConstraints();
+		gbc_ShutdownSeqButton.fill = GridBagConstraints.BOTH;
+		gbc_ShutdownSeqButton.insets = new Insets(0, 0, 0, 5);
+		gbc_ShutdownSeqButton.gridx = 2;
+		gbc_ShutdownSeqButton.gridy = 10;
+		AdvancedCommandsPanel.add(ShutdownSeqButton, gbc_ShutdownSeqButton);
+		ShutdownSeqButton.addActionListener(ActionlistnerAAM.AdvancedComListener);
+		
+		GridBagConstraints gbc_ShutdownSeqCheckBox = new GridBagConstraints();
+		gbc_ShutdownSeqCheckBox.insets = new Insets(0, 0, 0, 5);
+		gbc_ShutdownSeqCheckBox.gridx = 3;
+		gbc_ShutdownSeqCheckBox.gridy = 10;
+		AdvancedCommandsPanel.add(ShutdownSeqCheckBox, gbc_ShutdownSeqCheckBox);
+		ShutdownSeqCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
+		
+		
+		/**
+		 * this panel is just a plain rcon
+		 */
+		tabbedPane.addTab("RCon", null, RconPanel, null);
+		GridBagLayout gbl_RconPanel = new GridBagLayout();
+		gbl_RconPanel.columnWidths = new int[]{0, 0, 0, 0, 0};
+		gbl_RconPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_RconPanel.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_RconPanel.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		RconPanel.setLayout(gbl_RconPanel);
+		
+		GridBagConstraints gbc_RconScrollPane = new GridBagConstraints();
+		gbc_RconScrollPane.gridwidth = 2;
+		gbc_RconScrollPane.insets = new Insets(0, 0, 5, 5);
+		gbc_RconScrollPane.fill = GridBagConstraints.BOTH;
+		gbc_RconScrollPane.gridx = 1;
+		gbc_RconScrollPane.gridy = 1;
+		RconPanel.add(RconScrollPane, gbc_RconScrollPane);
+		
+		RconScrollPane.setViewportView(RconLogPanel);
+		RconLogPanel.setLayout(new BoxLayout(RconLogPanel, BoxLayout.Y_AXIS));
+		
+		final JLabel StartLabel = new JLabel(new Date().toString() + ": \t Start of the log");
+		RconLogPanel.add(StartLabel);
+		
+		GridBagConstraints gbc_RconField = new GridBagConstraints();
+		gbc_RconField.insets = new Insets(0, 0, 5, 5);
+		gbc_RconField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_RconField.gridx = 1;
+		gbc_RconField.gridy = 2;
+		RconPanel.add(RconField, gbc_RconField);
+		
+		GridBagConstraints gbc_RconRunButton = new GridBagConstraints();
+		gbc_RconRunButton.insets = new Insets(0, 0, 5, 5);
+		gbc_RconRunButton.gridx = 2;
+		gbc_RconRunButton.gridy = 2;
+		RconPanel.add(RconRunButton, gbc_RconRunButton);
+		RconRunButton.addActionListener(ActionlistnerAAM.RconRunListner);
+		
 		
 		/**
 		 * this is the panel for the custom commands, this is a dynamicly build panel.
@@ -1148,6 +1254,8 @@ public class AAMGui extends JFrame {
 				}else if (tabbedPane.getSelectedIndex() == 2) {
 					SwingUtilities.updateComponentTreeUI(AdvancedCommandsPanel);
 				}else if (tabbedPane.getSelectedIndex() == 3) {
+					SwingUtilities.updateComponentTreeUI(RconPanel);
+				}else if (tabbedPane.getSelectedIndex() == 4) {
 					SwingUtilities.updateComponentTreeUI(CustomCommandsPanel);
 					
 					ButtonPanel.removeAll();

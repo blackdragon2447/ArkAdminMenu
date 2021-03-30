@@ -22,7 +22,6 @@ import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.blackdragon2447.AAM.gui.AAMGui;
-import com.blackdragon2447.AAM.gui.auth.LoginDialog;
 import com.blackdragon2447.AAM.util.CSVReader;
 import com.blackdragon2447.AAM.util.CreatureSetBuilder;
 import com.blackdragon2447.AAM.util.ItemSetBuilder;

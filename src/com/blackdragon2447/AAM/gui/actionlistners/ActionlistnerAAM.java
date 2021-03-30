@@ -20,6 +20,7 @@ import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.AAMGui;
 import com.blackdragon2447.AAM.gui.components.JNumberedButton;
 import com.blackdragon2447.AAM.gui.components.JNumberedCheckbox;
+import com.blackdragon2447.AAM.gui.dialog.DinoWipeDialog;
 import com.blackdragon2447.AAM.gui.dialog.SimpleCommandDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.AllPlayerPosReturnDialog;
 import com.blackdragon2447.AAM.gui.dialog.advCom.ForceIntoTribeDialog;
@@ -299,6 +300,8 @@ public class ActionlistnerAAM {
 			case 24:
 				ListUnclaimedReturnDialog.createGui();
 				break;
+			case 25:
+				DinoWipeDialog.CreateGui();
 			default:
 				break;
 			}
