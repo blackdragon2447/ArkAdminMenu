@@ -115,7 +115,6 @@ public class AddNewSeriesGui extends JFrame {
 		contentPane.add(AddButtonButton, gbc_AddButtonButton);
 		AddButtonButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("works");
 				JTextField TxtField = new JTextField();
 				CommandPanel.add(TxtField);
 				CommandPanel.revalidate();
@@ -150,7 +149,6 @@ public class AddNewSeriesGui extends JFrame {
 					arr = Arrays.copyOf(arr, arr.length + 1);
 				} catch (NullPointerException e2) {
 					arr = new String[]{null};
-					System.out.println("oops");
 				}
 				arr[arr.length - 1] = NameField.getText();
 				cfg.setProperty("CommandSeriesName", Arrays.toString(arr));

@@ -168,5 +168,11 @@ public class Utils {
 		}
 		
 	}
-
+	
+	public static <T>T[] AddToArray(T[] arr, T obj) {
+	    arr = Arrays.copyOf(arr, arr.length + 1);
+	    arr[arr.length - 1] = obj;
+	    return arr;
+	}
+	
 }

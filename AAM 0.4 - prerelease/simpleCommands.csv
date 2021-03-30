@@ -1,0 +1,13 @@
+﻿settimeofday,TRUE
+playersonly,FALSE
+ToggleDamageNumbers,FALSE
+broadcast,TRUE
+serverchat,TRUE
+getchat,FALSE
+getgamelog,FALSE
+doexit,FALSE
+saveworld,FALSE
+destroywilddinos,FALSE
+banplayer,TRUE
+unbanplayer,TRUE
+kickplayer,TRUE

@@ -109,7 +109,6 @@ public class SteamIDReturnDialog extends JFrame {
 		contentPane.add(ResponseLabel, gbc_ResponseLabel);
 		
 		setBounds(getBounds().x, getBounds().y, getBounds().width, 20 * ResponseLabel.getLineCount());
-		System.out.println(getBounds());
 		
 		thread.start();
 		
@@ -154,7 +153,7 @@ public class SteamIDReturnDialog extends JFrame {
 				String result = null;
 				if(!Reference.MultipleServer) {
 					try {
-						result = RconHandler.command("ListAllPlayerSteamID");
+						result = RconHandler.RefreshCommand("ListAllPlayerSteamID");
 					} catch (Exception e1) {
 						if(e1 instanceof AuthenticationException) result = "failed to outheticate";
 						else if (Reference.Password == null) {
@@ -167,7 +166,7 @@ public class SteamIDReturnDialog extends JFrame {
 					}
 				} else {
 					try {
-						result = RconHandler.MultipleCommand("ListAllPlayerSteamID");
+						result = RconHandler.RefreshMultipleCommand("ListAllPlayerSteamID");
 					} catch (Exception e1) {
 						if(e1 instanceof AuthenticationException) result = "failed to autheticate";
 						else if (Reference.Password == null) {
@@ -183,13 +182,12 @@ public class SteamIDReturnDialog extends JFrame {
 					JOptionPane.showInternalMessageDialog(contentPane, "server recived, assuming it exectued!");
 				
 				try {
-					TimeUnit.SECONDS.sleep(10);
+					TimeUnit.SECONDS.sleep(30);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 				ResponseLabel.setText(result);
 				setBounds(getBounds().x, getBounds().y, getBounds().width, 20 * ResponseLabel.getLineCount());
-				System.out.println("+++++++");
 			}
 			
 		}

@@ -133,10 +133,6 @@ public class ForceIntoTribeDialog extends JDialog {
 		gbc_argumentLabel.gridy = 3;
 		contentPane.add(ArgumentLabel, gbc_argumentLabel);
 		
-		for (Pair<Integer, String> pair: Reference.AdvancedCommandArgList) {
-			System.out.println(pair.GetcsvValue());
-		}
-		
 		PlayerIDLabel = new JLabel("PlayerId");
 		GridBagConstraints gbc_PlayerIDLabel = new GridBagConstraints();
 		gbc_PlayerIDLabel.insets = new Insets(0, 0, 5, 5);
@@ -363,7 +359,6 @@ public class ForceIntoTribeDialog extends JDialog {
 				arguments[0] = PlayerIDField.getText();
 				arguments[1] = TribeNameField.getText();
 				
-				System.out.println("-----");
 				OutPutLabel.setText(new GenericCommand("forceplayertojointribe", arguments).generateCommand());
 				
 			}

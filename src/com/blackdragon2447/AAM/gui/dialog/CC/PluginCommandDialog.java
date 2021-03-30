@@ -107,7 +107,6 @@ public class PluginCommandDialog extends JDialog {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						System.out.println(CommandLabel.getText());
 						dispose();
 					}
 				});

@@ -60,5 +60,12 @@ public class Pair<T, U>{
 	public String GetcsvValue() {
 		return p1.toString() + ", " + p2.toString();
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean equals(Object obj) {
+		Pair<T, U> compObj = (Pair<T, U>) obj;
+		return ((this.p1 == compObj.p1) && (this.p2 == compObj.p2));
+	}
 
 }
