@@ -44,7 +44,6 @@ public class CommandSeriesDialog extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		
-		System.out.println(Commands.length);
 		for (int i = 0; i < Commands.length; i++) {
 			contentPanel.add(new JLabel(Commands[i].replace("[", "").replace("]", "")));
 		}
@@ -62,9 +61,6 @@ public class CommandSeriesDialog extends JDialog {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						for (String string : Commands) {
-							System.out.println(string.replace("[", "").replace("]", ""));
-						}
 						dispose();
 					}
 				});

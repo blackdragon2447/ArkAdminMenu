@@ -109,7 +109,6 @@ public class AllPlayerPosReturnDialog extends JFrame {
 		contentPane.add(ResponseLabel, gbc_ResponseLabel);
 		
 		setBounds(getBounds().x, getBounds().y, getBounds().width, 20 * ResponseLabel.getLineCount());
-		System.out.println(getBounds());
 		
 		thread.start();
 		
@@ -189,7 +188,6 @@ public class AllPlayerPosReturnDialog extends JFrame {
 				}
 				ResponseLabel.setText(result);
 				setBounds(getBounds().x, getBounds().y, getBounds().width, 20 * ResponseLabel.getLineCount());
-				System.out.println("+++++++");
 			}
 			
 		}

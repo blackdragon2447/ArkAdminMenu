@@ -1,0 +1,5 @@
+Mar 30, 2021 7:01:47 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   Starting Debug Log
+Mar 30, 2021 7:01:47 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   Starting new session at: 213.46.87.220
+Mar 30, 2021 7:01:49 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   true
+Mar 30, 2021 7:01:51 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   servers button pressed
+Mar 30, 2021 7:01:53 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   Session with null ended

@@ -1,7 +1,9 @@
 package com.blackdragon2447.AAM.util;
 
 import java.io.IOException;
+import java.util.logging.Level;
 
+import com.blackdragon2447.AAM.Main;
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.util.obj.Server;
 
@@ -23,10 +25,15 @@ public class RconHandler {
 	 */
 	public static String command(String command) throws IOException, AuthenticationException {
 		final Rcon rcon = new Rcon(Reference.RConIp, Reference.RConPort, Reference.Password.getBytes());
-		System.out.println("sending command");
+		Main.logger.LogUser("to: " + Reference.ServerName +" sending command: " + command, Level.INFO);
 		String Result = rcon.command(command);
-		System.out.println("command sent");
-		//rcon.disconnect();
+		return Result;
+	}
+	
+	public static String command(String command, String name) throws IOException, AuthenticationException {
+		final Rcon rcon = new Rcon(Reference.RConIp, Reference.RConPort, Reference.Password.getBytes());
+		Main.logger.LogUser("to: " + name +" sending command: " + command, Level.INFO);
+		String Result = rcon.command(command);
 		return Result;
 	}
 	
@@ -37,11 +44,31 @@ public class RconHandler {
 		
 		for (Server server : Reference.LoggedServers) {
 			rcon = new Rcon(server.getIP(), server.getPort(), server.getPassword().getBytes());
+			Main.logger.LogUser("to: " + server.getName() +" sending command: " + command, Level.INFO);
 			Result = rcon.command(command);
 			
 			FullResult = FullResult + server.getName() + "\n" + Result;
 		}
-		//rcon.disconnect();
+		return FullResult;
+	}
+	
+	public static String RefreshCommand(String command) throws IOException, AuthenticationException {
+		final Rcon rcon = new Rcon(Reference.RConIp, Reference.RConPort, Reference.Password.getBytes());
+		String Result = rcon.command(command);
+		return Result;
+	}
+	
+	public static String RefreshMultipleCommand(String command) throws IOException, AuthenticationException {
+		Rcon rcon = null;
+		String FullResult = "";
+		String Result;
+		
+		for (Server server : Reference.LoggedServers) {
+			rcon = new Rcon(server.getIP(), server.getPort(), server.getPassword().getBytes());
+			Result = rcon.command(command);
+			
+			FullResult = FullResult + server.getName() + "\n" + Result;
+		}
 		return FullResult;
 	}
 
