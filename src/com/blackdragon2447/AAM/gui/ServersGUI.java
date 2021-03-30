@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -46,7 +46,7 @@ import net.kronos.rkon.core.ex.AuthenticationException;
  * @author Blackdragon2447
  *
  */
-public class ServersGUI extends JFrame {
+public class ServersGUI extends JDialog {
 
 	private static final long serialVersionUID = 422929525233814207L;
 	private static JPanel contentPane;
@@ -77,9 +77,11 @@ public class ServersGUI extends JFrame {
 	 */
 	public ServersGUI() {
 		
-
 		
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setModal(true);
+		
 		setBounds(100, 100, 450, 358);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

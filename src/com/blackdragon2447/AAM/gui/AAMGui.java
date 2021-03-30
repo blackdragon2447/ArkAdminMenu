@@ -51,6 +51,7 @@ import org.aeonbits.owner.ConfigFactory;
 import com.blackdragon2447.AAM.Main;
 import com.blackdragon2447.AAM.Reference;
 import com.blackdragon2447.AAM.gui.actionlistners.ActionlistnerAAM;
+import com.blackdragon2447.AAM.gui.auth.CreateServersDialog;
 import com.blackdragon2447.AAM.gui.components.JNumberedButton;
 import com.blackdragon2447.AAM.gui.components.JNumberedCheckbox;
 import com.blackdragon2447.AAM.gui.components.JNumberedPanel;
@@ -146,6 +147,7 @@ public class AAMGui extends JFrame {
 	JNumberedButton ListAllUNCDinoButton = new JNumberedButton("List All Unclaimed Dinos", 24);
 	JNumberedCheckbox ListAllUNCDinoCheckBox = new JNumberedCheckbox("", 24);
 	private final JSeparator separator_2 = new JSeparator();
+	private final JButton ServersButton = new JButton("Servers");
 	
 
 	
@@ -204,9 +206,9 @@ public class AAMGui extends JFrame {
 			}
 		});
 		
-		JMenuItem ServersMenuItem = new JMenuItem("Servers");
-		settingsMenu.add(ServersMenuItem);
-		ServersMenuItem.addActionListener(new ActionListener() {
+		JMenuItem ConnectionsMenuItem = new JMenuItem("Connections");
+		settingsMenu.add(ConnectionsMenuItem);
+		ConnectionsMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ServersGUI.createGui();
 			}
@@ -221,6 +223,20 @@ public class AAMGui extends JFrame {
 		
 		JMenuItem helpMenuItem = new JMenuItem("help");
 		settingsMenu.add(helpMenuItem);
+		
+		ServersButton.setOpaque(false);
+		ServersButton.setContentAreaFilled(false);
+		ServersButton.setBorderPainted(false);
+		if(Reference.currentUser.isOwner()) menuBar.add(ServersButton);
+		Main.logger.LogDebug(Reference.currentUser.isOwner().toString(), Level.INFO);
+		
+		ServersButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Main.logger.LogDebug("servers button pressed", Level.INFO);
+					CreateServersDialog.createGui();
+				}
+		});
 		ContentPane = new JPanel();
 		ContentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		ContentPane.setLayout(new BorderLayout(0, 0));
@@ -1321,8 +1337,10 @@ public class AAMGui extends JFrame {
 		}
 	    
 	    for(int i : Reference.currentUser.getDisabledCommands()) {
-	    	Utils.findButtonByNumber(i).setEnabled(false);
-	    	Utils.findCheckboxByNumber(i).setEnabled(false);
+	    	try {
+	    		Utils.findButtonByNumber(i).setEnabled(false);
+	    		Utils.findCheckboxByNumber(i).setEnabled(false);
+	    	} catch (NullPointerException e) {}
 	    }
 	    
 	}

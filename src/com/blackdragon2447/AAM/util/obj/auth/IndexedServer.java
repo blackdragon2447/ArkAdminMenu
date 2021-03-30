@@ -6,9 +6,9 @@ import com.blackdragon2447.AAM.util.obj.EmptyConstructorExeption;
 
 public class IndexedServer implements AuthClass{
 
-	private String Name;
-	private Integer ServerID;
-	private Long[] Admins;
+	protected String Name;
+	protected Integer ServerID;
+	protected Long[] Admins;
 	
 	public IndexedServer() throws EmptyConstructorExeption {
 		throw new EmptyConstructorExeption("you tried to create and empty server");

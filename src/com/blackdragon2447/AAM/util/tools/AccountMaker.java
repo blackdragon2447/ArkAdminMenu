@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import com.blackdragon2447.AAM.gui.LoginDialog;
+import com.blackdragon2447.AAM.gui.auth.LoginDialog;
 import com.blackdragon2447.AAM.util.obj.auth.Account;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

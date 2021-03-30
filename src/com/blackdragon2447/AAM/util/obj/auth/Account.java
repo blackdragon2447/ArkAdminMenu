@@ -57,7 +57,7 @@ public class Account implements AuthClass{
 		return DisabledCommands;
 	}
 	
-	public Boolean getUserType() {
+	public Boolean isOwner() {
 		return UserType;
 	}
 	
@@ -85,4 +85,4 @@ public class Account implements AuthClass{
 		
 		return Data;
 	}
-} 
+}

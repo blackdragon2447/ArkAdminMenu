@@ -1,4 +1,20 @@
-Mar 28, 2021 9:52:27 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   Starting Debug Log
-Mar 28, 2021 9:52:27 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   Starting new session at: 213.46.87.220
-Mar 28, 2021 9:52:44 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   User BlackDragon2447 Logged On
-Mar 28, 2021 9:52:48 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   Session with BlackDragon2447 ended
+Mar 30, 2021 6:42:22 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   Starting Debug Log
+Mar 30, 2021 6:42:22 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   Starting new session at: 213.46.87.220
+Mar 30, 2021 6:42:42 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - WARNING:  a faild logon attemp was made with username: Blackdragon2447
+Mar 30, 2021 6:42:46 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   User BlackDragon2447 Logged On
+Mar 30, 2021 6:42:46 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   true
+Mar 30, 2021 6:42:51 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   servers button pressed
+Mar 30, 2021 6:43:45 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   servers button pressed
+Mar 30, 2021 6:48:34 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   servers button pressed
+Mar 30, 2021 6:48:56 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   servers button pressed
+Mar 30, 2021 6:49:35 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   servers button pressed
+Mar 30, 2021 6:50:07 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   servers button pressed
+Mar 30, 2021 6:50:31 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   servers button pressed
+Mar 30, 2021 6:51:00 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   servers button pressed
+Mar 30, 2021 6:51:39 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   servers button pressed
+Mar 30, 2021 6:51:56 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   servers button pressed
+Mar 30, 2021 6:52:18 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   servers button pressed
+Mar 30, 2021 6:52:32 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   servers button pressed
+Mar 30, 2021 6:52:52 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   servers button pressed
+Mar 30, 2021 6:53:02 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   servers button pressed
+Mar 30, 2021 6:53:27 PM com.blackdragon2447.AAM.util.logger.AAMLogger LogDebug - INFO:   servers button pressed

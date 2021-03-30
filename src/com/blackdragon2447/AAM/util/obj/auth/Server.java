@@ -1,5 +1,7 @@
 package com.blackdragon2447.AAM.util.obj.auth;
 
+import java.util.HashMap;
+
 import com.blackdragon2447.AAM.util.Utils;
 
 public class Server extends IndexedServer implements AuthClass{
@@ -51,6 +53,18 @@ public class Server extends IndexedServer implements AuthClass{
 	
 	public void addDisavledCommand(int Command){
 		DisabledCommands = Utils.AddToArray(DisabledCommands, Command);
+	}
+	
+	
+	public HashMap<String, Object> ToHashMap() {
+		HashMap<String, Object> Data = new HashMap<>();
+		Data.put("Name", this.Name);
+		Data.put("ServerID", this.ServerID);
+		Data.put("Asmins", this.Admins);
+		Data.put("OwnedIPs", this.OwnedIPs);
+		Data.put("DisabledCommands", this.DisabledCommands);
+		
+		return Data;
 	}
 
 }
