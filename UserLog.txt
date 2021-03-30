@@ -1,3 +1,2 @@
-Mar 30, 2021 6:42:22 PM INFO:   Starting new session at: 213.46.87.220
-Mar 30, 2021 6:42:42 PM WARNING:  a faild logon attemp was made with username: Blackdragon2447
-Mar 30, 2021 6:42:46 PM INFO:   User BlackDragon2447 Logged On
+Mar 30, 2021 7:01:47 PM INFO:   Starting new session at: 213.46.87.220
+Mar 30, 2021 7:01:53 PM INFO:   Session with null ended

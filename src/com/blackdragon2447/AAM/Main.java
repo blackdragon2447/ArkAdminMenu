@@ -130,7 +130,8 @@ public class Main {
 		    }
 		}
 		
-		LoginDialog.createGui();
+		//LoginDialog.createGui();
+		Reference.currentUser = new Account(null, null, null, true);
 		
 		/**
 		 * this piece of the code will import any files needed to run before opening the actual GUI to prevent delay
