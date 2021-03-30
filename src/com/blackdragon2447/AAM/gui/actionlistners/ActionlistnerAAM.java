@@ -1,13 +1,17 @@
 package com.blackdragon2447.AAM.gui.actionlistners;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -297,6 +301,72 @@ public class ActionlistnerAAM {
 				break;
 			default:
 				break;
+			}
+		}
+	};
+	
+	public static ActionListener RconRunListner = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			GridBagConstraints gbc_RconLabel = new GridBagConstraints();
+			gbc_RconLabel.gridy = AAMGui.GridY;
+			JLabel label;
+			label = new JLabel(new Date().toString() + ": \t " + AAMGui.RconField.getText());
+			label.setForeground(Color.yellow);
+			AAMGui.RconLogPanel.add(label, gbc_RconLabel);
+			AAMGui.GridY++;
+			gbc_RconLabel.gridy = AAMGui.GridY;
+			String result = null;
+			if(!Reference.MultipleServer) {
+				try {
+					result = RconHandler.command(AAMGui.RconField.getText());
+				} catch (Exception e1) {
+					if(e1 instanceof AuthenticationException) result = "failed to outheticate";
+					else if (Reference.Password == null) {
+						label = new JLabel(new Date().toString() + ": \t " + "Not Logged On");
+						label.setForeground(Color.red);
+						AAMGui.RconLogPanel.add(label, gbc_RconLabel);
+					}
+					else {
+						result = "an unkown error occured";
+						e1.printStackTrace();
+					}
+				}
+			} else {
+				try {
+					result = RconHandler.MultipleCommand(AAMGui.RconField.getText());
+				} catch (Exception e1) {
+					if(e1 instanceof AuthenticationException) result = "failed to outheticate";
+					else if (Reference.Password == null) {
+						label = new JLabel(new Date().toString() + ": \t " + "Not Logged On");
+						label.setForeground(Color.red);
+						AAMGui.RconLogPanel.add(label, gbc_RconLabel);
+					}
+					else {
+						result = "an unkown error occured";
+						e1.printStackTrace();
+					}
+				}
+			}
+			
+			String[] lineResults;
+			lineResults = result.split("\n");
+			String[] finalResults = new String[lineResults.length/2];
+			for (int i = 0; i < finalResults.length; i++) {
+				finalResults[i] = lineResults[i*2] + ": " + lineResults[(i*2)+1];
+			}
+			for (String string : finalResults) {
+				if(result != null) {
+					if(result.contains("no response")) {
+						label = new JLabel(new Date().toString() + ": \t " + "server recived, assuming it executed.");
+						AAMGui.RconLogPanel.add(label, gbc_RconLabel);
+					}
+					else{
+	
+						label = new JLabel(new Date().toString() + ": \t " + string);
+						AAMGui.RconLogPanel.add(label, gbc_RconLabel);
+					}
+				}
+				AAMGui.RconField.setText("");
 			}
 		}
 	};

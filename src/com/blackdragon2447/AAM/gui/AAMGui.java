@@ -63,13 +63,10 @@ import com.blackdragon2447.AAM.gui.dialog.CC.AddNewPluginCommand;
 import com.blackdragon2447.AAM.gui.dialog.CC.AddNewScriptGui;
 import com.blackdragon2447.AAM.util.CustomButtonBuilder;
 import com.blackdragon2447.AAM.util.FavButtonPanelBuilder;
-import com.blackdragon2447.AAM.util.RconHandler;
 import com.blackdragon2447.AAM.util.ThemeButtonBuilder;
 import com.blackdragon2447.AAM.util.Themes;
 import com.blackdragon2447.AAM.util.Utils;
 import com.blackdragon2447.AAM.util.iface.AAMConfig;
-
-import net.kronos.rkon.core.ex.AuthenticationException;
 
 public class AAMGui extends JFrame {
 	
@@ -155,10 +152,10 @@ public class AAMGui extends JFrame {
 	private final JLabel lblNewLabel = new JLabel("Command Sequences");
 	private final JPanel RconPanel = new JPanel();
 	private final JScrollPane RconScrollPane = new JScrollPane();
-	private final JPanel RconLogPanel = new JPanel();
-	private final JTextField RconField = new JTextField();
-	private final JButton RconRunButton = new JButton("Run");
-	int GridY = 1;
+	public static final JPanel RconLogPanel = new JPanel();
+	public static final JTextField RconField = new JTextField();
+	public static final JButton RconRunButton = new JButton("Run");
+	public static int GridY = 1;
 	/**
 	 * the method for opening the GUI.
 	 * @throws UnsupportedLookAndFeelException
@@ -775,69 +772,12 @@ public class AAMGui extends JFrame {
 		gbc_RconField.gridy = 2;
 		RconPanel.add(RconField, gbc_RconField);
 		
-		GridBagConstraints gbc_RconLabel = new GridBagConstraints();
-		gbc_RconLabel.gridy = GridY;
-		
 		GridBagConstraints gbc_RconRunButton = new GridBagConstraints();
 		gbc_RconRunButton.insets = new Insets(0, 0, 5, 5);
 		gbc_RconRunButton.gridx = 2;
 		gbc_RconRunButton.gridy = 2;
 		RconPanel.add(RconRunButton, gbc_RconRunButton);
-		RconRunButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JLabel label;
-				label = new JLabel(new Date().toString() + ": \t " + RconField.getText());
-				label.setForeground(Color.yellow);
-				RconLogPanel.add(label, gbc_RconLabel);
-				GridY++;
-				gbc_RconLabel.gridy = GridY;
-				String result = null;
-				if(!Reference.MultipleServer) {
-					try {
-						result = RconHandler.command(RconField.getText());
-					} catch (Exception e1) {
-						if(e1 instanceof AuthenticationException) result = "failed to outheticate";
-						else if (Reference.Password == null) {
-							label = new JLabel(new Date().toString() + ": \t " + "Not Logged On");
-							label.setForeground(Color.red);
-							RconLogPanel.add(label, gbc_RconLabel);
-						}
-						else {
-							result = "an unkown error occured";
-							e1.printStackTrace();
-						}
-					}
-				} else {
-					try {
-						result = RconHandler.MultipleCommand(RconField.getText());
-					} catch (Exception e1) {
-						if(e1 instanceof AuthenticationException) result = "failed to outheticate";
-						else if (Reference.Password == null) {
-							label = new JLabel(new Date().toString() + ": \t " + "Not Logged On");
-							label.setForeground(Color.red);
-							RconLogPanel.add(label, gbc_RconLabel);
-						}
-						else {
-							result = "an unkown error occured";
-							e1.printStackTrace();
-						}
-					}
-				}
-				
-				if(result != null) {
-					if(result.contains("no response")) {
-						label = new JLabel(new Date().toString() + ": \t " + "server recived, assuming it executed.");
-						RconLogPanel.add(label, gbc_RconLabel);
-					}
-					else{
-
-						label = new JLabel(new Date().toString() + ": \t " + result);
-						RconLogPanel.add(label, gbc_RconLabel);
-					}
-				}
-				RconField.setText("");
-			}
-		});
+		RconRunButton.addActionListener(ActionlistnerAAM.RconRunListner);
 		
 		JPanel CustomCommandsPanel = new JPanel();
 		tabbedPane.addTab("custom commands", null, CustomCommandsPanel, null);
