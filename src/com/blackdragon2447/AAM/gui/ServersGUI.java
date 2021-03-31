@@ -364,7 +364,7 @@ public class ServersGUI extends JDialog {
 		Reference.RConIp = cfg.IPs()[serverNum];
 		Reference.RConPort = cfg.Ports()[serverNum];
 		final JPasswordField pwd = new JPasswordField(10);
-	    int Cancel = JOptionPane.showConfirmDialog(null, pwd, "Enter Password",JOptionPane.OK_CANCEL_OPTION);
+	    int Cancel = JOptionPane.showConfirmDialog(contentPane, pwd, "Enter Password",JOptionPane.OK_CANCEL_OPTION);
 	    pwd.addComponentListener(new ComponentAdapter() {
 	    	public void componentShown(ComponentEvent ce){
 				pwd.requestFocusInWindow();
