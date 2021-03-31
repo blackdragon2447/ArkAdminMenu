@@ -3,4 +3,7 @@ bin/
 build/
 .gradle/
 ./AAMConfig.properties
+bugs.csv
 
+.classpath
+.classpath

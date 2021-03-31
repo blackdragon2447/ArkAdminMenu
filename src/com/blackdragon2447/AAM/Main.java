@@ -118,6 +118,7 @@ public class Main {
 			}
 		}
 		
+		/*
 		try (BufferedReader br = new BufferedReader(new FileReader("Users.txt"))) {
 		    String line;
 		    while ((line = br.readLine()) != null) {
@@ -128,6 +129,7 @@ public class Main {
 		    	Reference.Logins.add(user);
 		    }
 		}
+		*/
 		
 		//LoginDialog.createGui();
 		Reference.currentUser = new Account(null, null, null, true);

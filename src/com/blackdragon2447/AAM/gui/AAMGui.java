@@ -268,7 +268,6 @@ public class AAMGui extends JFrame {
 		ServersButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Main.logger.LogDebug("servers button pressed", Level.INFO);
 					CreateServersDialog.createGui();
 				}
 		});
@@ -1566,13 +1565,15 @@ public class AAMGui extends JFrame {
 		}
 
 	    
-	    for(int i : Reference.currentUser.getDisabledCommands()) {
-	    	try {
-	    		Utils.findButtonByNumber(i).setEnabled(false);
-	    		Utils.findCheckboxByNumber(i).setEnabled(false);
-	    	} catch (NullPointerException e) {}
-	    }
-	    
+	    try {
+	    	for(int i : Reference.currentUser.getDisabledCommands()) {
+	    		try {
+	    			Utils.findButtonByNumber(i).setEnabled(false);
+	    			Utils.findCheckboxByNumber(i).setEnabled(false);
+	    		} catch (NullPointerException e) {}
+	    	}
+	    } catch (NullPointerException e) {
+		}
 	}
 
 	/**

@@ -1,8 +1,2 @@
-Mar 30, 2021 10:09:58 PM INFO:   Starting new session at: 213.46.87.220
-Mar 30, 2021 10:10:07 PM INFO:   using pritcolors command to verify a valid connection
-Mar 30, 2021 10:10:07 PM WARNING:  null unsuccesfully tried to log onto Elf-Isl
-Mar 30, 2021 10:10:12 PM INFO:   to: Elf-Isl sending command: printcolors
-Mar 30, 2021 10:10:19 PM INFO:   null logged succesfully onto Elf-Isl
-Mar 30, 2021 10:11:50 PM INFO:   to: Elf-Isl sending command: ListAllPlayerSteamID
-Mar 30, 2021 10:11:57 PM INFO:   to: Elf-Isl sending command: broadcast wiping dinos in 10 min, let an admin know in discord if you need more time
-Mar 30, 2021 10:17:59 PM INFO:   Session with null ended
+Mar 31, 2021 10:49:16 AM INFO:   Starting new session at: 213.46.87.220
+Mar 31, 2021 10:49:29 AM INFO:   Session with null ended
