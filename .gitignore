@@ -2,6 +2,5 @@ bin/
 .settings/
 ./AAMConfig.properties
 bugs.csv
+.classpath
 
-.classpath
-.classpath
