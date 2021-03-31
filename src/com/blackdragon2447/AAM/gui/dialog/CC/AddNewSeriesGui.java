@@ -22,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.aeonbits.owner.ConfigFactory;
@@ -51,6 +52,7 @@ public class AddNewSeriesGui extends JFrame {
 
 	public static void createGui() {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					AddNewSeriesGui frame = new AddNewSeriesGui();
@@ -70,7 +72,7 @@ public class AddNewSeriesGui extends JFrame {
 			e.printStackTrace();
 		}
 		
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 432, 257);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -114,6 +116,7 @@ public class AddNewSeriesGui extends JFrame {
 		gbc_AddButtonButton.gridy = 2;
 		contentPane.add(AddButtonButton, gbc_AddButtonButton);
 		AddButtonButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				JTextField TxtField = new JTextField();
 				CommandPanel.add(TxtField);
@@ -143,6 +146,7 @@ public class AddNewSeriesGui extends JFrame {
 		gbc_btnNewButton.gridy = 4;
 		contentPane.add(btnNewButton, gbc_btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				String [] arr = cfg.CommandSeriesName();
 				try {
@@ -155,7 +159,7 @@ public class AddNewSeriesGui extends JFrame {
 				
 				
 				
-				String[][] arr1 = cfg.CommandSeries();
+				String[][] arr1 = {{}};
 				try {
 					arr1 = Arrays.copyOf(arr1, arr1.length + 1);
 				} catch (NullPointerException e2) {

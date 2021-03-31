@@ -36,18 +36,21 @@ public class AutoCompleteion extends PlainDocument {
 	    this.comboBox = comboBox;
 	    model = comboBox.getModel();
 	    comboBox.addActionListener(new ActionListener() {
-	        public void actionPerformed(ActionEvent e) {
+	        @Override
+			public void actionPerformed(ActionEvent e) {
 	            if (!selecting) highlightCompletedText(0);
 	        }
 	    });
 	    comboBox.addPropertyChangeListener(new PropertyChangeListener() {
-	        public void propertyChange(PropertyChangeEvent e) {
+	        @Override
+			public void propertyChange(PropertyChangeEvent e) {
 	            if (e.getPropertyName().equals("editor")) configureEditor((ComboBoxEditor) e.getNewValue());
 	            if (e.getPropertyName().equals("model")) model = (ComboBoxModel) e.getNewValue();
 	        }
 	    });
 	    editorKeyListener = new KeyAdapter() {
-	        public void keyPressed(KeyEvent e) {
+	        @Override
+			public void keyPressed(KeyEvent e) {
 	            if (comboBox.isDisplayable()) comboBox.setPopupVisible(true);
 	            hitBackspace=false;
 	            switch (e.getKeyCode()) {
@@ -66,10 +69,12 @@ public class AutoCompleteion extends PlainDocument {
 	    hidePopupOnFocusLoss=System.getProperty("java.version").startsWith("1.5");
 	    // Highlight whole text when gaining focus
 	    editorFocusListener = new FocusAdapter() {
-	        public void focusGained(FocusEvent e) {
+	        @Override
+			public void focusGained(FocusEvent e) {
 	            highlightCompletedText(0);
 	        }
-	        public void focusLost(FocusEvent e) {
+	        @Override
+			public void focusLost(FocusEvent e) {
 	            // Workaround for Bug 5100422 - Hide Popup on focus loss
 	            if (hidePopupOnFocusLoss) comboBox.setPopupVisible(false);
 	        }
@@ -103,6 +108,7 @@ public class AutoCompleteion extends PlainDocument {
 	    }
 	}
 	
+	@Override
 	public void remove(int offs, int len) throws BadLocationException {
 	    // return immediately when selecting an item
 	    if (selecting) return;
@@ -121,6 +127,7 @@ public class AutoCompleteion extends PlainDocument {
 	    }
 	}
 	
+	@Override
 	public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
 	    // return immediately when selecting an item
 	    if (selecting) return;

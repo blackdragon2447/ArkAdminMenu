@@ -29,6 +29,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.aeonbits.owner.ConfigFactory;
@@ -68,6 +69,7 @@ public class GiveExpToPlayerDialog extends JDialog {
 	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 		
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					GiveExpToPlayerDialog frame = new GiveExpToPlayerDialog();
@@ -87,7 +89,7 @@ public class GiveExpToPlayerDialog extends JDialog {
 	public GiveExpToPlayerDialog() throws UnsupportedLookAndFeelException {
 
 		setModal(true);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		try {
 			UIManager.setLookAndFeel(AAMGui.getLookAndFeel());
@@ -167,7 +169,7 @@ public class GiveExpToPlayerDialog extends JDialog {
 		contentPane.add(XpAmountLabel, gbc_XpAmountLabel);
 		
 		XpAmountSpinner = new JSpinner();
-		XpAmountSpinner.setModel(new SpinnerNumberModel(new Integer(1000), new Integer(0), null, new Integer(1000)));
+		XpAmountSpinner.setModel(new SpinnerNumberModel(1000, 0, null, 1000));
 		GridBagConstraints gbc_XpAmountSpinner = new GridBagConstraints();
 		gbc_XpAmountSpinner.anchor = GridBagConstraints.WEST;
 		gbc_XpAmountSpinner.insets = new Insets(0, 0, 5, 5);
@@ -253,7 +255,7 @@ public class GiveExpToPlayerDialog extends JDialog {
 				String[] arguments = {null, null, null, null};
 				
 				arguments[0] = PlayerIDField.getText();
-				arguments[1] = String.valueOf(((Integer) XpAmountSpinner.getValue()));
+				arguments[1] = String.valueOf((XpAmountSpinner.getValue()));
 				arguments[2] = "0";
 				arguments[3] = ShareWithTribeCheckBox.isSelected() ? "0" : "1";
 				
@@ -371,7 +373,7 @@ public class GiveExpToPlayerDialog extends JDialog {
 				String[] arguments = {null, null, null, null};
 				
 				arguments[0] = PlayerIDField.getText();
-				arguments[1] = String.valueOf(((Integer) XpAmountSpinner.getValue()));
+				arguments[1] = String.valueOf((XpAmountSpinner.getValue()));
 				arguments[2] = "0";
 				arguments[3] = ShareWithTribeCheckBox.isSelected() ? "0" : "1";
 				

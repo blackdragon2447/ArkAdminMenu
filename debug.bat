@@ -1,2 +1,2 @@
-java -jar "AAM.jar"
+java -jar "AAM.jar" true
 pause

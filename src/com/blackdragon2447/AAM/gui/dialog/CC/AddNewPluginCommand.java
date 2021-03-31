@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.aeonbits.owner.ConfigFactory;
@@ -41,6 +42,7 @@ public class AddNewPluginCommand extends JFrame {
 	 */
 	public static void createGui() {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					AddNewPluginCommand frame = new AddNewPluginCommand();
@@ -56,7 +58,7 @@ public class AddNewPluginCommand extends JFrame {
 	 * the constructor: build the gui
 	 */
 	public AddNewPluginCommand() {
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 207);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -135,6 +137,7 @@ public class AddNewPluginCommand extends JFrame {
 		gbc_btnNewButton.gridy = 4;
 		contentPane.add(btnNewButton, gbc_btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				String[] arr = cfg.PluginCommands();
 				try {

@@ -44,10 +44,12 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.LookAndFeel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -179,6 +181,7 @@ public class AAMGui extends JFrame {
 			IllegalAccessException, InvocationTargetException {
 
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					new AAMGui();
@@ -213,12 +216,15 @@ public class AAMGui extends JFrame {
 			}
 		});
 		RconField.setColumns(10);
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(AAMGui.class.getResource("/com/blackdragon2447/AAM/assets/AAM.logo.png")));
-
-		setBounds(100, 100, 702, 500);
-
-
+		setIconImage(Toolkit.getDefaultToolkit().getImage(AAMGui.class.getResource("/com/blackdragon2447/AAM/assets/AAM.logo.png")));
+		
+		/**
+		 * setting the default settings for the GUI
+		 */
+		setTitle("ArkAdminManager");
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setBounds(100, 100, 700, 500);
+		
 		/**
 		 * adding the menu bar the options are pretty self explanatory by name.
 		 */
@@ -244,6 +250,7 @@ public class AAMGui extends JFrame {
 		JMenuItem ConnectionsMenuItem = new JMenuItem("Connections");
 		settingsMenu.add(ConnectionsMenuItem);
 		ConnectionsMenuItem.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				ServersGUI.createGui();
 			}
@@ -276,6 +283,7 @@ public class AAMGui extends JFrame {
 		ContentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(ContentPane);
 		helpMenuItem.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				HelpDialog.createDialog();
 			}
@@ -293,7 +301,7 @@ public class AAMGui extends JFrame {
 		 * this part of the constructor builds the tabbed pane and the panels in it
 		 * most if not all of the buttons in this part have a name explaining their use
 		 */
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		JTabbedPane tabbedPane = new JTabbedPane(SwingConstants.TOP);
 		ContentPane.add(tabbedPane, BorderLayout.CENTER);
 		tabbedPaneOut = tabbedPane;
 
@@ -763,17 +771,6 @@ public class AAMGui extends JFrame {
 		gbc_numberedCheckbox_1.insets = new Insets(0, 0, 5, 5);
 		gbc_numberedCheckbox_1.gridx = 3;
 		gbc_numberedCheckbox_1.gridy = 8;
-<<<<<<< HEAD
-		AdvancedCommandsPanel.add(ListAllUNCDinoCheckBox, gbc_numberedCheckbox_1);
-
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.insets = new Insets(0, 0, 0, 5);
-		gbc_lblNewLabel.gridx = 2;
-		gbc_lblNewLabel.gridy = 9;
-		AdvancedCommandsPanel.add(lblNewLabel, gbc_lblNewLabel);
-		ListAllUNCDinoCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
-
-=======
 		AdvancedCommandsPanel.add(ListAllUNCDinoCheckBox, gbc_numberedCheckbox_1);		
 		ListAllUNCDinoCheckBox.addActionListener(ActionlistnerAAM.FavButtonListner);
 		
@@ -1536,6 +1533,57 @@ public class AAMGui extends JFrame {
 
 			public void windowDeactivated(WindowEvent arg0) {
 			}
+	    ToolTipManager.sharedInstance().setDismissDelay(dismissDelay);
+	    ToolTipManager.sharedInstance().setInitialDelay(0);
+	    ScrollPane.setBorder(BorderFactory.createEmptyBorder());
+	    ScrollPane.getVerticalScrollBar().setUnitIncrement(16);
+	    
+	    /**
+	     * this window listener is used to save any information on closing the window
+	     */
+	    addWindowListener(new WindowListener() {
+	    	
+	    	@Override
+			public void windowClosing(WindowEvent arg0) {
+				  
+				  ArrayList<Integer> ButtonNumbers = new ArrayList<Integer>();
+				  String ButtonNumbersString = "0";
+				  
+				  for(JNumberedButton button : Reference.FavoriteButtonList) {
+					  ButtonNumbers.add(button.getNumber());
+					  ButtonNumbersString = ButtonNumbersString + "," + button.getNumber();
+				  }
+				  
+				  //if(ButtonNumbersString != "") ButtonNumbersString = ButtonNumbersString.substring(1);
+				  
+				  cfg = ConfigFactory.create(AAMConfig.class);
+				  
+				  cfg.setProperty("Theme", String.valueOf(Reference.theme));
+				  
+				  cfg.setProperty("Favorites", ButtonNumbersString);
+				  try {
+					  cfg.store(new FileOutputStream("AAMConfig.properties"), "no comments");
+				  } catch (IOException e1) {
+					  e1.printStackTrace();
+				  }
+				  
+				  Main.logger.LogUser("Session with " + Reference.UserName + " ended", Level.INFO);
+				  
+				  System.exit(0);
+			  }
+
+			  @Override
+			public void windowOpened(WindowEvent arg0) {}
+			  @Override
+			public void windowClosed(WindowEvent arg0) {}
+			  @Override
+			public void windowIconified(WindowEvent arg0) {}
+			  @Override
+			public void windowDeiconified(WindowEvent arg0) {}
+			  @Override
+			public void windowActivated(WindowEvent arg0) {}
+			  @Override
+			public void windowDeactivated(WindowEvent arg0) {}
 		});
 
 		setVisible(true);

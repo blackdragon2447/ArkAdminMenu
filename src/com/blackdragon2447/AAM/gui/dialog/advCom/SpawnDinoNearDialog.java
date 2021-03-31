@@ -30,6 +30,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.aeonbits.owner.ConfigFactory;
@@ -71,8 +72,8 @@ public class SpawnDinoNearDialog extends JDialog {
 	 */
 	public static void createGui() throws UnsupportedLookAndFeelException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 		
-		
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					SpawnDinoNearDialog frame = new SpawnDinoNearDialog();
@@ -92,15 +93,13 @@ public class SpawnDinoNearDialog extends JDialog {
 	public SpawnDinoNearDialog() throws UnsupportedLookAndFeelException {
 		
 		setModal(true);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		try {
 			UIManager.setLookAndFeel(AAMGui.getLookAndFeel());
 		} catch (UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		
-		setBounds(100, 100, 530, 275);
+		setBounds(100, 100, 530, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -294,7 +293,7 @@ public class SpawnDinoNearDialog extends JDialog {
 				
 				arguments[0] = PlayerIDField.getText();
 				arguments[1] = "\"blueprint\'"+FullCreaturePairList.get(DinoBPComboBox.getSelectedIndex()).getSecondValue()+"\'\"";
-				arguments[2] = String.valueOf(((Integer) LevelSpinner.getValue()));
+				arguments[2] = String.valueOf((LevelSpinner.getValue()));
 				arguments[3] = TamedCheckBox.isSelected() ? "1" : "0";
 				arguments[4] = "0";
 				arguments[5] = "0";
@@ -416,10 +415,10 @@ public class SpawnDinoNearDialog extends JDialog {
 				arguments[0] = PlayerIDField.getText();
 				try {
 					arguments[1] = "\"blueprint\'"+FullCreaturePairList.get(DinoBPComboBox.getSelectedIndex()).getFirstValue()+"\'\"";
-				} catch (ArrayIndexOutOfBoundsException e) {
+				} catch (IndexOutOfBoundsException e) {
 					arguments[1] = "";
 				}
-				arguments[2] = String.valueOf(((Integer) LevelSpinner.getValue()));
+				arguments[2] = String.valueOf((LevelSpinner.getValue()));
 				arguments[3] = TamedCheckBox.isSelected() ? "1" : "0";
 				arguments[4] = "0";
 				arguments[5] = "0";

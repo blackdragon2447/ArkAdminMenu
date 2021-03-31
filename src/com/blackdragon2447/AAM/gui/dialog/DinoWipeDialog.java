@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.blackdragon2447.AAM.Main;
@@ -77,6 +78,7 @@ public class DinoWipeDialog extends JFrame {
 	 */
 	public static void CreateGui() {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					DinoWipeDialog frame = new DinoWipeDialog();
@@ -92,7 +94,7 @@ public class DinoWipeDialog extends JFrame {
 	 * Create the frame.
 	 */
 	public DinoWipeDialog() {
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 293);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

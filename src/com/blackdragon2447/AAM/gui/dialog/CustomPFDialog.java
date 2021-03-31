@@ -20,6 +20,7 @@ import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -45,7 +46,7 @@ public class CustomPFDialog extends JDialog {
 	public static void createDialog() {
 		try {
 			CustomPFDialog dialog = new CustomPFDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();

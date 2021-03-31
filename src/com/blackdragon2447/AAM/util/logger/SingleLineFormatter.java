@@ -25,7 +25,8 @@ public class SingleLineFormatter extends Formatter {
 	   * @param record the log record to be formatted.
 	   * @return a formatted log record
 	   */
-	  public synchronized String format(LogRecord record) {
+	  @Override
+	public synchronized String format(LogRecord record) {
 
 	    StringBuilder sb = new StringBuilder();
 

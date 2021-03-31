@@ -22,6 +22,13 @@ public class Account implements AuthClass{
 		this.UserType = IsOwner;
 	}
 	
+
+	public Account(Long SteamID, Boolean IsOwner, Boolean Regisered) {
+		this.SteamID = SteamID;
+		this.UserType = IsOwner;
+		this.Registered = Regisered;
+	}
+	
 	/**
 	 * Use this method to create a new owner account.
 	 * @param UserName

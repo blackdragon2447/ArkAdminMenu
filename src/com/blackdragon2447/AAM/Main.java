@@ -11,10 +11,12 @@ import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.StandardCopyOption;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 
@@ -22,13 +24,14 @@ import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.blackdragon2447.AAM.gui.AAMGui;
+import com.blackdragon2447.AAM.gui.auth.LoginDialog;
 import com.blackdragon2447.AAM.util.CSVReader;
 import com.blackdragon2447.AAM.util.CreatureSetBuilder;
 import com.blackdragon2447.AAM.util.ItemSetBuilder;
 import com.blackdragon2447.AAM.util.Pair;
 import com.blackdragon2447.AAM.util.logger.AAMLogger;
+import com.blackdragon2447.AAM.util.network.NetworkHandler;
 import com.blackdragon2447.AAM.util.obj.auth.Account;
-import com.blackdragon2447.AAM.util.tools.AccountMaker;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -45,16 +48,21 @@ import com.google.gson.GsonBuilder;
 
 public class Main {
 
-	public static Boolean firstRun = true;
+	private static Boolean firstRun = false;
 	public static AAMLogger logger;
+	public final static String projectId = "arkadminmanager-325ce";
+	
 	@SuppressWarnings("unused")
-	public static void main(String[] args) throws NoSuchAlgorithmException, IOException{
-		try {
-			if(args[1] != null) {
-				AccountMaker.CreateGui();
-				TimeUnit.HOURS.sleep(1);
-			}
-		} catch (Exception e) {}
+	public static void main(String[] args) throws NoSuchAlgorithmException, IOException, SQLException, ClassNotFoundException{
+
+		
+		System.out.println("starting");
+		NetworkHandler networkHandler = new NetworkHandler();
+		System.out.println("sending");
+		networkHandler.sendMessage("test");
+		System.out.println("send done");
+		networkHandler.close();
+		System.out.println("network done");
 		
 		String systemipaddress = ""; 
         try{ 
@@ -78,36 +86,48 @@ public class Main {
 		logger.LogDebug("Starting Debug Log", Level.INFO);
 		logger.LogUser("Starting new session at: " + systemipaddress, Level.INFO);
 		
-		try (BufferedInputStream in = new BufferedInputStream(new URL("https://github.com/blackdragon2447/ArkAdminMenu/releases/download/latest/AAMUpdater.exe").openStream());
-			FileOutputStream fileOutputStream = new FileOutputStream("AAMUpdater(new).exe")) {
-			    byte dataBuffer[] = new byte[1024];
-			    int bytesRead;
-			    while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
-			        fileOutputStream.write(dataBuffer, 0, bytesRead);
-			    }
+		/**
+		 * auto updater
+		 */
+		try {
+			BufferedInputStream in = new BufferedInputStream(new URL("https://github.com/blackdragon2447/ArkAdminMenu/releases/download/latest/AAMUpdater.exe").openStream());
+			FileOutputStream fileOutputStream = new FileOutputStream("AAMUpdater(new).exe");
+			byte dataBuffer[] = new byte[1024];
+			int bytesRead;
+			while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+			    fileOutputStream.write(dataBuffer, 0, bytesRead);
+			}
+			fileOutputStream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		File file = null;
-		file = new File("AAMUpdater.exe");
+		
+		File file = new File("AAMUpdater.exe");
 		File file2 = new File("AAMUpdater(new).exe");
 		
 		byte[] f1 = null;
-		try {
-			f1 = Files.readAllBytes(file.toPath());
-		}catch (Exception e) {
-			e.printStackTrace();
+		
+		if (file.exists()) {
+			try {
+				f1 = Files.readAllBytes(file.toPath());
+			}catch (NoSuchFileException e) {
+				e.printStackTrace();
+				firstRun = true;
+			}
+		} else {
+			System.out.println("first run");
 			firstRun = true;
 		}
 		
 		if (firstRun) {
-			//Files.copy(file2.toPath(), new File("AAMUpdater.exe").toPath());
+			System.out.println("copying file");
+			Files.copy(file2.toPath(), new File("AAMUpdater.exe").toPath(), StandardCopyOption.REPLACE_EXISTING);
 			f1 = Files.readAllBytes(file.toPath());
 		}
 		byte[] f2 = Files.readAllBytes(file2.toPath());
 				
 		if (!(Arrays.equals(f1, f2))) {
-			
+			System.out.println("update available");
 			if(JOptionPane.showConfirmDialog(null, "a new update is available, do you wanna update?") == 0) {
 				file.delete();
 				file2.renameTo(file);
@@ -118,7 +138,10 @@ public class Main {
 			}
 		}
 		
-		/*
+		/**
+		 * setting up all the data needed for loggin in
+		 */
+		
 		try (BufferedReader br = new BufferedReader(new FileReader("Users.txt"))) {
 		    String line;
 		    while ((line = br.readLine()) != null) {
@@ -129,10 +152,11 @@ public class Main {
 		    	Reference.Logins.add(user);
 		    }
 		}
-		*/
 		
-		//LoginDialog.createGui();
-		Reference.currentUser = new Account(null, null, null, true);
+		LoginDialog.createGui();
+		//Reference.currentUser = new Account(null, null, null, true);
+		
+		
 		
 		/**
 		 * this piece of the code will import any files needed to run before opening the actual GUI to prevent delay

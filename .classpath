@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="LIB/commons-lang3-3.11.jar" sourcepath="LIB/commons-lang3-3.11-sources.jar">
+	<classpathentry kind="lib" path="/home/blackdragon2447/eclipse-workspace/java-workspace/LIB/commons-lang3/commons-lang3-3.11.jar" sourcepath="/home/blackdragon2447/eclipse-workspace/java-workspace/LIB/commons-lang3/commons-lang3-3.11-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/ArkAdminMenu/LIB/commons-lang3-3.11-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/home/blackdragon2447/eclipse-workspace/java-workspace/LIB/commons-lang3/commons-lang3-3.11-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="LIB/flatlaf-1.0.jar"/>
-	<classpathentry kind="lib" path="LIB/flatlaf-intellij-themes-1.0.jar"/>
-	<classpathentry kind="lib" path="LIB/gson-2.8.6.jar"/>
-	<classpathentry kind="lib" path="LIB/jide-oss-3.7.4.jar"/>
-	<classpathentry kind="lib" path="LIB/owner-1.0.12.jar" sourcepath="LIB/owner-1.0.12-sources.jar">
+	<classpathentry kind="lib" path="/home/blackdragon2447/eclipse-workspace/java-workspace/LIB/flatlaf-1.0.jar"/>
+	<classpathentry kind="lib" path="/home/blackdragon2447/eclipse-workspace/java-workspace/LIB/flatlaf-intellij-themes-1.0.jar"/>
+	<classpathentry kind="lib" path="/home/blackdragon2447/eclipse-workspace/java-workspace/LIB/gson-2.8.6.jar"/>
+	<classpathentry kind="lib" path="/home/blackdragon2447/eclipse-workspace/java-workspace/LIB/jide-oss-3.7.4.jar"/>
+	<classpathentry kind="lib" path="/home/blackdragon2447/eclipse-workspace/java-workspace/LIB/owner-1.0.12.jar" sourcepath="/home/blackdragon2447/eclipse-workspace/java-workspace/LIB/owner-1.0.12-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/ArkAdminMenu/LIB/owner-1.0.12-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/home/blackdragon2447/eclipse-workspace/java-workspace/LIB/owner-1.0.12-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="LIB/rkon-core-1.1.2.jar"/>
-	<classpathentry kind="lib" path="LIB/swingx-all-1.6.4.jar"/>
+	<classpathentry kind="lib" path="/home/blackdragon2447/eclipse-workspace/java-workspace/LIB/rkon-core-1.1.2.jar"/>
+	<classpathentry kind="lib" path="/home/blackdragon2447/eclipse-workspace/java-workspace/LIB/swingx-all-1.6.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
