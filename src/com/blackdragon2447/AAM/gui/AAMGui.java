@@ -264,7 +264,6 @@ public class AAMGui extends JFrame {
 		ServersButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Main.logger.LogDebug("servers button pressed", Level.INFO);
 					CreateServersDialog.createGui();
 				}
 		});

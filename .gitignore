@@ -1,4 +1,5 @@
 bin/
 .settings/
 ./AAMConfig.properties
+bugs.csv
 

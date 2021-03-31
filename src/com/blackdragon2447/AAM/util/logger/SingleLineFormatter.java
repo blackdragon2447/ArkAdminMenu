@@ -43,23 +43,6 @@ public class SingleLineFormatter extends Formatter {
 	    sb.append(text);
 	    sb.append(" ");
 
-
-	    // Class name 
-	    if (record.getSourceClassName() != null) {
-	      sb.append(record.getSourceClassName());
-	    } else {
-	      sb.append(record.getLoggerName());
-	    }
-
-	    // Method name 
-	    if (record.getSourceMethodName() != null) {
-	      sb.append(" ");
-	      sb.append(record.getSourceMethodName());
-	    }
-	    sb.append(" - "); // lineSeparator
-
-
-
 	    String message = formatMessage(record);
 
 	    // Level
