@@ -10,6 +10,7 @@
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
+SetupIconFile="C:\Users\thoma\Desktop\java workspace\ArkAdminMenu\AAM 0.8 - prerelease\AAMlogo.ico"
 AppId={{93BF6E04-2B57-4B48-8AB7-468D72F33280}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
@@ -43,8 +44,8 @@ Source: "jre-8u281-windows-i586-iftw.exe"; DestDir: "{tmp}"; DestName: "JREInsta
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\AAMLogo.ico"
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\AAMLogo.ico"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent 

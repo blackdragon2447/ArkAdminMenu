@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.StandardCopyOption;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,7 +47,7 @@ import com.google.gson.GsonBuilder;
 
 public class Main {
 
-	public static Boolean firstRun = true;
+	private static Boolean firstRun = true;
 	public static AAMLogger logger;
 	@SuppressWarnings("unused")
 	public static void main(String[] args) throws NoSuchAlgorithmException, IOException{
@@ -93,15 +95,20 @@ public class Main {
 		File file2 = new File("AAMUpdater(new).exe");
 		
 		byte[] f1 = null;
-		try {
-			f1 = Files.readAllBytes(file.toPath());
-		}catch (Exception e) {
-			e.printStackTrace();
+		
+		if (file.exists()) {
+			try {
+				f1 = Files.readAllBytes(file.toPath());
+			}catch (NoSuchFileException e) {
+				e.printStackTrace();
+				firstRun = true;
+			}
+		} else {
 			firstRun = true;
 		}
 		
 		if (firstRun) {
-			//Files.copy(file2.toPath(), new File("AAMUpdater.exe").toPath());
+			Files.copy(file2.toPath(), new File("AAMUpdater.exe").toPath(), StandardCopyOption.REPLACE_EXISTING);
 			f1 = Files.readAllBytes(file.toPath());
 		}
 		byte[] f2 = Files.readAllBytes(file2.toPath());
