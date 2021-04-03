@@ -1,4 +1,2 @@
-Apr 2, 2021 8:40:28 PM INFO:   Starting Debug Log
-Apr 2, 2021 8:40:28 PM INFO:   Starting new session at: 213.46.87.220
-Apr 2, 2021 8:40:29 PM INFO:   true
-Apr 2, 2021 8:40:33 PM INFO:   Session with null ended
+Apr 3, 2021 10:46:55 PM INFO:   Starting Debug Log
+Apr 3, 2021 10:46:56 PM INFO:   Starting new session at: 213.46.87.220
