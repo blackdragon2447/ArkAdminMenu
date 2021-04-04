@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 import org.aeonbits.owner.ConfigFactory;
 
@@ -49,7 +51,7 @@ public class CreateServersDialog extends JDialog{
 		
 		setBounds(new Rectangle(450, 300));
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		JTabbedPane tabbedPane = new JTabbedPane(SwingConstants.TOP);
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
 		JPanel serversPanel = new JPanel();
@@ -61,7 +63,7 @@ public class CreateServersDialog extends JDialog{
 		gbl_serversPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0};
 		serversPanel.setLayout(gbl_serversPanel);
 		
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setModal(true);
 		
 		JLabel serverNameLabel = new JLabel("Server Name");
@@ -122,6 +124,7 @@ public class CreateServersDialog extends JDialog{
 		gbc_RemoveButton.gridy = 3;
 		serversPanel.add(RemoveButton, gbc_RemoveButton);
 		RemoveButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				removeServer(list.getSelectedIndex());
 			}
@@ -134,6 +137,7 @@ public class CreateServersDialog extends JDialog{
 		gbc_AddButton.gridy = 3;
 		serversPanel.add(AddButton, gbc_AddButton);
 		AddButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				Utils.AddServer(serverNameField.getText(), IPField.getText(), Integer.valueOf(PortField.getText()));
 				refresh();

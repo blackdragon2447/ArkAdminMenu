@@ -25,6 +25,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.aeonbits.owner.ConfigFactory;
@@ -63,6 +64,7 @@ public class RenameTribeDialog extends JDialog {
 		
 		
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					RenameTribeDialog frame = new RenameTribeDialog();
@@ -82,7 +84,7 @@ public class RenameTribeDialog extends JDialog {
 	public RenameTribeDialog() throws UnsupportedLookAndFeelException {
 
 		setModal(true);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		try {
 			UIManager.setLookAndFeel(AAMGui.getLookAndFeel());

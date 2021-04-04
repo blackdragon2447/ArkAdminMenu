@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.blackdragon2447.AAM.gui.auth.LoginDialog;
@@ -37,6 +38,7 @@ public class AccountMaker extends JFrame {
 	 */
 	public static void CreateGui() {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					AccountMaker frame = new AccountMaker();
@@ -52,7 +54,7 @@ public class AccountMaker extends JFrame {
 	 * Create the frame.
 	 */
 	public AccountMaker() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

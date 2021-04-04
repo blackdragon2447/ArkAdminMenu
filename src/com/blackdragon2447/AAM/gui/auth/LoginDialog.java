@@ -24,9 +24,11 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.LookAndFeel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.aeonbits.owner.ConfigFactory;
@@ -96,14 +98,14 @@ public class LoginDialog extends JDialog {
 		
 		setVisual(Themes.getLookAndFeel(cfg.Theme()));
 		
-		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setModal(true);
 		setBounds(100, 100, 450, 247);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(SwingConstants.TOP);
 		contentPane.add(tabbedPane);
 		
 		loginPanel = new JPanel();
@@ -183,6 +185,7 @@ public class LoginDialog extends JDialog {
 		gbc_loginButton.gridy = 5;
 		loginPanel.add(loginButton, gbc_loginButton);
 		loginButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				Boolean CorrectName = false;
 				Boolean CorrectPW = false;
@@ -367,6 +370,7 @@ public class LoginDialog extends JDialog {
 		gbc_passwordField_1.gridy = 2;
 		adminLoginPanel.add(passwordField_1, gbc_passwordField_1);
 		adminToggleButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(adminToggleButton.isSelected()) {
 					System.out.println("switching to owner");

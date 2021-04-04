@@ -43,10 +43,12 @@ import javax.swing.JTextField;
 import javax.swing.JTabbedPane;
 import javax.swing.LookAndFeel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -178,6 +180,7 @@ public class AAMGui extends JFrame {
 		
 		
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					new AAMGui();
@@ -216,7 +219,7 @@ public class AAMGui extends JFrame {
 		 * setting the default settings for the GUI
 		 */
 		setTitle("ArkAdminManager");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
 		
 		/**
@@ -240,6 +243,7 @@ public class AAMGui extends JFrame {
 		JMenuItem ConnectionsMenuItem = new JMenuItem("Connections");
 		settingsMenu.add(ConnectionsMenuItem);
 		ConnectionsMenuItem.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				ServersGUI.createGui();
 			}
@@ -272,6 +276,7 @@ public class AAMGui extends JFrame {
 		ContentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(ContentPane);
 		helpMenuItem.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				HelpDialog.createDialog();
 			}
@@ -288,7 +293,7 @@ public class AAMGui extends JFrame {
 		 * this part of the constructor builds the tabbed pane and the panels in it
 		 * most if not all of the buttons in this part have a name explaining their use
 		 */
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		JTabbedPane tabbedPane = new JTabbedPane(SwingConstants.TOP);
 		ContentPane.add(tabbedPane, BorderLayout.CENTER);
 		tabbedPaneOut = tabbedPane;
 		
@@ -1387,7 +1392,8 @@ public class AAMGui extends JFrame {
 	     */
 	    addWindowListener(new WindowListener() {
 	    	
-	    	public void windowClosing(WindowEvent arg0) {
+	    	@Override
+			public void windowClosing(WindowEvent arg0) {
 				  
 				  ArrayList<Integer> ButtonNumbers = new ArrayList<Integer>();
 				  String ButtonNumbersString = "0";
@@ -1415,12 +1421,18 @@ public class AAMGui extends JFrame {
 				  System.exit(0);
 			  }
 
-			  public void windowOpened(WindowEvent arg0) {}
-			  public void windowClosed(WindowEvent arg0) {}
-			  public void windowIconified(WindowEvent arg0) {}
-			  public void windowDeiconified(WindowEvent arg0) {}
-			  public void windowActivated(WindowEvent arg0) {}
-			  public void windowDeactivated(WindowEvent arg0) {}
+			  @Override
+			public void windowOpened(WindowEvent arg0) {}
+			  @Override
+			public void windowClosed(WindowEvent arg0) {}
+			  @Override
+			public void windowIconified(WindowEvent arg0) {}
+			  @Override
+			public void windowDeiconified(WindowEvent arg0) {}
+			  @Override
+			public void windowActivated(WindowEvent arg0) {}
+			  @Override
+			public void windowDeactivated(WindowEvent arg0) {}
 		});
 	    
 	    setVisible(true);

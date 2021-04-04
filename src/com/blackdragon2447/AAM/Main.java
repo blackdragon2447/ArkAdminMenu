@@ -145,13 +145,7 @@ public class Main {
 		/**
 		 * setting up all the data needed for loggin in
 		 */
-		/*
-		FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance().toBuilder()
-	                .setProjectId(projectId)
-	                .setCredentials(GoogleCredentials.getApplicationDefault())
-	                .build();
-	        	Firestore db = firestoreOptions.getService();
-		*/
+		
 		try (BufferedReader br = new BufferedReader(new FileReader("Users.txt"))) {
 		    String line;
 		    while ((line = br.readLine()) != null) {

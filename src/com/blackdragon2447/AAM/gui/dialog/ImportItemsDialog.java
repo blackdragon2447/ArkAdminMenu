@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -44,7 +45,7 @@ public class ImportItemsDialog extends JDialog {
 	public static void createDialog() {
 		try {
 			ImportItemsDialog dialog = new ImportItemsDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -103,6 +104,7 @@ public class ImportItemsDialog extends JDialog {
 		{
 			JButton btnNewButton = new JButton("open");
 			btnNewButton.addActionListener(new ActionListener() {
+				@Override
 				public void actionPerformed(ActionEvent e) {
 					FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV Files", "csv");
 					FileChooser.setFileFilter(filter);

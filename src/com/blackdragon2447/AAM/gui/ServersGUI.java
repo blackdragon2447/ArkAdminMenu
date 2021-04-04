@@ -27,6 +27,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.aeonbits.owner.ConfigFactory;
@@ -62,6 +63,7 @@ public class ServersGUI extends JDialog {
 	 */
 	public static void createGui() {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					new ServersGUI();
@@ -79,7 +81,7 @@ public class ServersGUI extends JDialog {
 		
 		
 		
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setModal(true);
 		
 		setBounds(100, 100, 450, 358);
@@ -171,6 +173,7 @@ public class ServersGUI extends JDialog {
 		gbc_AddButton.gridy = 3;
 		ServersPanel.add(AddButton, gbc_AddButton);
 		AddButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				Utils.AddServer(NameField.getText(), IPField.getText(), Integer.valueOf(PortField.getText()));
 				refresh();
@@ -208,6 +211,7 @@ public class ServersGUI extends JDialog {
 		gbc_RemoveButton.gridy = 5;
 		ServersPanel.add(RemoveButton, gbc_RemoveButton);
 		RemoveButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				removeServer(list.getSelectedIndex());
 			}
@@ -220,6 +224,7 @@ public class ServersGUI extends JDialog {
 		gbc_AuthenticateButton.gridy = 5;
 		ServersPanel.add(AuthenticateButton, gbc_AuthenticateButton);
 		AuthenticateButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				Reference.MultipleServer = false;
 				Reference.LoggedServers = new ArrayList<Server>();
@@ -235,6 +240,7 @@ public class ServersGUI extends JDialog {
 		gbc_MSToggleButton.gridy = 6;
 		ServersPanel.add(MSToggleButton, gbc_MSToggleButton);
 		MSToggleButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				Reference.MultipleServer = MSToggleButton.isSelected();
 			}
@@ -246,6 +252,7 @@ public class ServersGUI extends JDialog {
 		gbc_AuthenticateAllButton.gridy = 6;
 		ServersPanel.add(AuthenticateAllButton, gbc_AuthenticateAllButton);
 		AuthenticateAllButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!MSToggleButton.isSelected()) {
 					if(0 == JOptionPane.showOptionDialog(contentPane, "use multiple servers is disabled, do you want to enable it", null, JOptionPane.YES_NO_OPTION, 0, null, null, null)) {
@@ -366,7 +373,8 @@ public class ServersGUI extends JDialog {
 		final JPasswordField pwd = new JPasswordField(10);
 	    int Cancel = JOptionPane.showConfirmDialog(contentPane, pwd, "Enter Password",JOptionPane.OK_CANCEL_OPTION);
 	    pwd.addComponentListener(new ComponentAdapter() {
-	    	public void componentShown(ComponentEvent ce){
+	    	@Override
+			public void componentShown(ComponentEvent ce){
 				pwd.requestFocusInWindow();
 			}
 		});

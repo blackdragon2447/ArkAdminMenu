@@ -30,6 +30,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.aeonbits.owner.ConfigFactory;
@@ -73,6 +74,7 @@ public class SpawnDinoNearDialog extends JDialog {
 		
 		
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					SpawnDinoNearDialog frame = new SpawnDinoNearDialog();
@@ -92,7 +94,7 @@ public class SpawnDinoNearDialog extends JDialog {
 	public SpawnDinoNearDialog() throws UnsupportedLookAndFeelException {
 		
 		setModal(true);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		
 		try {
 			UIManager.setLookAndFeel(AAMGui.getLookAndFeel());
@@ -294,7 +296,7 @@ public class SpawnDinoNearDialog extends JDialog {
 				
 				arguments[0] = PlayerIDField.getText();
 				arguments[1] = "\"blueprint\'"+FullCreaturePairList.get(DinoBPComboBox.getSelectedIndex()).getSecondValue()+"\'\"";
-				arguments[2] = String.valueOf(((Integer) LevelSpinner.getValue()));
+				arguments[2] = String.valueOf((LevelSpinner.getValue()));
 				arguments[3] = TamedCheckBox.isSelected() ? "1" : "0";
 				arguments[4] = "0";
 				arguments[5] = "0";
@@ -419,7 +421,7 @@ public class SpawnDinoNearDialog extends JDialog {
 				} catch (ArrayIndexOutOfBoundsException e) {
 					arguments[1] = "";
 				}
-				arguments[2] = String.valueOf(((Integer) LevelSpinner.getValue()));
+				arguments[2] = String.valueOf((LevelSpinner.getValue()));
 				arguments[3] = TamedCheckBox.isSelected() ? "1" : "0";
 				arguments[4] = "0";
 				arguments[5] = "0";
