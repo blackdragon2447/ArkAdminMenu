@@ -27,8 +27,6 @@ public interface AAMConfig extends Accessible, Mutable{
 	
 	String[] CommandSeriesName();
 	
-	String[][] CommandSeries();
-	
 	@DefaultValue("true")
 	Boolean ShowWelcome();
 	

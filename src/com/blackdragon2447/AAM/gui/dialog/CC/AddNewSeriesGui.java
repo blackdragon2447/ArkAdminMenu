@@ -159,7 +159,7 @@ public class AddNewSeriesGui extends JFrame {
 				
 				
 				
-				String[][] arr1 = cfg.CommandSeries();
+				String[][] arr1 = {{}};
 				try {
 					arr1 = Arrays.copyOf(arr1, arr1.length + 1);
 				} catch (NullPointerException e2) {

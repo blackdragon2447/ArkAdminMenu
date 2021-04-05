@@ -32,8 +32,6 @@ import com.blackdragon2447.AAM.util.Pair;
 import com.blackdragon2447.AAM.util.logger.AAMLogger;
 import com.blackdragon2447.AAM.util.obj.auth.Account;
 import com.blackdragon2447.AAM.util.tools.AccountMaker;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.FirestoreOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
