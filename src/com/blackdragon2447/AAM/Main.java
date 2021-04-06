@@ -89,7 +89,6 @@ public class Main {
 		 * auto updater
 		 */
 		try {
-			System.out.println("getting new updater");
 			BufferedInputStream in = new BufferedInputStream(new URL("https://github.com/blackdragon2447/ArkAdminMenu/releases/download/latest/AAMUpdater.exe").openStream());
 			FileOutputStream fileOutputStream = new FileOutputStream("AAMUpdater(new).exe");
 			byte dataBuffer[] = new byte[1024];
@@ -107,9 +106,7 @@ public class Main {
 		
 		byte[] f1 = null;
 		
-		System.out.println(file.exists());
 		if (file.exists()) {
-			System.out.println("reading the old file");
 			try {
 				f1 = Files.readAllBytes(file.toPath());
 			}catch (NoSuchFileException e) {
