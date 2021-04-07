@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.StandardCopyOption;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
@@ -53,8 +54,8 @@ public class Main {
 	public final static String projectId = "arkadminmanager-325ce";
 	
 	@SuppressWarnings("unused")
-	public static void main(String[] args) throws NoSuchAlgorithmException, IOException{
-		
+	public static void main(String[] args) throws NoSuchAlgorithmException, IOException, SQLException, ClassNotFoundException{
+
 		try {
 			if(args[1] != null) {
 				AccountMaker.CreateGui();
