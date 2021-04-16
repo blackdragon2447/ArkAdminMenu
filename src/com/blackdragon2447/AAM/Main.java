@@ -31,6 +31,7 @@ import com.blackdragon2447.AAM.util.CreatureSetBuilder;
 import com.blackdragon2447.AAM.util.ItemSetBuilder;
 import com.blackdragon2447.AAM.util.Pair;
 import com.blackdragon2447.AAM.util.logger.AAMLogger;
+import com.blackdragon2447.AAM.util.network.NetworkHandler;
 import com.blackdragon2447.AAM.util.obj.auth.Account;
 import com.blackdragon2447.AAM.util.tools.AccountMaker;
 import com.google.gson.Gson;
@@ -56,6 +57,11 @@ public class Main {
 	@SuppressWarnings("unused")
 	public static void main(String[] args) throws NoSuchAlgorithmException, IOException, SQLException, ClassNotFoundException{
 
+		NetworkHandler networkHandler = new NetworkHandler();
+		
+		System.out.println(networkHandler.sendMessage("-accreq 76561198870018877"));
+		networkHandler.close();
+		
 		try {
 			if(args[1] != null) {
 				AccountMaker.CreateGui();
