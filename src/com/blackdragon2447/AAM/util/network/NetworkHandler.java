@@ -13,7 +13,9 @@ public class NetworkHandler {
 	
 	public NetworkHandler() {
 		try {
-			socket = new Socket("192.168.178.69", 6666);
+			System.out.println("connecting");
+			socket = new Socket("localhost", 6666);
+			System.out.println("connected");
 			dataOut = new DataOutputStream(socket.getOutputStream());
 			dataIn = new DataInputStream(socket.getInputStream());
 		} catch (IOException e) {
@@ -29,8 +31,9 @@ public class NetworkHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return null;
 		
-		return dataIn.readUTF();
+		//return dataIn.readUTF();
 	}
 	
 	public void close() {

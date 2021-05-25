@@ -17,7 +17,6 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 
@@ -33,7 +32,6 @@ import com.blackdragon2447.AAM.util.Pair;
 import com.blackdragon2447.AAM.util.logger.AAMLogger;
 import com.blackdragon2447.AAM.util.network.NetworkHandler;
 import com.blackdragon2447.AAM.util.obj.auth.Account;
-import com.blackdragon2447.AAM.util.tools.AccountMaker;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -57,18 +55,14 @@ public class Main {
 	@SuppressWarnings("unused")
 	public static void main(String[] args) throws NoSuchAlgorithmException, IOException, SQLException, ClassNotFoundException{
 
+		
+		System.out.println("starting");
 		NetworkHandler networkHandler = new NetworkHandler();
-		
-		System.out.println(networkHandler.sendMessage("-accreq 76561198870018877"));
+		System.out.println("sending");
+		networkHandler.sendMessage("test");
+		System.out.println("send done");
 		networkHandler.close();
-		
-		try {
-			if(args[1] != null) {
-				AccountMaker.CreateGui();
-				TimeUnit.HOURS.sleep(1);
-			}
-		} catch (Exception e) {}
-			
+		System.out.println("network done");
 		
 		String systemipaddress = ""; 
         try{ 
