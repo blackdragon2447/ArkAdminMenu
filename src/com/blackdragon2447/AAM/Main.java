@@ -59,9 +59,9 @@ public class Main {
 		System.out.println("starting");
 		NetworkHandler networkHandler = new NetworkHandler();
 		System.out.println("sending");
-		networkHandler.sendMessage("test");
+		networkHandler.sendMessage("exit");
 		System.out.println("send done");
-		networkHandler.close();
+		//networkHandler.close();
 		System.out.println("network done");
 		
 		String systemipaddress = ""; 

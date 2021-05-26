@@ -1,23 +1,24 @@
 package com.blackdragon2447.AAM.util.network;
 
-import java.io.DataInputStream;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 public class NetworkHandler {
 
 	Socket socket;
 	DataOutputStream dataOut;
-	DataInputStream dataIn;
+	BufferedWriter dataIn;
 	
 	public NetworkHandler() {
 		try {
 			System.out.println("connecting");
-			socket = new Socket("localhost", 6666);
+			socket = new Socket("loaclhost", 6666);
 			System.out.println("connected");
 			dataOut = new DataOutputStream(socket.getOutputStream());
-			dataIn = new DataInputStream(socket.getInputStream());
+			dataIn = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -25,12 +26,14 @@ public class NetworkHandler {
 	}
 	
 	public String sendMessage(String msg) throws IOException {
-		try {
-			dataOut.writeUTF(msg);
-			dataOut.flush();  
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		System.out.println("*****");
+		dataOut.writeUTF(msg);
+		System.out.println(msg);
+		System.out.println(dataOut);
+		dataOut.flush();
+		
+		System.out.println("+++++");
 		return null;
 		
 		//return dataIn.readUTF();
@@ -39,6 +42,7 @@ public class NetworkHandler {
 	public void close() {
 		try {
 			dataOut.close();
+			dataIn.close();
 			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
