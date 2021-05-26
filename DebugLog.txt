@@ -1,2 +1,0 @@
-May 25, 2021 9:53:34 PM INFO:   Starting Debug Log
-May 25, 2021 9:53:34 PM INFO:   Starting new session at: 213.46.87.220
