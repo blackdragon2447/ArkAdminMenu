@@ -6,6 +6,8 @@ build/
 bugs.csv
 .classpath
 
+./*.exe
+
 
 # Ignore Gradle project-specific cache directory
 .gradle
